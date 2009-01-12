@@ -1,13 +1,13 @@
 # This is a template for all makefiles.
 
 #Set the list of files to be deleted by clean (Targets can also be specified).:
-CLEAN_TARGETS += $(ALL_LIBRARIES) *.log *.clog AutoDict_*
+CLEAN_TARGETS += $(ALL_LIBRARIES) *.log *.clog
 
 # Set the list of target to make while testing.  By default, mytest is the
 # only target added.  If the name of the target is changed in the rules then
 # the name should be changed accordingly in this list.
 
-TEST_TARGETS += defaultargs templateAutodict
+TEST_TARGETS += defaultargs
 
 # Search for Rules.mk in roottest/scripts
 # Algorithm:  Find the current working directory and remove everything after
@@ -61,10 +61,4 @@ defaultargs_compiled: defaultargs.clog
 	$(TestDiff)
 
 defaultargs_interpreted: defaultargs.log
-	$(TestDiff)
-
-templateAutodict.shortlog: templateAutodict.log
-	$(CMDECHO) cat templateAutodict.log | grep -v -e _cint.\*cxx -e Creating -e AutoDict_.\*cxx > templateAutodict.shortlog
-
-templateAutodict: templateAutodict.shortlog
 	$(TestDiff)

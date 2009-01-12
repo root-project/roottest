@@ -375,7 +375,7 @@ export CALLROOTEXE
 
 ifneq ($(MAKECMDGOALS),clean)
 ifeq ($(CINT_VERSION),)
-   export CINT_VERSION := Cint$(shell $(CALLROOTEXE) -q -b | grep CINT | sed -e 's/.* \([57]\)\..*/\1/' )
+   export CINT_VERSION := Cint$(shell $(CALLROOTEXE) -q -b | grep CINT | sed -e 's/.*\([57]\).*/\1/' )
 endif
 endif
 
@@ -558,14 +558,6 @@ define TestDiffW
 	   diff -u -b -w $@.ref$(ROOTBITS) $< ; \
 	else \
 	   diff -u -b -w $@.ref $< ; \
-	fi
-endef
-
-define SuccessTestDiff
-	$(CMDECHO) if [ -f $@.ref$(ROOTBITS) ]; then \
-	   diff -u -b $(subst .success,.ref$(ROOTBITS),$@) $< ; \
-	else \
-	   diff -u -b $(subst .success,.ref,$@) $< ; \
 	fi
 endef
 

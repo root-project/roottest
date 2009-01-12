@@ -4,7 +4,7 @@
 CLEAN_TARGETS += *dict* *.so $(ALL_LIBRARIES) *.log
 
 #Set the list of target to make while testing
-TEST_TARGETS += defaultArgTest VectorSort
+TEST_TARGETS += defaultArgTest
 
 ifeq ($(strip $(ROOTTEST_HOME)),)
 	export ROOTTEST_HOME := $(shell expr $(PWD) : '\(.*/roottest/\)')
@@ -20,11 +20,3 @@ dict.cc: mylist.C $(ROOTCINT)
 
 mylist_C.so:
 	$(CMDECHO) $(CALLROOTEXE) -q -l -b build.C > build.log 2>&1
-
-VectorSort.log: VectorSort.C
-	$(CMDECHO) LINES=0 $(CALLROOTEXE) -q -l -b $(@:.log=.C) \
-	  | $(RemoveLeadingDirs) -e 's,^(vector,(class vector,' -e 's,::iterator)[x[:xdigit:]]*$$,::iterator),' \
-	  > $@ 2>&1
-
-VectorSort: VectorSort.log
-	$(TestDiff)
