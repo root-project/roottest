@@ -93,6 +93,7 @@
 #include <algorithm>
 #include <cstring>
 #include <iostream>
+#include <cstdio>
 
 const char* gFilename = "Event.root";
 static Int_t gBufSize = 64000;
