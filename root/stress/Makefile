@@ -18,7 +18,16 @@ endif
 ifeq ($(findstring mathmore,$(shell root-config --features)),)
 STRESSTESTS  := $(filter-out stressMathMore-test,$(STRESSTESTS))
 endif
-
+ifeq ($(shell root-config --arch),linuxx8664gcc)
+GCC_MAJOR     := $(shell $(CXX) -dumpversion 2>&1 | cut -d'.' -f1)
+GCC_MINOR     := $(shell $(CXX) -dumpversion 2>&1 | cut -d'.' -f2)
+GCC_PATCH     := $(shell $(CXX) -dumpversion 2>&1 | cut -d'.' -f3)
+GCC_VERS      := gcc-$(GCC_MAJOR).$(GCC_MINOR)
+GCC_VERS_FULL := gcc-$(GCC_MAJOR).$(GCC_MINOR).$(GCC_PATCH)
+ifeq ($(GCC_VERS),gcc-4.4)
+STRESSTESTS  := $(filter-out stressGraphics-test,$(STRESSTESTS))
+endif
+endif
 TEST_TARGETS += $(STRESSTESTS)
 
 # Search for Rules.mk in roottest/scripts

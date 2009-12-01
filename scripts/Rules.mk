@@ -9,6 +9,15 @@ test: tests ;
 # The previous line contains just ';' in order to disable the implicit 
 # rule building an executable 'test' from test.C
 
+ifneq ($(V),) 
+VERBOSE:=$(V)
+endif
+ifeq ($(VERBOSE),) 
+   CMDECHO=@
+else
+   CMDECHO=
+endif
+
 .PHONY: valgrind
 scripts/analyze_valgrind: scripts/analyze_valgrind.cxx
 	$(CXX) $< -o $@
@@ -126,28 +135,19 @@ $(TEST_TARGETS_DIR): %.test:  $(EVENTDIR)/$(SUCCESS_FILE) utils
 	@(cd $*; $(TESTTIMEPRE) $(MAKE) CURRENTDIR=$* --no-print-directory $(TESTGOAL) $(TESTTIMEPOST); \
      result=$$?; \
      if [ $$result -ne 0 ] ; then \
-         len=`echo Tests in $(CALLDIR)/$* | wc -c `;end=`expr 68 - $$len`;printf 'Test in %s %.*s ' $(CALLDIR)/$* $$end $(DOTS); \
+         len=`echo Tests in $(CALLDIR)/$* | wc -c `;end=`expr 68 - $$len`;printf 'Test in %s %*.*s ' $(CALLDIR)/$* $$end $$end $(DOTS); \
 	      printf 'FAIL\n' ; \
          false ; \
      $(TESTTIMEACTION)\
      fi )
 
 #     result=$$?; \
-#     len=`echo Test in $(CALLDIR)/$* | wc -c `;end=`expr 68 - $$len`;printf 'Test in %s %.*s ' $(CALLDIR)/$* $$end $(DOTS); \
+#     len=`echo Test in $(CALLDIR)/$* | wc -c `;end=`expr 68 - $$len`;printf 'Test in %s %*.*s ' $(CALLDIR)/$* $$end $$end $(DOTS); \
 #	  if [ -f $*/.success ] ; then printf 'OK\n' ; else printf 'FAIL\n' ; fi; \
 #     if [ $$result -ne 0 ] ; then false ; fi )
 
 $(CLEAN_TARGETS_DIR): %.clean:
 	@(cd $*; $(MAKE) --no-print-directory clean)
-
-ifneq ($(V),) 
-VERBOSE:=$(V)
-endif
-ifeq ($(VERBOSE),) 
-   CMDECHO=@
-else
-   CMDECHO=
-endif
 
 clean:  $(CLEAN_TARGETS_DIR)
 	$(CMDECHO) rm -rf main *Dict\.* Event.root .*~ *~ $(CLEAN_TARGETS)
@@ -243,6 +243,7 @@ LD            = link -nologo
 #LDOPT         = -opt:ref
 #LDOPT         = -debug
 #LDFLAGS       = $(LDOPT) -nologo -nodefaultlib -incremental:no
+CLDFLAGS      = -link 
 SOFLAGS       = -DLL
 SYSLIBS       = kernel32.lib  ws2_32.lib mswsock.lib \
                 advapi32.lib  user32.lib gdi32.lib comdlg32.lib winspool.lib 
@@ -288,17 +289,28 @@ SOFLAGS       = -shared
 endif
 
 ifeq ($(ARCH),linuxicc)
-# Linux with linuxicc
+# Linux with Intel icc compiler in 32-bit mode
 CXX = icc
-LD  = icc
+LD  = icpc
 ifeq ($(ROOTBUILD),debug)
-CXXFLAGS += -g -wd191 
+CXXFLAGS += -g -wd191 -fPIC 
 else
-CXXFLAGS += -O -wd191 
+CXXFLAGS += -O -wd191 -fPIC
 endif
 SOFLAGS  = -shared 
 endif
 
+ifeq ($(ARCH),linuxx8664icc)
+# Linux with Intel icc compiler in 64-bit mode
+CXX = icc
+LD  = icpc
+ifeq ($(ROOTBUILD),debug)
+CXXFLAGS += -g -wd191 -fPIC
+else
+CXXFLAGS += -O -wd191 -fPIC
+endif
+SOFLAGS  = -shared
+endif
 
 ifeq ($(ARCH),macosx)
 
@@ -370,12 +382,46 @@ LibSuf        = so
 endif
 endif
 
+ifeq ($(ARCH),macosxicc)
+
+# MacOSX 32/64 bit with Intel icc
+export DYLD_LIBRARY_PATH:=$(ROOTTEST_HOME)/scripts:$(DYLD_LIBRARY_PATH)
+CXX           = icc
+ifeq ($(ROOTBUILD),debug)
+CXXFLAGS      += -g -fPIC -wd191 -wd1476
+else
+CXXFLAGS      += -O -fPIC -wd191 -wd1476
+endif
+ifeq ($(MACOSX_MINOR),) 
+  export MACOSX_MINOR := $(shell sw_vers | sed -n 's/ProductVersion://p' | cut -d . -f 2)
+endif
+ifeq ($(subst $(MACOSX_MINOR),,123),123)
+UNDEFOPT      = dynamic_lookup
+LD            = MACOSX_DEPLOYMENT_TARGET=10.$(MACOSX_MINOR) icpc
+else
+ifeq ($(MACOSX_MINOR),3)
+UNDEFOPT      = dynamic_lookup
+LD            = MACOSX_DEPLOYMENT_TARGET=10.$(MACOSX_MINOR) icpc
+else
+UNDEFOPT      = suppress
+LD            = icpc
+endif
+endif
+LDFLAGS       =
+SOFLAGS       = -dynamiclib -single_module -undefined $(UNDEFOPT)
+DllSuf        = so
+LibSuf        = dylib
+ifeq ($(subst $(MACOSX_MINOR),,01234),01234)
+LibSuf        = so
+endif
+endif
+
 CALLROOTEXE  ?= root.exe
 export CALLROOTEXE
 
 ifneq ($(MAKECMDGOALS),clean)
 ifeq ($(CINT_VERSION),)
-   export CINT_VERSION := Cint$(shell $(CALLROOTEXE) -q -b | grep CINT | sed -e 's/.*\([57]\).*/\1/' )
+   export CINT_VERSION := Cint$(shell $(CALLROOTEXE) -q -b | grep CINT | sed -e 's/.* \([57]\)\..*/\1/' )
 endif
 endif
 
@@ -515,6 +561,8 @@ endif
 %.neutral.log: %.log
 	$(CMDECHO) cat $*.clog | sed -e 's:0x.*:0xRemoved:' > $@
 
+.PRECIOUS: %.clog %.log 
+
 ifneq ($(PLATFORM),macosx)
 
 define BuildWithLib
@@ -561,10 +609,18 @@ define TestDiffW
 	fi
 endef
 
+define SuccessTestDiff
+	$(CMDECHO) if [ -f $@.ref$(ROOTBITS) ]; then \
+	   diff -u -b $(subst .success,.ref$(ROOTBITS),$@) $< ; \
+	else \
+	   diff -u -b $(subst .success,.ref,$@) $< ; \
+	fi
+endef
+
 
 define BuildFromObj
 $(CMDECHO) ( touch dummy$$$$.C && \
-	($(CALLROOTEXEBUILD) -q -l -b "$(ROOTTEST_HOME)/scripts/build.C(\"dummy$$$$.C\",\"\",\"$<\")" > $@.build.log 2>&1 || cat $@.build.log ) && \
+	($(CALLROOTEXEBUILD) -q -l -b "$(ROOTTEST_HOME)/scripts/build.C(\"dummy$$$$.C\",\"$(shell echo $(filter %.$(DllSuf),$^)|sed 's,/cygdrive/\(.\)/,\1:/,g')\",\"$<\")" > $@.build.log 2>&1 || cat $@.build.log ) && \
 	mv dummy$$$$_C.$(DllSuf) $@ && \
 	rm -f dummy$$$$.C dummy$$$$_C.* \
 )
@@ -572,7 +628,7 @@ endef
 
 define BuildFromObjs
 $(CMDECHO) ( touch dummy$$$$.C && \
-	($(CALLROOTEXEBUILD) -q -l -b "$(ROOTTEST_HOME)/scripts/build.C(\"dummy$$$$.C\",\"\",\"$(filter %.$(ObjSuf),$^)\")" > $@.build.log 2>&1 || cat $@.build.log ) && \
+	($(CALLROOTEXEBUILD) -q -l -b "$(ROOTTEST_HOME)/scripts/build.C(\"dummy$$$$.C\",\"$(filter %.$(DllSuf),$^)\",\"$(filter %.$(ObjSuf),$^)\")" > $@.build.log 2>&1 || cat $@.build.log ) && \
 	mv dummy$$$$_C.$(DllSuf) $@ && \
 	rm dummy$$$$.C \
 )
