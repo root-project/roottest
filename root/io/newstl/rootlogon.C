@@ -19,8 +19,10 @@ TString dirname = gROOT->GetVersion();
 dirname.ReplaceAll(".","-");
 dirname.ReplaceAll("/","-");
 dirname.Append(".libs");
-gSystem->SetBuildDir(dirname);
-
+if (strcmp(gSystem->GetBuildArch(),"win32") != 0) {
+   // Do no use a build dir on windows (due to the 256 character limit on #include filenames)
+   gSystem->SetBuildDir(dirname);
+}
 #ifdef __APPLE__
 gSystem->Load("libTree");
 #endif

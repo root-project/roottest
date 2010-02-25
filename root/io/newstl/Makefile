@@ -16,13 +16,17 @@ RAW_PWD := $(shell pwd)
 NOLINK_PWD := $(shell echo `pwd -P`)
 endif
 LIBDIRTOP := $(VERSION).libs
+ifeq ($(PLATFORM),win32)
+LIBDIR := ./
+else
 LIBDIR := $(LIBDIRTOP)$(NOLINK_PWD)/
+endif
 FILEDIR := $(VERSION)
 #debug := $(shell echo $(PLATFORM) $(NOLINK_PWD) 1>&2 )
 #debug := $(shell echo $(LIBDIR) 1>&2 )
 
 #Set the list of files to be delete by clean:
-CLEAN_TARGETS += -r $(ALL_LIBRARIES) *.d *.log *.clog  result.root $(LIBDIRTOP) emulvector.root \
+CLEAN_TARGETS += -r $(ALL_LIBRARIES) *.d *.df *.log *.clog  result.root $(LIBDIRTOP) emulvector.root \
    test.root samplerootfile.root
 # We intentionally do not delete the output file in $(FILEDIR) so that 
 # we can keep the historic versions.
