@@ -17,12 +17,13 @@ void fillListOfDir(TList &l) {
       //create a TList to store the file names (not yet sorted)
       TString basename = ".-..-..";
       TRegexp re(basename,kFALSE);
+      TString trunk = "trunk";
 
       while ((file = gSystem->GetDirEntry(dir))) {
          if (!strcmp(file,".") || !strcmp(file,"..")) continue;
          TString s = file;
 //          cout << "found the directory " << file << endl;
-         if ( (basename!=file) && s.Index(re) == kNPOS) continue;
+         if ( (trunk!=file) && (basename!=file) && s.Index(re) == kNPOS) continue;
 
          TString vfile = gSystem->ConcatFileName(file,"vector.root");
          if (gSystem->GetPathInfo(vfile,(Long_t*)0,(Long_t*)0,(Long_t*)0,0)==0) {
