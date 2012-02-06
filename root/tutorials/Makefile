@@ -39,7 +39,8 @@ TUTORIALSTESTS_VETO := htmlex  rootalias \
   pythia/% \
   sql/% \
   tree/hsimpleProxy tree/tree0 tree/tree2a tree/tree4 \
-  roostats/rs401d_FeldmanCousins.C \
+  roostats/rs401d_FeldmanCousins \
+  histfactory/ModifyInterpolation \
   tree/copytree2 tree/copytree3 tree/copytree
 
 TUTORIALSTESTS_NEEDS_MIUNIT2 := fit/fit2dHist fit/fit2dHist \
@@ -60,7 +61,7 @@ TUTORIALSTESTS_VETO += math/testrandom unuran/unuranDemo unuran/unuranFoamTest
 endif
 
 ifeq ($(findstring roofit,$(shell root-config --features)),)
-TUTORIALSTESTS_VETO += roofit/% roostats/% histfactory/ModifyInterpolation%
+TUTORIALSTESTS_VETO += roofit/% roostats/% histfactory/%
 endif
 
 ifeq ($(findstring xml, $(shell root-config --features)),)
