@@ -40,7 +40,9 @@ endif
 
 operatorLessThanTemplate.log: runoperatorLessThanTemplate.C operatorLessThanTemplate_C.$(DllSuf)
 	$(CMDECHO) $(CALLROOTEXE) -q -l -b  runoperatorLessThanTemplate.C | $(RemoveLeadingDirs) | grep -v -e tagnum -e size= > $@ 2>&1
+ifeq ($(FAIL),)
 	@echo "Warning: operatorLessThanTemplate has some known defect (needs to modify the file to see them)"
+endif
 
 operatorLessThanTemplate:  operatorLessThanTemplate.log
 	$(TestDiff)
