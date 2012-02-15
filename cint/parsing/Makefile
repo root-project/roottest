@@ -13,15 +13,6 @@ endif
 
 include $(ROOTTEST_HOME)/scripts/Rules.mk
 
-
-mytest:
-	$(CMDECHO) echo mytest > /dev/null
-
-testWithFailure:
-ifeq ($(FAIL),)
-	$(WarnFailTest)
-endif
-
 # Remember that sometest.log can be made automatically from
 # from runsometest.C
 
@@ -40,7 +31,7 @@ endif
 
 operatorLessThanTemplate.log: runoperatorLessThanTemplate.C operatorLessThanTemplate_C.$(DllSuf)
 	$(CMDECHO) $(CALLROOTEXE) -q -l -b  runoperatorLessThanTemplate.C | $(RemoveLeadingDirs) | grep -v -e tagnum -e size= > $@ 2>&1
-ifeq ($(FAIL),)
+ifneq ($(FAIL),)
 	@echo "Warning: operatorLessThanTemplate has some known defect (needs to modify the file to see them)"
 endif
 
