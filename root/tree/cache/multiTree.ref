@@ -1,33 +1,33 @@
 
 Processing runmultiTree.C...
 Number of branches in the cache ...: 300
-Cache Efficiency ..................: 0.500000
-Cache Efficiency Rel...............: 0.817934
+Cache Efficiency ..................: 1.000000
+Cache Efficiency Rel...............: 0.818182
 Reading............................: 1212 transactions
 Number of blocks in current cache..: 2700, total size: 282990
 Number of branches in the cache ...: 400
-Cache Efficiency ..................: 0.500000
-Cache Efficiency Rel...............: 0.817996
+Cache Efficiency ..................: 1.000000
+Cache Efficiency Rel...............: 0.818182
 Reading............................: 1212 transactions
 Number of blocks in current cache..: 3600, total size: 378002
 Number of branches in the cache ...: 500
-Cache Efficiency ..................: 0.500000
-Cache Efficiency Rel...............: 0.818033
+Cache Efficiency ..................: 1.000000
+Cache Efficiency Rel...............: 0.818182
 Reading............................: 1212 transactions
 Number of blocks in current cache..: 4500, total size: 472302
 Number of branches in the cache ...: 300
-Cache Efficiency ..................: 0.499907
-Cache Efficiency Rel...............: 0.899367
-Reading............................: 1214 transactions
-Number of blocks in current cache..: 2699, total size: 282887
+Cache Efficiency ..................: 1.000000
+Cache Efficiency Rel...............: 0.899700
+Reading............................: 1212 transactions
+Number of blocks in current cache..: 2700, total size: 282990
 Number of branches in the cache ...: 400
-Cache Efficiency ..................: 0.499931
-Cache Efficiency Rel...............: 0.899525
-Reading............................: 1214 transactions
-Number of blocks in current cache..: 3599, total size: 377899
+Cache Efficiency ..................: 1.000000
+Cache Efficiency Rel...............: 0.899775
+Reading............................: 1212 transactions
+Number of blocks in current cache..: 3600, total size: 378002
 Number of branches in the cache ...: 500
-Cache Efficiency ..................: 0.500000
-Cache Efficiency Rel...............: 0.725455
-Reading............................: 1214 transactions
+Cache Efficiency ..................: 1.000000
+Cache Efficiency Rel...............: 0.725806
+Reading............................: 1212 transactions
 Number of blocks in current cache..: 4500, total size: 472302
 (int)0
