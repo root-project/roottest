@@ -122,3 +122,5 @@ template class Template<float>;
 template class Template<std::vector<double> >;
 //template class Template<std::vector<Double32_t> >;
 template class Template<std::vector<float> >;
+namespace HepMC { class GenEvent {}; }
+

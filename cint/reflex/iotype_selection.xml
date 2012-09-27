@@ -1,4 +1,5 @@
 <lcgdict>
+<class name="HepMC::GenEvent" />
 <class name="CIoType">
   <field name="vd32" iotype="std::vector<Double32_t>"/>
   <field name="d32" iotype="Double32_t"/>

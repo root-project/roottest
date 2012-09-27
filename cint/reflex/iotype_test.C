@@ -83,4 +83,9 @@ void iotype_test() {
    }
    writeIOT();
    readIOT();
+
+   if (TClass::GetClass("HepMC::GenEvent")->GetStreamerInfos()->GetEntries() == 0) {
+      // This test mostly check that the previous line does not seg fault.
+      printf("Problem: we have too many StreamerINfos for HepMC::GenEvent\n");
+   }
 }
