@@ -103,3 +103,4 @@ Comparing Td32 with Tf
 relBytesDiff2 < 0.001: ok.
 Comparing Tdd32 with Tf
 relBytesDiff2 < 0.001: ok.
+Problem: we have too many StreamerInfos for HepMC::GenEvent
