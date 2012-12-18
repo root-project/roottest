@@ -64,3 +64,11 @@ notmergeable.log:
 
 notmergeable: notmergeable.log
 	$(TestDiff)
+
+mfile1.root mfile2.root mfile3.root mfile4.root: execMerge
+
+mfile1-4.root: execMerge mfile1.root mfile2.root mfile3.root mfile4.root
+	$(CMDECHO) ( hadd -f mfile1-2.root mfile1.root mfile2.root && hadd -f mfile3-4.root mfile3.root mfile4.root \
+	     && hadd -f mfile1-4.root mfile1-2.root mfile3-4.root ) > mfile1-4.log 2>&1  \
+	|| handleError.sh --log=mfile1-4.log --res=$$?
+
