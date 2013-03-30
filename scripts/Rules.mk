@@ -434,6 +434,18 @@ endif
 SOFLAGS       = -shared
 endif
 
+ifeq ($(ARCH),linuxarm)
+# Linux / ARM
+CXX          ?= g++
+LD           ?= g++
+ifeq ($(ROOTBUILD),debug)
+CXXFLAGS      += -g -Wall -fPIC
+else
+CXXFLAGS      += -O -Wall -fPIC
+endif
+SOFLAGS       = -shared
+endif
+
 ifeq ($(ARCH),linuxx8664gcc)
 
 CXX          ?= g++
