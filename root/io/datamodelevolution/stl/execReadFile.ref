@@ -60,7 +60,110 @@ Holder::fValues :
  i=7 x=107 y=1007
  i=8 x=108 y=1008
  i=9 x=109 y=1009
-listHolder::fMap :
+Holder::fMap :
+ i=0 key=one val=100
+ i=1 key=two val=-200
+Reading a vector of Holder object.
+Printing vector<Holder>
+size=2
+  index=0
+Holder:
+Holder::fX 3
+Single value
+ x=33 y=66
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+ i=10 v=-10
+ i=11 v=-11
+ i=12 v=-12
+ i=13 v=-13
+ i=14 v=-14
+ i=15 v=-15
+ i=16 v=-16
+ i=17 v=-17
+ i=18 v=-18
+ i=19 v=-19
+ i=20 v=-20
+ i=21 v=-21
+ i=22 v=-22
+ i=23 v=-23
+ i=24 v=-24
+ i=25 v=-25
+ i=26 v=-26
+ i=27 v=-27
+ i=28 v=-28
+ i=29 v=-29
+Holder::fValues :
+ i=0 x=300 y=3000
+ i=1 x=301 y=3001
+ i=2 x=302 y=3002
+ i=3 x=303 y=3003
+ i=4 x=304 y=3004
+ i=5 x=305 y=3005
+ i=6 x=306 y=3006
+ i=7 x=307 y=3007
+ i=8 x=308 y=3008
+ i=9 x=309 y=3009
+ i=10 x=310 y=3010
+ i=11 x=311 y=3011
+ i=12 x=312 y=3012
+ i=13 x=313 y=3013
+ i=14 x=314 y=3014
+ i=15 x=315 y=3015
+ i=16 x=316 y=3016
+ i=17 x=317 y=3017
+ i=18 x=318 y=3018
+ i=19 x=319 y=3019
+ i=20 x=320 y=3020
+ i=21 x=321 y=3021
+ i=22 x=322 y=3022
+ i=23 x=323 y=3023
+ i=24 x=324 y=3024
+ i=25 x=325 y=3025
+ i=26 x=326 y=3026
+ i=27 x=327 y=3027
+ i=28 x=328 y=3028
+ i=29 x=329 y=3029
+Holder::fMap :
+ i=0 key=one val=300
+ i=1 key=two val=-600
+  index=1
+Holder:
+Holder::fX 1
+Single value
+ x=11 y=22
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+Holder::fValues :
+ i=0 x=100 y=1000
+ i=1 x=101 y=1001
+ i=2 x=102 y=1002
+ i=3 x=103 y=1003
+ i=4 x=104 y=1004
+ i=5 x=105 y=1005
+ i=6 x=106 y=1006
+ i=7 x=107 y=1007
+ i=8 x=108 y=1008
+ i=9 x=109 y=1009
+Holder::fMap :
  i=0 key=one val=100
  i=1 key=two val=-200
 Reading from TTree entry #0.
@@ -113,7 +216,110 @@ Holder::fValues :
  i=7 x=107 y=1007
  i=8 x=108 y=1008
  i=9 x=109 y=1009
-listHolder::fMap :
+Holder::fMap :
+ i=0 key=one val=100
+ i=1 key=two val=-200
+Reading a vector of Holder object.
+Printing vector<Holder>
+size=2
+  index=0
+Holder:
+Holder::fX 3
+Single value
+ x=0 y=0
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+ i=10 v=-10
+ i=11 v=-11
+ i=12 v=-12
+ i=13 v=-13
+ i=14 v=-14
+ i=15 v=-15
+ i=16 v=-16
+ i=17 v=-17
+ i=18 v=-18
+ i=19 v=-19
+ i=20 v=-20
+ i=21 v=-21
+ i=22 v=-22
+ i=23 v=-23
+ i=24 v=-24
+ i=25 v=-25
+ i=26 v=-26
+ i=27 v=-27
+ i=28 v=-28
+ i=29 v=-29
+Holder::fValues :
+ i=0 x=300 y=3000
+ i=1 x=301 y=3001
+ i=2 x=302 y=3002
+ i=3 x=303 y=3003
+ i=4 x=304 y=3004
+ i=5 x=305 y=3005
+ i=6 x=306 y=3006
+ i=7 x=307 y=3007
+ i=8 x=308 y=3008
+ i=9 x=309 y=3009
+ i=10 x=310 y=3010
+ i=11 x=311 y=3011
+ i=12 x=312 y=3012
+ i=13 x=313 y=3013
+ i=14 x=314 y=3014
+ i=15 x=315 y=3015
+ i=16 x=316 y=3016
+ i=17 x=317 y=3017
+ i=18 x=318 y=3018
+ i=19 x=319 y=3019
+ i=20 x=320 y=3020
+ i=21 x=321 y=3021
+ i=22 x=322 y=3022
+ i=23 x=323 y=3023
+ i=24 x=324 y=3024
+ i=25 x=325 y=3025
+ i=26 x=326 y=3026
+ i=27 x=327 y=3027
+ i=28 x=328 y=3028
+ i=29 x=329 y=3029
+Holder::fMap :
+ i=0 key=one val=300
+ i=1 key=two val=-600
+  index=1
+Holder:
+Holder::fX 1
+Single value
+ x=0 y=0
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+Holder::fValues :
+ i=0 x=100 y=1000
+ i=1 x=101 y=1001
+ i=2 x=102 y=1002
+ i=3 x=103 y=1003
+ i=4 x=104 y=1004
+ i=5 x=105 y=1005
+ i=6 x=106 y=1006
+ i=7 x=107 y=1007
+ i=8 x=108 y=1008
+ i=9 x=109 y=1009
+Holder::fMap :
  i=0 key=one val=100
  i=1 key=two val=-200
 Reading from TTree entry #1.
@@ -162,11 +368,6 @@ Reading a vector<Values> into a vector<Track>.
 Reading a Holder object.
 Holder:
 Holder::fX 2
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Values to Track
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<int> to list<float>
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<Values> to list<Track>
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from map<string,int> to map<string,long>
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Holder to listHolder
 Single value
  x=22 y=44
 Holder::fVec :
@@ -211,9 +412,117 @@ Holder::fValues :
  i=17 x=217 y=2017
  i=18 x=218 y=2018
  i=19 x=219 y=2019
-listHolder::fMap :
+Holder::fMap :
  i=0 key=one val=200
  i=1 key=two val=-400
+Reading a vector of Holder object.
+Printing vector<Holder>
+size=2
+  index=0
+Holder:
+Holder::fX 3
+Single value
+ x=33 y=66
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+ i=10 v=-10
+ i=11 v=-11
+ i=12 v=-12
+ i=13 v=-13
+ i=14 v=-14
+ i=15 v=-15
+ i=16 v=-16
+ i=17 v=-17
+ i=18 v=-18
+ i=19 v=-19
+ i=20 v=-20
+ i=21 v=-21
+ i=22 v=-22
+ i=23 v=-23
+ i=24 v=-24
+ i=25 v=-25
+ i=26 v=-26
+ i=27 v=-27
+ i=28 v=-28
+ i=29 v=-29
+Holder::fValues :
+ i=0 x=300 y=3000
+ i=1 x=301 y=3001
+ i=2 x=302 y=3002
+ i=3 x=303 y=3003
+ i=4 x=304 y=3004
+ i=5 x=305 y=3005
+ i=6 x=306 y=3006
+ i=7 x=307 y=3007
+ i=8 x=308 y=3008
+ i=9 x=309 y=3009
+ i=10 x=310 y=3010
+ i=11 x=311 y=3011
+ i=12 x=312 y=3012
+ i=13 x=313 y=3013
+ i=14 x=314 y=3014
+ i=15 x=315 y=3015
+ i=16 x=316 y=3016
+ i=17 x=317 y=3017
+ i=18 x=318 y=3018
+ i=19 x=319 y=3019
+ i=20 x=320 y=3020
+ i=21 x=321 y=3021
+ i=22 x=322 y=3022
+ i=23 x=323 y=3023
+ i=24 x=324 y=3024
+ i=25 x=325 y=3025
+ i=26 x=326 y=3026
+ i=27 x=327 y=3027
+ i=28 x=328 y=3028
+ i=29 x=329 y=3029
+Holder::fMap :
+ i=0 key=one val=300
+ i=1 key=two val=-600
+  index=1
+Holder:
+Holder::fX 1
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Values to Track
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<int> to list<float>
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<Values> to list<Track>
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from map<string,int> to map<string,long>
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Holder to listHolder
+Single value
+ x=11 y=22
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+Holder::fValues :
+ i=0 x=100 y=1000
+ i=1 x=101 y=1001
+ i=2 x=102 y=1002
+ i=3 x=103 y=1003
+ i=4 x=104 y=1004
+ i=5 x=105 y=1005
+ i=6 x=106 y=1006
+ i=7 x=107 y=1007
+ i=8 x=108 y=1008
+ i=9 x=109 y=1009
+Holder::fMap :
+ i=0 key=one val=100
+ i=1 key=two val=-200
 Reading a Track.
 Single value
  x=7 y=9
@@ -272,6 +581,109 @@ listHolder::fValues :
 listHolder::fMap :
  i=0 key=one val=100
  i=1 key=two val=-200
+Reading a vector of Holder object.
+Printing vector<Holder>
+size=2
+  index=0
+Holder:
+Holder::fX 3
+Single value
+ x=33 y=66
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+ i=10 v=-10
+ i=11 v=-11
+ i=12 v=-12
+ i=13 v=-13
+ i=14 v=-14
+ i=15 v=-15
+ i=16 v=-16
+ i=17 v=-17
+ i=18 v=-18
+ i=19 v=-19
+ i=20 v=-20
+ i=21 v=-21
+ i=22 v=-22
+ i=23 v=-23
+ i=24 v=-24
+ i=25 v=-25
+ i=26 v=-26
+ i=27 v=-27
+ i=28 v=-28
+ i=29 v=-29
+Holder::fValues :
+ i=0 x=300 y=3000
+ i=1 x=301 y=3001
+ i=2 x=302 y=3002
+ i=3 x=303 y=3003
+ i=4 x=304 y=3004
+ i=5 x=305 y=3005
+ i=6 x=306 y=3006
+ i=7 x=307 y=3007
+ i=8 x=308 y=3008
+ i=9 x=309 y=3009
+ i=10 x=310 y=3010
+ i=11 x=311 y=3011
+ i=12 x=312 y=3012
+ i=13 x=313 y=3013
+ i=14 x=314 y=3014
+ i=15 x=315 y=3015
+ i=16 x=316 y=3016
+ i=17 x=317 y=3017
+ i=18 x=318 y=3018
+ i=19 x=319 y=3019
+ i=20 x=320 y=3020
+ i=21 x=321 y=3021
+ i=22 x=322 y=3022
+ i=23 x=323 y=3023
+ i=24 x=324 y=3024
+ i=25 x=325 y=3025
+ i=26 x=326 y=3026
+ i=27 x=327 y=3027
+ i=28 x=328 y=3028
+ i=29 x=329 y=3029
+Holder::fMap :
+ i=0 key=one val=300
+ i=1 key=two val=-600
+  index=1
+Holder:
+Holder::fX 1
+Single value
+ x=11 y=22
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+Holder::fValues :
+ i=0 x=100 y=1000
+ i=1 x=101 y=1001
+ i=2 x=102 y=1002
+ i=3 x=103 y=1003
+ i=4 x=104 y=1004
+ i=5 x=105 y=1005
+ i=6 x=106 y=1006
+ i=7 x=107 y=1007
+ i=8 x=108 y=1008
+ i=9 x=109 y=1009
+Holder::fMap :
+ i=0 key=one val=100
+ i=1 key=two val=-200
 Reading from TTree entry #0.
 Reading a vector<int> into a list<float>.
  i=0 v=0
@@ -323,6 +735,109 @@ listHolder::fValues :
  i=8 x=108 y=1008
  i=9 x=109 y=1009
 listHolder::fMap :
+ i=0 key=one val=100
+ i=1 key=two val=-200
+Reading a vector of Holder object.
+Printing vector<Holder>
+size=2
+  index=0
+Holder:
+Holder::fX 3
+Single value
+ x=0 y=0
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+ i=10 v=-10
+ i=11 v=-11
+ i=12 v=-12
+ i=13 v=-13
+ i=14 v=-14
+ i=15 v=-15
+ i=16 v=-16
+ i=17 v=-17
+ i=18 v=-18
+ i=19 v=-19
+ i=20 v=-20
+ i=21 v=-21
+ i=22 v=-22
+ i=23 v=-23
+ i=24 v=-24
+ i=25 v=-25
+ i=26 v=-26
+ i=27 v=-27
+ i=28 v=-28
+ i=29 v=-29
+Holder::fValues :
+ i=0 x=300 y=3000
+ i=1 x=301 y=3001
+ i=2 x=302 y=3002
+ i=3 x=303 y=3003
+ i=4 x=304 y=3004
+ i=5 x=305 y=3005
+ i=6 x=306 y=3006
+ i=7 x=307 y=3007
+ i=8 x=308 y=3008
+ i=9 x=309 y=3009
+ i=10 x=310 y=3010
+ i=11 x=311 y=3011
+ i=12 x=312 y=3012
+ i=13 x=313 y=3013
+ i=14 x=314 y=3014
+ i=15 x=315 y=3015
+ i=16 x=316 y=3016
+ i=17 x=317 y=3017
+ i=18 x=318 y=3018
+ i=19 x=319 y=3019
+ i=20 x=320 y=3020
+ i=21 x=321 y=3021
+ i=22 x=322 y=3022
+ i=23 x=323 y=3023
+ i=24 x=324 y=3024
+ i=25 x=325 y=3025
+ i=26 x=326 y=3026
+ i=27 x=327 y=3027
+ i=28 x=328 y=3028
+ i=29 x=329 y=3029
+Holder::fMap :
+ i=0 key=one val=300
+ i=1 key=two val=-600
+  index=1
+Holder:
+Holder::fX 1
+Single value
+ x=0 y=0
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+Holder::fValues :
+ i=0 x=100 y=1000
+ i=1 x=101 y=1001
+ i=2 x=102 y=1002
+ i=3 x=103 y=1003
+ i=4 x=104 y=1004
+ i=5 x=105 y=1005
+ i=6 x=106 y=1006
+ i=7 x=107 y=1007
+ i=8 x=108 y=1008
+ i=9 x=109 y=1009
+Holder::fMap :
  i=0 key=one val=100
  i=1 key=two val=-200
 Reading from TTree entry #1.
@@ -371,11 +886,6 @@ Reading a vector<Values> into a list<Track>.
 Reading a listHolder object.
 listHolder:
 listHolder::fX 2
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Values to Track
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<int> to set<float>
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<Values> to set<Track>
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from map<string,int> to map<string,long>
-Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Holder to setHolder
 Single value
  x=22 y=44
 listHolder::fVec :
@@ -423,6 +933,114 @@ listHolder::fValues :
 listHolder::fMap :
  i=0 key=one val=200
  i=1 key=two val=-400
+Reading a vector of Holder object.
+Printing vector<Holder>
+size=2
+  index=0
+Holder:
+Holder::fX 3
+Single value
+ x=33 y=66
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+ i=10 v=-10
+ i=11 v=-11
+ i=12 v=-12
+ i=13 v=-13
+ i=14 v=-14
+ i=15 v=-15
+ i=16 v=-16
+ i=17 v=-17
+ i=18 v=-18
+ i=19 v=-19
+ i=20 v=-20
+ i=21 v=-21
+ i=22 v=-22
+ i=23 v=-23
+ i=24 v=-24
+ i=25 v=-25
+ i=26 v=-26
+ i=27 v=-27
+ i=28 v=-28
+ i=29 v=-29
+Holder::fValues :
+ i=0 x=300 y=3000
+ i=1 x=301 y=3001
+ i=2 x=302 y=3002
+ i=3 x=303 y=3003
+ i=4 x=304 y=3004
+ i=5 x=305 y=3005
+ i=6 x=306 y=3006
+ i=7 x=307 y=3007
+ i=8 x=308 y=3008
+ i=9 x=309 y=3009
+ i=10 x=310 y=3010
+ i=11 x=311 y=3011
+ i=12 x=312 y=3012
+ i=13 x=313 y=3013
+ i=14 x=314 y=3014
+ i=15 x=315 y=3015
+ i=16 x=316 y=3016
+ i=17 x=317 y=3017
+ i=18 x=318 y=3018
+ i=19 x=319 y=3019
+ i=20 x=320 y=3020
+ i=21 x=321 y=3021
+ i=22 x=322 y=3022
+ i=23 x=323 y=3023
+ i=24 x=324 y=3024
+ i=25 x=325 y=3025
+ i=26 x=326 y=3026
+ i=27 x=327 y=3027
+ i=28 x=328 y=3028
+ i=29 x=329 y=3029
+Holder::fMap :
+ i=0 key=one val=300
+ i=1 key=two val=-600
+  index=1
+Holder:
+Holder::fX 1
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Values to Track
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<int> to set<float>
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<Values> to set<Track>
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from map<string,int> to map<string,long>
+Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Holder to setHolder
+Single value
+ x=11 y=22
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+Holder::fValues :
+ i=0 x=100 y=1000
+ i=1 x=101 y=1001
+ i=2 x=102 y=1002
+ i=3 x=103 y=1003
+ i=4 x=104 y=1004
+ i=5 x=105 y=1005
+ i=6 x=106 y=1006
+ i=7 x=107 y=1007
+ i=8 x=108 y=1008
+ i=9 x=109 y=1009
+Holder::fMap :
+ i=0 key=one val=100
+ i=1 key=two val=-200
 Reading a Track.
 Single value
  x=7 y=9
@@ -481,6 +1099,109 @@ setHolder::fValues :
 setHolder::fMap :
  i=0 key=one val=100
  i=1 key=two val=-200
+Reading a vector of Holder object.
+Printing vector<Holder>
+size=2
+  index=0
+Holder:
+Holder::fX 3
+Single value
+ x=33 y=66
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+ i=10 v=-10
+ i=11 v=-11
+ i=12 v=-12
+ i=13 v=-13
+ i=14 v=-14
+ i=15 v=-15
+ i=16 v=-16
+ i=17 v=-17
+ i=18 v=-18
+ i=19 v=-19
+ i=20 v=-20
+ i=21 v=-21
+ i=22 v=-22
+ i=23 v=-23
+ i=24 v=-24
+ i=25 v=-25
+ i=26 v=-26
+ i=27 v=-27
+ i=28 v=-28
+ i=29 v=-29
+Holder::fValues :
+ i=0 x=300 y=3000
+ i=1 x=301 y=3001
+ i=2 x=302 y=3002
+ i=3 x=303 y=3003
+ i=4 x=304 y=3004
+ i=5 x=305 y=3005
+ i=6 x=306 y=3006
+ i=7 x=307 y=3007
+ i=8 x=308 y=3008
+ i=9 x=309 y=3009
+ i=10 x=310 y=3010
+ i=11 x=311 y=3011
+ i=12 x=312 y=3012
+ i=13 x=313 y=3013
+ i=14 x=314 y=3014
+ i=15 x=315 y=3015
+ i=16 x=316 y=3016
+ i=17 x=317 y=3017
+ i=18 x=318 y=3018
+ i=19 x=319 y=3019
+ i=20 x=320 y=3020
+ i=21 x=321 y=3021
+ i=22 x=322 y=3022
+ i=23 x=323 y=3023
+ i=24 x=324 y=3024
+ i=25 x=325 y=3025
+ i=26 x=326 y=3026
+ i=27 x=327 y=3027
+ i=28 x=328 y=3028
+ i=29 x=329 y=3029
+Holder::fMap :
+ i=0 key=one val=300
+ i=1 key=two val=-600
+  index=1
+Holder:
+Holder::fX 1
+Single value
+ x=11 y=22
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+Holder::fValues :
+ i=0 x=100 y=1000
+ i=1 x=101 y=1001
+ i=2 x=102 y=1002
+ i=3 x=103 y=1003
+ i=4 x=104 y=1004
+ i=5 x=105 y=1005
+ i=6 x=106 y=1006
+ i=7 x=107 y=1007
+ i=8 x=108 y=1008
+ i=9 x=109 y=1009
+Holder::fMap :
+ i=0 key=one val=100
+ i=1 key=two val=-200
 Reading from TTree entry #0.
 Reading a vector<int> into a set<float>.
  i=0 v=-9
@@ -532,6 +1253,109 @@ setHolder::fValues :
  i=8 x=101 y=1001
  i=9 x=100 y=1000
 setHolder::fMap :
+ i=0 key=one val=100
+ i=1 key=two val=-200
+Reading a vector of Holder object.
+Printing vector<Holder>
+size=2
+  index=0
+Holder:
+Holder::fX 3
+Single value
+ x=0 y=0
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+ i=10 v=-10
+ i=11 v=-11
+ i=12 v=-12
+ i=13 v=-13
+ i=14 v=-14
+ i=15 v=-15
+ i=16 v=-16
+ i=17 v=-17
+ i=18 v=-18
+ i=19 v=-19
+ i=20 v=-20
+ i=21 v=-21
+ i=22 v=-22
+ i=23 v=-23
+ i=24 v=-24
+ i=25 v=-25
+ i=26 v=-26
+ i=27 v=-27
+ i=28 v=-28
+ i=29 v=-29
+Holder::fValues :
+ i=0 x=300 y=3000
+ i=1 x=301 y=3001
+ i=2 x=302 y=3002
+ i=3 x=303 y=3003
+ i=4 x=304 y=3004
+ i=5 x=305 y=3005
+ i=6 x=306 y=3006
+ i=7 x=307 y=3007
+ i=8 x=308 y=3008
+ i=9 x=309 y=3009
+ i=10 x=310 y=3010
+ i=11 x=311 y=3011
+ i=12 x=312 y=3012
+ i=13 x=313 y=3013
+ i=14 x=314 y=3014
+ i=15 x=315 y=3015
+ i=16 x=316 y=3016
+ i=17 x=317 y=3017
+ i=18 x=318 y=3018
+ i=19 x=319 y=3019
+ i=20 x=320 y=3020
+ i=21 x=321 y=3021
+ i=22 x=322 y=3022
+ i=23 x=323 y=3023
+ i=24 x=324 y=3024
+ i=25 x=325 y=3025
+ i=26 x=326 y=3026
+ i=27 x=327 y=3027
+ i=28 x=328 y=3028
+ i=29 x=329 y=3029
+Holder::fMap :
+ i=0 key=one val=300
+ i=1 key=two val=-600
+  index=1
+Holder:
+Holder::fX 1
+Single value
+ x=0 y=0
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+Holder::fValues :
+ i=0 x=100 y=1000
+ i=1 x=101 y=1001
+ i=2 x=102 y=1002
+ i=3 x=103 y=1003
+ i=4 x=104 y=1004
+ i=5 x=105 y=1005
+ i=6 x=106 y=1006
+ i=7 x=107 y=1007
+ i=8 x=108 y=1008
+ i=9 x=109 y=1009
+Holder::fMap :
  i=0 key=one val=100
  i=1 key=two val=-200
 Reading from TTree entry #1.
@@ -627,3 +1451,106 @@ setHolder::fValues :
 setHolder::fMap :
  i=0 key=one val=200
  i=1 key=two val=-400
+Reading a vector of Holder object.
+Printing vector<Holder>
+size=2
+  index=0
+Holder:
+Holder::fX 3
+Single value
+ x=0 y=0
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+ i=10 v=-10
+ i=11 v=-11
+ i=12 v=-12
+ i=13 v=-13
+ i=14 v=-14
+ i=15 v=-15
+ i=16 v=-16
+ i=17 v=-17
+ i=18 v=-18
+ i=19 v=-19
+ i=20 v=-20
+ i=21 v=-21
+ i=22 v=-22
+ i=23 v=-23
+ i=24 v=-24
+ i=25 v=-25
+ i=26 v=-26
+ i=27 v=-27
+ i=28 v=-28
+ i=29 v=-29
+Holder::fValues :
+ i=0 x=300 y=3000
+ i=1 x=301 y=3001
+ i=2 x=302 y=3002
+ i=3 x=303 y=3003
+ i=4 x=304 y=3004
+ i=5 x=305 y=3005
+ i=6 x=306 y=3006
+ i=7 x=307 y=3007
+ i=8 x=308 y=3008
+ i=9 x=309 y=3009
+ i=10 x=310 y=3010
+ i=11 x=311 y=3011
+ i=12 x=312 y=3012
+ i=13 x=313 y=3013
+ i=14 x=314 y=3014
+ i=15 x=315 y=3015
+ i=16 x=316 y=3016
+ i=17 x=317 y=3017
+ i=18 x=318 y=3018
+ i=19 x=319 y=3019
+ i=20 x=320 y=3020
+ i=21 x=321 y=3021
+ i=22 x=322 y=3022
+ i=23 x=323 y=3023
+ i=24 x=324 y=3024
+ i=25 x=325 y=3025
+ i=26 x=326 y=3026
+ i=27 x=327 y=3027
+ i=28 x=328 y=3028
+ i=29 x=329 y=3029
+Holder::fMap :
+ i=0 key=one val=300
+ i=1 key=two val=-600
+  index=1
+Holder:
+Holder::fX 1
+Single value
+ x=0 y=0
+Holder::fVec :
+ i=0 v=0
+ i=1 v=-1
+ i=2 v=-2
+ i=3 v=-3
+ i=4 v=-4
+ i=5 v=-5
+ i=6 v=-6
+ i=7 v=-7
+ i=8 v=-8
+ i=9 v=-9
+Holder::fValues :
+ i=0 x=100 y=1000
+ i=1 x=101 y=1001
+ i=2 x=102 y=1002
+ i=3 x=103 y=1003
+ i=4 x=104 y=1004
+ i=5 x=105 y=1005
+ i=6 x=106 y=1006
+ i=7 x=107 y=1007
+ i=8 x=108 y=1008
+ i=9 x=109 y=1009
+Holder::fMap :
+ i=0 key=one val=100
+ i=1 key=two val=-200

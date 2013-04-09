@@ -37,13 +37,6 @@ public:
 typedef Track Values;
 #endif
 
-#ifdef __MAKECINT__
-#pragma read sourceClass="Values" targetClass="Track";
-#pragma link C++ vector<Track>+;
-#pragma read sourceClass="Holder" targetClass="listHolder";
-#pragma read sourceClass="Holder" targetClass="setHolder";
-#endif
-
 void Print(const Track &value)
 {
    std::cout << "Single value\n";
@@ -127,6 +120,10 @@ public:
    std::map<string,long> fMap;
 
    void Fill(int seed = 1) {
+      fVec.clear();
+      fValues.clear();
+      fMap.clear();
+
       fX = seed + seed/10.0;
       fSingle.fX = fSingle.fY = 99.9;
       for(int i = 0; i < 10*seed; ++i) {
@@ -147,7 +144,7 @@ public:
       }
       std::cout << "Holder::fValues :\n";
       ::Print(fValues);
-      std::cout << "listHolder::fMap :\n";
+      std::cout << "Holder::fMap :\n";
       ::Print(fMap);
    }
 };
@@ -161,6 +158,10 @@ public:
    std::map<string,long> fMap;
 
    void Fill(int seed = 1) {
+      fVec.clear();
+      fValues.clear();
+      fMap.clear();
+
       fX = seed + seed/10.0;
       fSingle.fX = fSingle.fY = 99.9;
       for(int i = 0; i < 10*seed; ++i) {
@@ -185,6 +186,9 @@ public:
       std::cout << "listHolder::fMap :\n";
       ::Print(fMap);
    }
+
+   bool operator==(const listHolder &right) { return right.fX == fX; }
+   bool operator<(const listHolder &right) const { return fX > right.fX; }
 };
 
 class setHolder {
@@ -196,6 +200,10 @@ public:
    std::map<string,long> fMap;
 
    void Fill(int seed = 1) {
+      fVec.clear();
+      fValues.clear();
+      fMap.clear();
+
       fX = seed + seed/10.0;
       fSingle.fX = fSingle.fY = 99.9;
       for(int i = 0; i < 10*seed; ++i) {
@@ -220,7 +228,39 @@ public:
       std::cout << "setHolder::fMap :\n";
       ::Print(fMap);
    }
+
+   bool operator<(const setHolder &right) const { return fX > right.fX; }
 };
+
+void Print(const std::vector<Holder> &holders) {
+   std::cout << "Printing vector<Holder>\n";
+   std::cout << "size=" << holders.size() << '\n';
+   int i = 0;
+   for(std::vector<Holder>::const_iterator iter = holders.begin(); iter != holders.end(); ++iter, ++i) {
+      std::cout << "  index=" << i << '\n';  
+      iter->Print();
+   }
+}
+
+void Print(const std::list<listHolder> &holders) {
+   std::cout << "Printing vector<Holder>\n";
+   std::cout << "size=" << holders.size() << '\n';
+   int i = 0;
+   for(std::list<listHolder>::const_iterator iter = holders.begin(); iter != holders.end(); ++iter, ++i) {
+      std::cout << "  index=" << i << '\n';  
+      iter->Print();
+   }
+}
+
+void Print(const std::set<setHolder> &holders) {
+   std::cout << "Printing vector<Holder>\n";
+   std::cout << "size=" << holders.size() << '\n';
+   int i = 0;
+   for(std::set<setHolder>::const_iterator iter = holders.begin(); iter != holders.end(); ++iter, ++i) {
+      std::cout << "  index=" << i << '\n';  
+      iter->Print();
+   }
+}
 
 void readFile(const char * filename = "stlinnerevo.root") {
    TFile *f = TFile::Open(filename,"READ");
@@ -256,6 +296,14 @@ void readFile(const char * filename = "stlinnerevo.root") {
       if(h) h->Print();
       delete h; h = 0;
    }
+
+   std::cout << "Reading a vector of Holder object.\n";
+   std::vector<Holder> *vecholder = 0;
+   f->GetObject("vecholder",vecholder);
+   if (vecholder) Print(*vecholder);
+   else std::cout << "vector of holder no read.\n";
+   delete vecholder; vecholder = 0;
+
    if (1) {
       TTree *t; f->GetObject("T",t);
       Holder *h = 0;
@@ -270,7 +318,8 @@ void readFile(const char * filename = "stlinnerevo.root") {
       
       t->SetBranchAddress("vecint",&vecintbr);
       t->SetBranchAddress("vec",&vecbr);
-      t->SetBranchAddress("holder",&h);
+      t->SetBranchAddress("holder.",&h);
+      t->SetBranchAddress("vecholder",&vecholder);
       for(Long64_t e = 0; e < 2 ; ++e) {
          t->GetEntry(e);
 
@@ -281,6 +330,8 @@ void readFile(const char * filename = "stlinnerevo.root") {
          if (vecbr) Print(*vecbr);
          std::cout << "Reading a Holder object.\n";
          if (h) h->Print();
+         std::cout << "Reading a vector of Holder object.\n";
+         Print(*vecholder);
       }
       delete h;
    }
@@ -321,6 +372,14 @@ void readFileList(const char * filename = "stlinnerevo.root") {
       if (h) h->Print();
       delete h; h = 0;
    }
+
+   std::cout << "Reading a vector of Holder object.\n";
+   std::vector<Holder> *vecholder = 0;
+   f->GetObject("vecholder",vecholder);
+   if (vecholder) Print(*vecholder);
+   else std::cout << "vector of holder no read.\n";
+   delete vecholder; vecholder = 0;
+
    if (1) {
       TTree *t; f->GetObject("T",t);
       listHolder *h = 0;
@@ -335,7 +394,8 @@ void readFileList(const char * filename = "stlinnerevo.root") {
       
       t->SetBranchAddress("vecint",&vecintbr);
       t->SetBranchAddress("vec",&vecbr);
-      t->SetBranchAddress("holder",&h);
+      t->SetBranchAddress("holder.",&h);
+      t->SetBranchAddress("vecholder",&vecholder);
       for(Long64_t e = 0; e < 2 ; ++e) {
          t->GetEntry(e);
 
@@ -346,6 +406,8 @@ void readFileList(const char * filename = "stlinnerevo.root") {
          if (vecbr) Print(*vecbr);
          std::cout << "Reading a listHolder object.\n";
          if (h) h->Print();
+         std::cout << "Reading a vector of Holder object.\n";
+         Print(*vecholder);
       }
    }
    delete f;
@@ -385,6 +447,14 @@ void readFileSet(const char * filename = "stlinnerevo.root") {
       if (h) h->Print();
       delete h; h = 0;
    }
+
+   std::cout << "Reading a vector of Holder object.\n";
+   std::vector<Holder> *vecholder = 0;
+   f->GetObject("vecholder",vecholder);
+   if (vecholder) Print(*vecholder);
+   else std::cout << "vector of holder no read.\n";
+   delete vecholder; vecholder = 0;
+
    if (1) {
       TTree *t; f->GetObject("T",t);
       setHolder *h = 0;
@@ -399,7 +469,9 @@ void readFileSet(const char * filename = "stlinnerevo.root") {
       
       t->SetBranchAddress("vecint",&vecintbr);
       t->SetBranchAddress("vec",&vecbr);
-      t->SetBranchAddress("holder",&h);
+      t->SetBranchAddress("holder.",&h);
+      t->SetBranchAddress("vecholder",&vecholder);
+
       for(Long64_t e = 0; e < 2 ; ++e) {
          t->GetEntry(e);
 
@@ -410,7 +482,21 @@ void readFileSet(const char * filename = "stlinnerevo.root") {
          if (vecbr) Print(*vecbr);
          std::cout << "Reading a setHolder object.\n";
          if (h) h->Print();
+         std::cout << "Reading a vector of Holder object.\n";
+         Print(*vecholder);
       }
    }
    delete f;
 }
+
+#ifdef __MAKECINT__
+#pragma read sourceClass="Values" targetClass="Track";
+#pragma link C++ vector<Track>+;
+#pragma read sourceClass="Holder" targetClass="listHolder";
+#pragma read sourceClass="Holder" targetClass="setHolder";
+#pragma link C++ class vector<Holder>+;
+#pragma link C++ class list<listHolder>+;
+#pragma link C++ class set<setHolder>+;
+
+#endif
+
