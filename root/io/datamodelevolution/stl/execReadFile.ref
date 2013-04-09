@@ -422,7 +422,7 @@ size=2
 Holder:
 Holder::fX 3
 Single value
- x=33 y=66
+ x=0 y=0
 Holder::fVec :
  i=0 v=0
  i=1 v=-1
@@ -497,7 +497,7 @@ Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<Values> 
 Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from map<string,int> to map<string,long>
 Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Holder to listHolder
 Single value
- x=11 y=22
+ x=0 y=0
 Holder::fVec :
  i=0 v=0
  i=1 v=-1
@@ -940,7 +940,7 @@ size=2
 Holder:
 Holder::fX 3
 Single value
- x=33 y=66
+ x=0 y=0
 Holder::fVec :
  i=0 v=0
  i=1 v=-1
@@ -1015,7 +1015,7 @@ Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from vector<Values> 
 Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from map<string,int> to map<string,long>
 Info in <TKey::ReadObjectAny>: Using Converter StreamerInfo from Holder to setHolder
 Single value
- x=11 y=22
+ x=0 y=0
 Holder::fVec :
  i=0 v=0
  i=1 v=-1
