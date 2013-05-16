@@ -105,7 +105,8 @@ AutoDict_*.cxx
 # /cint/typedef_global/
 /cint/typedef_global/*dict*
 /cint/typedef_global/*Dict*
-/cint/typedef_global/output
+/cint/typedef_global/output1
+/cint/typedef_global/output2
 /cint/typedef_global/*_timestamp
 
 /python/ttree/test.root
