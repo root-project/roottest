@@ -23,6 +23,7 @@ public:
       T obj;
       for(size_t i = 0; i < seed; ++i) {
          obj.SetName(TString::Format("name%lu_%lu",i,seed));
+         obj.fId = i;
          fValues.push_back(obj);
       }
    }
@@ -43,6 +44,7 @@ public:
       Content obj;
       for(size_t i = 0; i < seed; ++i) {
          obj.SetName(TString::Format("name%lu_%lu",i,seed));
+         obj.fId = i;
          fValues.push_back(obj);
       }
    }
@@ -104,6 +106,7 @@ int execWriteCustomCollection() {
    tree->Branch("coll.",&v);
    tree->Branch("vec.",&v.fValues);
    tree->Fill();
+   tree->Scan();
    file->Write();
    delete file;
 
@@ -111,6 +114,7 @@ int execWriteCustomCollection() {
    DataVectorConcrete vc;
    vc.Fill(4);
    file = TFile::Open("tcoll.root","RECREATE");
+   if (!file) return 1;
    tree = new TTree("T","T");
    tree->Branch("coll.",&vc);
    tree->Branch("vec.",&vc.fValues);
@@ -133,6 +137,7 @@ int execWriteCustomCollection() {
       tree->GetEntry(0);
       if (tvp) tvp->Print();
    }
+   tree->Scan();
    delete file;
 
    printf("Reading file with just a TTree\n");
@@ -144,6 +149,7 @@ int execWriteCustomCollection() {
       tree->GetEntry(0);
       if (tvp) tvp->Print();
    }
+   tree->Scan();
    delete file;
    
    return 0;
