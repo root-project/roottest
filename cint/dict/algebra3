@@ -750,9 +750,11 @@ namespace aux {
    *                                                               *
    ****************************************************************/
 
+#ifdef __CINT__
   static inline float conj(const float& x) { return float(x); }
   static inline double conj(const double& x) { return double(x); }
   static inline long double conj(const long double& x) { return ((long double)(x)); }
+#endif
 
   template<typename _Tp> static inline bool operator < (const complex<_Tp>& x, const complex<_Tp>& y)
   { return (norm(x) < norm(y)); }
