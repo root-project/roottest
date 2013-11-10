@@ -5,26 +5,22 @@
 #include <iostream>
 #include <typeinfo>
 
-// MSVC2010 pulls in std::tr1::shared_ptr, MacOSX10.9 pulls in std::__1::shared_ptr
-// CINT pulls in std, which combined creates ambiguities.
-# define shared_ptr not_tr1_shared_ptr
-
 class Parent{ public: static const char *ClassName() { return "Parent"; } };
 
 class Child : public Parent { public: static const char *ClassName() { return "Child"; }};
 
-template <class T> class shared_ptr;
+template <class T> class MySharedPtr;
 
 class testing {
-   template <class U> friend class shared_ptr;
+   template <class U> friend class MySharedPtr;
 };
 
 template <class T>
-class shared_ptr 
+class MySharedPtr 
 {
 
   T *theobject;
-  // this shared_ptr class is of course missing any 
+  // this MySharedPtr class is of course missing any 
   // reference counting mechanism
    void PF(const char* func) {
       std::string clname;
@@ -35,23 +31,23 @@ class shared_ptr
       if (clname.find("Parent") != std::string::npos) clname = "Parent";
       else clname = "Child";
 #endif
-      std::cout << "shared_ptr<" << clname << ">::" << func << std::endl;
+      std::cout << "MySharedPtr<" << clname << ">::" << func << std::endl;
    }
 
 public:
 
-  template <class U> friend class shared_ptr;
+  template <class U> friend class MySharedPtr;
 
   const char *GetName() { return typeid(T).name(); }
 
-  shared_ptr(T* someobject) 
+  MySharedPtr(T* someobject) 
   { 
      PF("c'tor(T)");
     theobject = someobject; 
   }
 
   template <class Y>
-  shared_ptr(shared_ptr<Y> const &rhs) 
+  MySharedPtr(MySharedPtr<Y> const &rhs) 
     : theobject(dynamic_cast<T*>(rhs.theobject)) 
   {
      PF("c'tor(Y)");
@@ -59,17 +55,17 @@ public:
 };
 
 #ifdef __MAKECINT__
-#pragma link C++ class shared_ptr<Parent>+;
-#pragma link C++ class shared_ptr<Child>+;
+#pragma link C++ class MySharedPtr<Parent>+;
+#pragma link C++ class MySharedPtr<Child>+;
 #endif
 int templatefriend()
 {
   // create shared pointer to child
-  shared_ptr<Child> child_p(new Child); 
+  MySharedPtr<Child> child_p(new Child); 
 
   // create shared pointer to parent from 
   // shared pointer to child, calls dynamic_cast<> in template constructor.
-  shared_ptr<Parent> parent_p(child_p); 
+  MySharedPtr<Parent> parent_p(child_p); 
   return 0;
 }
 
