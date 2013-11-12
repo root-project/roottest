@@ -187,7 +187,7 @@ public:
       ::Print(fMap);
    }
 
-   bool operator==(const listHolder &right) { return right.fX == fX; }
+   bool operator==(const listHolder &right) const { return right.fX == fX; }
    bool operator<(const listHolder &right) const { return fX > right.fX; }
 };
 
