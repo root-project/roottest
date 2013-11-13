@@ -6,7 +6,7 @@ void readBack()
   TestClass* testB = (TestClass*) outputB->Get("testB");
   if ( !testB ) { cout << "Couldn't find B?" << endl; return; }
   cout << "fBits settings B: 0x" << hex << testB->TestRefBits(0xFFFFFFFF) << endl;
-  cout << "Readback for testB->GetRef()" << std::endl << testB->GetRef() << endl;
+  cout << "Readback for testB->GetRef()" << std::endl << (ULong_t)testB->GetRef() << endl;
   cout << "******************************************" << std::endl;
 }
 
