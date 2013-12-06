@@ -78,7 +78,7 @@ STRESSTESTSCOMP := $(STRESSTESTS:-test=-ctest)
 STRESSTESTSINTERP_VETO := stressMathCore-itest stressMathMore-itest \
   stressRooFit-itest stressRooStats-itest \
   stressLinear-itest stressVector-itest stressGeometry-itest stressIterators-itest stressHistogram-itest stressHistoFit-itest \
-  stressTMVA-itest
+  stressTMVA-itest stressGraphics-itest
 STRESSTESTSINTERP := $(filter-out $(STRESSTESTSINTERP_VETO),$(STRESSTESTS:-test=-itest))
 
 ifneq ($(FAST),)
@@ -86,12 +86,12 @@ ifneq ($(FAST),)
 STRESSTESTSINTERP_VETO += $(STRESSTESTSINTERP)
 STRESSTESTSINTERP :=
 STRESSTESTSCOMP_VETO := $(STRESSTESTSCOMP_VETO) stressTMVA-ctest
-endif
-
+else
 # run all compiled except for those that are run interpreted:
 STRESSTESTSCOMP_VETO :=  $(STRESSTESTSCOMP_VETO) $(STRESSTESTSINTERP:-itest=-ctest)
 # ...and those that are known to fail: none!
 # STRESSTESTSCOMP_VETO := 
+endif
 STRESSTESTSCOMP := $(filter-out $(STRESSTESTSCOMP_VETO),$(STRESSTESTS:-test=-ctest))
 
 
