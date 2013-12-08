@@ -35,7 +35,7 @@ if [ "x$logfile" != "x" ] ; then
         echo "--- FAILING TEST: make -C $CALLDIR $testname" > $SUMMARY.$testname.summary
         cat $logfile >> $SUMMARY.$testname.summary
         if [ `grep -c "exited with error code: $result" $logfile` -eq 0 ] ; then 
-          if [ "x$cmd" == "xdiff" ] ; then 
+          if [ "x$cmd" = "xdiff" ] ; then 
             echo "diff command exited with error code: $result" >> $SUMMARY.$testname.summary
           else 
             if [ "x$cmd" != "x" ] ; then 
@@ -54,7 +54,7 @@ if [ "x$logfile" != "x" ] ; then
   fi
   cat $logfile
   if [ "x$testname" != "x" ] ; then
-     if [ "$cmd" == "diff" ] ; then 
+     if [ "x$cmd" = "xdiff" ] ; then 
        echo "diff command exited with error code: $result" >> $logfile
      else 
        if [ "x$cmd" != "x" ] ; then 
