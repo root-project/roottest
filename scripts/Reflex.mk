@@ -24,7 +24,7 @@ HAVEGCCXML?=$(shell which gccxml 2>/dev/null)
 	$(CMDECHO) $(GENREFLEX) $*.h -s $*_selection.xml $(GENREFLEXFLAGS) -I"$(ROOTSYS)/include" $(GENREFLEXCXXFLAGS) > $@.log || (cat $@.log && exit 1)
 
 %_cint.cpp: %.h %LinkDef.h
-	$(CMDECHO) rootcint -f $@ -c $^
+	$(CMDECHO) rootcint -f $@ -c $^; > $@.log || (cat $@.log && exit 1)
 
 ifeq ($(R__EXPLICITLINK),yes)
 lib%_dictrflx.$(DllSuf): %_rflx.$(ObjSuf) $(ROOT_LOC)/lib/libReflex.$(LibSuf)
