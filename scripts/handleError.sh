@@ -32,6 +32,7 @@ fi
 if [ "x$logfile" != "x" ] ; then
   if [ "x$SUMMARY" != "x" ] ; then 
      if [ "x$testname" != "x" ] ; then
+        testname=`echo $testname | tr / .`
         echo "--- FAILING TEST: make -C $CALLDIR $testname" > $SUMMARY.$testname.summary
         cat $logfile >> $SUMMARY.$testname.summary
         if [ `grep -c "exited with error code: $result" $logfile` -eq 0 ] ; then 
