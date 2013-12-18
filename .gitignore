@@ -31,6 +31,7 @@ pt_*.gif
 AutoDict_*.cxx
 *_rflx.cpp
 *_rflxdriver.C
+*_cling.cpp
 *~
 
 # /
@@ -256,6 +257,9 @@ AutoDict_*.cxx
 
 # /root/io/evolution/array/
 /root/io/evolution/array/oldArrayObject.root
+
+# /root/io/evolution/pragma_read
+/root/io/evolution/pragma_read/test.root
 
 # /root/io/evolution/versions/
 /root/io/evolution/versions/*.root
