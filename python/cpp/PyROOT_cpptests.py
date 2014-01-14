@@ -1,7 +1,7 @@
 # File: roottest/python/cpp/PyROOT_cpptests.py
 # Author: Wim Lavrijsen (LBNL, WLavrijsen@lbl.gov)
 # Created: 01/03/05
-# Last: 09/30/10
+# Last: 01/13/14
 
 """C++ language interface unit tests for PyROOT package."""
 
@@ -201,6 +201,15 @@ class Cpp1LanguageFeatureTestCase( MyTestCase ):
       self.assert_( None != l3 )        # id.
       self.assertNotEqual( l3, l5 )
       self.assertNotEqual( l5, l3 )
+
+   def test12NULLPtrPassing( self ):
+      """Allow the programmer to pass NULL in certain cases"""
+
+      self.assertNotEqual( nullptr, 0 )
+      self.assertRaises( TypeError, TGraphErrors, 0, 0, 0 )
+
+      g = TGraphErrors( 0, nullptr, nullptr )
+      self.assertEqual( round( g.GetMean(), 8 ), 0.0 )
 
 
 ### C++ language naming of classes ===========================================
