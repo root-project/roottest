@@ -32,7 +32,7 @@ int runindex64(){
   run = biguval; event = bigval; tree->Fill();
   tree->Write();
 
-  cout<<"Tree BuildIndex returns "<<tree->BuildIndex("run", "event")<<endl;
+  cout << "Tree BuildIndex returns " << tree->BuildIndex("run", "event") << endl;
   cout << "Entry should be 3: " << tree->GetEntryNumberWithIndex(5,bigval) << endl;
   cout << "Entry should be 6: " << tree->GetEntryNumberWithIndex(4,bigval) << endl;
   
