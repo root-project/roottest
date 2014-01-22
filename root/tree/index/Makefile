@@ -59,8 +59,13 @@ endif
 testWithDiff: testWithDiff.log testWithDiff.ref
 	$(TestDiff)
 
+ifeq ($(ARCH)$(FAIL),win32)
+index64: index64.log
+        $(WarnFailTest)
+else
 index64: index64.log
 	$(TestDiff)
+endif
 
 chain: chain.log
 	$(TestDiff)
