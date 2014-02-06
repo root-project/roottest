@@ -12,7 +12,9 @@ STRESSTESTS  := $(filter-out stressHepix-test,\
 	$(filter-out stressRooFit_tests-test,\
 	$(filter-out stressRooStats_tests-test,\
 	$(filter-out stressRooStats_models-test,\
-	$(notdir $(STRESSSRC:.cxx=-test)))))))
+	$(filter-out stressHistFactory_tests-test,\
+	$(filter-out stressHistFactory_models-test,\
+	$(notdir $(STRESSSRC:.cxx=-test)))))))))
 ifeq ($(ARCH)$(FAIL),win32)
    for_echoing := $(shell echo Known failures: stressMathCore skipped tests in root/stress 1>&2)
 STRESSTESTS  := $(filter-out stressMathCore-test,$(STRESSTEST))
@@ -23,7 +25,7 @@ ifeq ($(R__FEATURES),)
 endif
 
 ifeq ($(findstring roofit,$(R__FEATURES)),)
-STRESSTESTS  := $(filter-out stressRooStats-test,$(filter-out stressRooFit-test,$(STRESSTESTS)))
+STRESSTESTS  := $(filter-out stressRooStats-test,$(filter-out stressRooFit-test,$(filter-out stressHistFactory-test,$(STRESSTESTS))))
 endif
 ifeq ($(findstring mathmore,$(R__FEATURES)),)
 STRESSTESTS  := $(filter-out stressMathMore-test,$(STRESSTESTS))
@@ -76,7 +78,7 @@ STRESSTESTSCOMP := $(STRESSTESTS:-test=-ctest)
 # Run all tests in interpreted mode except for those that CINT
 # cannot interpret - these are run in compiled mode instead.
 STRESSTESTSINTERP_VETO := stressMathCore-itest stressMathMore-itest \
-  stressRooFit-itest stressRooStats-itest \
+  stressRooFit-itest stressRooStats-itest stressHistFactory-itest \
   stressLinear-itest stressVector-itest stressGeometry-itest stressIterators-itest stressHistogram-itest stressHistoFit-itest \
   stressTMVA-itest stressGraphics-itest
 STRESSTESTSINTERP := $(filter-out $(STRESSTESTSINTERP_VETO),$(STRESSTESTS:-test=-itest))
