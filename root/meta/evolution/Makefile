@@ -1,6 +1,6 @@
 # This is a template for all makefiles.
 
-BASE_FILES = baseClass_merge1.root baseClass_merge2.root baseClass_53410_v1.root baseClass_53410_v2.root
+BASE_FILES = baseClass_merge1.root baseClass_merge2.root baseClass_53410_v1.root baseClass_53410_v2.root baseClass_59906_v1.root baseClass_59906_v2.root
 MIXED_FILES = mixedBase_merge1.root mixedBase_merge2.root mixedBase_53410_v1.root mixedBase_53410_v2.root
 BASE_SUCCESS = $(subst .root,.success,$(BASE_FILES) $(MIXED_FILES))
 
