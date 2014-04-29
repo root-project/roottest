@@ -24,4 +24,4 @@ The HasTypeDef object has:
   fVec3.size() : 0
   fInt1        : 1
   fInt2        : 2
-(int) 0
+(int)0
