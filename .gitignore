@@ -30,6 +30,7 @@ pt_*.root
 pt_*.gif
 AutoDict_*.cxx
 *_rflx.cpp
+*_cint.cpp
 *_rflxdriver.C
 *_cling.cpp
 *~
