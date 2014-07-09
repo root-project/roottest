@@ -10,7 +10,7 @@ StreamerInfo for class: WithDouble, checksum=0xf3af1b21
 StreamerInfo for class: MyVector<double>, checksum=0x4ffe5ea
   double         d32             offset= [deleted from log] 0 type= 8                     
   double         regdouble       offset= [deleted from log] 8 type= 8                     
-   i= 0, d32             type= 28, offset= [deleted from log] 0, len=2, method=0
+   i= 0, d32             type= 28, offset= [deleted from log] 0, len=2, method=0 [optimized]
 
 StreamerInfo for class: MyVector<Double32_t>, checksum=0xdd163122
   Double32_t     d32             offset= [deleted from log] 0 type= 9                     
