@@ -20,7 +20,7 @@ public :
    virtual Bool_t  Process(Long64_t entry) {
       GetEntry(entry);
       printf("MySelector::Process called, entry=%lld\n", entry);
-      printf("Reported cache size from fChain: %d\n", fChain->GetCacheSize());
+      printf("Reported cache size from fChain: %lld\n", fChain->GetCacheSize());
       printf("Reported AutoFlush value for the TTree %lld\n", fChain->GetTree()->GetAutoFlush());
       printf("Reported cache size from TTree: %lld\n", fChain->GetTree()->GetCacheSize());
       TTreeCache *pf = dynamic_cast<TTreeCache*>(fChain->GetCurrentFile()->GetCacheRead(fChain->GetTree()));
@@ -148,7 +148,7 @@ int runone(const Long64_t *cSizep=0) {
    printf("Reported cache size from TTree: %lld\n", T->GetCacheSize());
    TTreeCache *pf = dynamic_cast<TTreeCache*>(file->GetCacheRead(T));
    if (pf) {
-     printf("Reported buffer size from TTreeCache: %lld\n", pf->GetBufferSize());
+     printf("Reported buffer size from TTreeCache: %d\n", pf->GetBufferSize());
      printf("PrintCacheStats output:\n");
      T->PrintCacheStats("");
      printf("-- end of PrintCacheStats output --\n");
