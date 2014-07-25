@@ -2,10 +2,12 @@
   File: roottest/python/cpp/AdvancedCpp.C
   Author: WLavrijsen@lbl.gov
   Created: 06/04/05
-  Last: 03/12/12
+  Last: 07/24/14
 */
 
+#include "TString.h"
 #include <vector>
+
 
 class PR_A {
 public:
@@ -181,3 +183,16 @@ public:
 };
 
 int SomeClassWithData::SomeData::s_numData = 0;
+
+// more globals
+TString PR_Lumi1 = "::1 C++ global lumi";
+TString PR_GetLumi1() { return PR_Lumi1; }
+TString PR_Lumi2 = "::2 C++ global lumi";
+TString PR_GetLumi2() { return PR_Lumi2; }
+
+namespace NS_PR_Lumi {
+   TString PR_Lumi1 = "NS::1 C++ global lumi";
+   TString PR_GetLumi1() { return PR_Lumi1; }
+   TString PR_Lumi2 = "NS::2 C++ global lumi";
+   TString PR_GetLumi2() { return PR_Lumi2; }
+}

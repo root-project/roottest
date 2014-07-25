@@ -19,7 +19,7 @@ __all__ = [
    'Cpp05AssignToRefArbitraryClassTestCase',
    'Cpp06MathConvertersTestCase',
    'Cpp07GloballyOverloadedComparatorTestCase',
-   'Cpp08GlobalArraysTestCase',
+   'Cpp08GlobalVariablesTestCase',
    'Cpp09LongExpressionsTestCase',
    'Cpp10StandardExceptionsTestCase',
 ]
@@ -304,13 +304,43 @@ class Cpp07GloballyOverloadedComparatorTestCase( MyTestCase ):
       self.assertEqual( b.__eq__( b ), False )
 
 
-### Check access to global array variables ===================================
-class Cpp08GlobalArraysTestCase( MyTestCase ):
+### Check access to global variables ========================================
+class Cpp08GlobalVariablesTestCase( MyTestCase ):
    def test1DoubleArray( self ):
       """Verify access to array of doubles"""
 
       self.assertEqual( myGlobalDouble, 12. )
       self.assertRaises( IndexError, myGlobalArray.__getitem__, 500 )
+
+   def test2WriteGlobalInstances( self ):
+      """Verify writability of global instances"""
+
+      import ROOT
+
+      def verify( func, name, val ):
+         self.assertEqual( func(),                    val )
+         self.assertEqual( getattr( ROOT, name ),     val )
+         self.assertEqual( getattr( ROOT.ROOT, name), val )
+
+      verify( ROOT.PR_GetLumi1, "PR_Lumi1", "::1 C++ global lumi" )
+
+      ROOT.PR_Lumi1 = "::1 python global lumi"
+      verify( ROOT.PR_GetLumi1, "PR_Lumi1", "::1 python global lumi" )
+
+      ROOT.PR_Lumi2 = "::2 python global lumi"
+      verify( ROOT.PR_GetLumi2, "PR_Lumi2", "::2 python global lumi" )
+
+      def verify( func, name, val ):
+         self.assertEqual( func(),                      val )
+         self.assertEqual( getattr( NS_PR_Lumi, name ), val )
+
+      verify( NS_PR_Lumi.PR_GetLumi1, "PR_Lumi1", "NS::1 C++ global lumi" )
+
+      NS_PR_Lumi.PR_Lumi1 = "NS::1 python global lumi"
+      verify( NS_PR_Lumi.PR_GetLumi1, "PR_Lumi1", "NS::1 python global lumi" )
+
+      NS_PR_Lumi.PR_Lumi2 = "NS::2 python global lumi"
+      verify( NS_PR_Lumi.PR_GetLumi2, "PR_Lumi2", "NS::2 python global lumi" )
 
 
 ### Verify temporary handling for long expressions ===========================
