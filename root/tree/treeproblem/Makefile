@@ -69,10 +69,10 @@ writer$(ExeSuf):writer.$(ObjSuf) Foo.$(DllSuf)
 	$(CMDECHO) $(LD) writer.$(ObjSuf) $(LDFLAGS) $(LIBS) Foo.$(LibSuf) $(OutPutOpt)$@
 
 write.log:  writer$(ExeSuf) Foo.$(DllSuf)
-	$(CMDECHO) root -b -l -q writer.C > write.log
+	$(CMDECHO) $(CALLROOTEXE) -b -l -q writer.C > write.log
 
 reader.log: Foo.$(DllSuf) reader$(ExeSuf) write.log
-	$(CMDECHO) root -b -l -q reader.C > reader.log
+	$(CMDECHO) $(CALLROOTEXE) -b -l -q reader.C > reader.log
 
 check: reader.log
 	$(CMDECHO)diff -b -w reader.ref reader.log
