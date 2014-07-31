@@ -302,6 +302,9 @@ endif
 ifeq ($(CXXFLAGS),)
    export CXXFLAGS := $(shell root-config --cflags)
 endif
+ifeq ($(LDFLAGS),)
+   export LDFLAGS := $(shell root-config --ldflags)
+endif
 ifeq ($(ROOTLIBS),)
    export ROOTLIBS     := $(shell root-config --nonew --libs)
 endif
