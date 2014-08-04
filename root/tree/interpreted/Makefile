@@ -23,7 +23,7 @@ ifeq ($(FAIL),)
 	@echo Warning Run the following in valgrind:
 	@echo Warning "root[] .L macroFriends2.C"
 	@echo Warning "root[] macroFriends()"
-	@echo Warning "G__ClassInfo::New would induce an error"
+	@echo Warning "G__ClassInfo::New would induce a problem."
 endif
 
 # Remember that sometest.log can be made automatically from
