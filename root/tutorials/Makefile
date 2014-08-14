@@ -29,7 +29,7 @@ TUTORIALSTESTS_NONBATCH := \
 TUTORIALSTESTS_VETO := htmlex  rootalias \
   fft/FFT \
   fit/fit1_C  fit/TwoHistoFit2D fit/line3Dfit fit/MDF \
-  fit/combinedFit \
+  fit/combinedFit fit/fitslicesy \
   foam/% \
   graphs/graphstruct \
   html/% \
@@ -40,7 +40,12 @@ TUTORIALSTESTS_VETO := htmlex  rootalias \
   pythia/% \
   sql/% \
   tree/hsimpleProxy tree/tree0 tree/tree2a tree/tree4 \
-  roostats/rs401d_FeldmanCousins.C \
+  thread/stressThreadPool thread/threadPool thread/threadsh2 \
+  roostats/rs401d_FeldmanCousins \
+  roostats/ModelInspector \
+  roostats/TwoSidedFrequentistUpperLimitWithBands \
+  roostats/rs101_limitexample \
+  histfactory/ModifyInterpolation \
   tree/copytree2 tree/copytree3 tree/copytree
 
 TUTORIALSTESTS_NEEDS_MIUNIT2 := fit/fit2dHist fit/fit2dHist \
