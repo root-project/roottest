@@ -654,6 +654,12 @@ AutoDict_*.cxx
 /root/tree/cache/multi.root
 /root/tree/cache/test_in.root
 /root/tree/cache/test_out.root
+/root/tree/cache/autocache1.root
+/root/tree/cache/autocache2.root
+/root/tree/cache/EventDict.*
+/root/tree/cache/perftest.root
+/root/tree/cache/tree1ps.root
+/root/tree/cache/tree2ps.root
 
 # /root/tree/chain/
 /root/tree/chain/*.root
