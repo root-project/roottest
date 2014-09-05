@@ -68,7 +68,7 @@ UInt_t test2() {
    TTree* tree = new TTree("tree", "tree");
 
    example* content = new example;
-   auto b = tree->Branch("content", &content);
+   TBranch *b = tree->Branch("content", &content);
    if ( b->GetListOfBranches()->GetEntries() != 1) {
       cout << "Error: There is too many branches in \"content\". It should be 1 (it is " << b->GetListOfBranches()->GetEntries() << ")\n";
       tree->Print();
