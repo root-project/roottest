@@ -6,7 +6,11 @@ public:
    Int_t fValue;
 };
 
+#ifndef __CINT__
 #include <stdint.h>
+#else
+typedef unsigned int uint32_t;
+#endif
 #include <vector>
 
 struct HcalFlagHFDigiTimeParam {
@@ -27,7 +31,7 @@ struct WithLongLong {
    unsigned long long mIndex;
 };
 
-#include "cmsCond01.h"
+//#include "cmsCond01.h"
 #include "signedchar.h"
 
 #ifdef __ROOTCLING__
@@ -63,6 +67,6 @@ void execMissingCheckSum()
 //   CheckFile("missingCheckSum2.root","timeParam","HcalFlagHFDigiTimeParam");
 //   CheckFile("missingCheckSum2.root","withLL","WithLongLong");
 //   CheckFile("checksumReflexEnum_v5.root","cond","L1GtCondition");
-   CheckFile("checksumSignedChar_v5.root","q","TQuality");
+// CheckFile("checksumSignedChar_v5.root","q","TQuality");
 }
 
