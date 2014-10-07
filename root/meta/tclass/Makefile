@@ -53,3 +53,4 @@ execState.log: libState_cxx.$(DllSuf)
 
 execSimpleVector.log: libsimpleVector_dictrflx.$(DllSuf)
 
+exectypedefCausingParsing.log: libtypedefCausingParsing_dictrflx.$(DllSuf)

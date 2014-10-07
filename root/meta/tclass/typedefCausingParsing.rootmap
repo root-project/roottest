@@ -1,0 +1,8 @@
+{ decls }
+
+
+[ libtypedefCausingParsing_dictrflx ]
+# List of selected classes
+class A
+# List of selected typedefs and outer classes
+typedef theTD

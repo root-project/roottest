@@ -1,0 +1,5 @@
+<lcgdict>
+   <class name="A" />
+   <typedef name="theTD" />
+   <typedef name="A::theTD" />
+</lcgdict>
