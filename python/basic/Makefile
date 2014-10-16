@@ -28,7 +28,13 @@ endif
 
 PyROOT_basictests.log: ArgumentPassingCompiled_C.$(DllSuf)
 
-PyROOT_basictests: PyROOT_basictests.log
+# This filtering is done in order to get rid of the header parsing messages
+# which appear at debug level 1 when an unknown name is requested to
+# TClass::GetClass.
+PyROOT_basictests_filtered.log: PyROOT_basictests.log
+	$(CMDECHO) cat PyROOT_basictests.log |grep -v "Header Parsing" > PyROOT_basictests_filtered.log 2>&1
+
+PyROOT_basictests: PyROOT_basictests_filtered.log
 	$(TestDiff)
 
 #-----

@@ -3,6 +3,7 @@ if(ROOT_python_FOUND)
                     MACRO PyROOT_basictests.py
                     PRECMD root -b -q -l -e .L\ ArgumentPassingCompiled.C+
                     WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+                    OUTCNV PyROOT_basictests_outputFilter.sh
                     OUTREF PyROOT_basictests.ref)
 
   ROOTTEST_ADD_TEST(roottest-python-basic-datatype
