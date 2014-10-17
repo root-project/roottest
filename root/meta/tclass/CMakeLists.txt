@@ -58,7 +58,7 @@ ROOTTEST_ADD_TEST(roottest-root-meta-tclass-execSimpleVector
                   OUTREF execSimpleVector.ref
                   DEPENDS ${GENERATE_REFLEX_TEST})
 
-ROOTTEST_GENERATE_REFLEX_DICTIONARY(exectypedefCausingParsing exectypedefCausingParsing.h SELECTION exectypedefCausingParsing_selection.xml)
+ROOTTEST_GENERATE_REFLEX_DICTIONARY(typedefCausingParsing typedefCausingParsing.h SELECTION typedefCausingParsing_selection.xml)
 
 ROOTTEST_ADD_TEST(roottest-root-meta-tclass-exectypedefCausingParsing
                   MACRO exectypedefCausingParsing.C
