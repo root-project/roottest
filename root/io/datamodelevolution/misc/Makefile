@@ -73,6 +73,7 @@ HAVEGCCXML:="nocintex"
 endif
 HAVEGCCXML?=$(shell which gccxml 2>/dev/null)
 
+execReadOrderClass.clog: execWriteOrderClass.success
 
 arr_cint.cpp: arrayRules.h arrayRulesLinkDef.h $(ROOTCORELIBS) $(ROOTCINT) $(ROOTV)
 	$(CMDECHO) rootcint -f arr_cint.cpp -c arrayRules.h arrayRulesLinkDef.h > arr_cint.log 2>&1 || handleError.sh --cmd='rootcint -f arr_cint.cxx -c arrayRules.h ArrayRulesLinkDef.h' --result=$$? --log=arr_cint.log --test=$@  
