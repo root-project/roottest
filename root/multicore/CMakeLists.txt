@@ -1,9 +1,16 @@
 ROOTTEST_ADD_TESTDIRS()
 
+ROOTTEST_ADD_TEST(roottest-root-multicore-exectsautoparse
+                  MACRO exectsautoparse.C
+                  OUTREF exectsautoparse.ref)
+
+ROOTTEST_ADD_TEST(roottest-root-multicore-exectsinclude
+                 MACRO  exectsinclude.C
+                 OUTREF exectsinclude.ref)
+
 ROOTTEST_ADD_TEST(roottest-root-multicore-execautoloadts
                  MACRO  execautoloadts.C
-                 OUTREF execautoloadts.ref
-                 DEPENDS ${GENERATE_REFLEX_TEST})
+                 OUTREF execautoloadts.ref)
 
 ROOTTEST_GENERATE_EXECUTABLE(tclass_methods tclass_methods.cpp LIBRARIES Core Thread)
 
@@ -37,11 +44,11 @@ ROOTTEST_ADD_TEST(roottest-root-multicore-th1f_fill
                   EXEC th1f_fill
                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
-ROOTTEST_GENERATE_EXECUTABLE(tformula tformula.cpp LIBRARIES Core Hist Thread)
-
-ROOTTEST_ADD_TEST(roottest-root-multicore-tformula
-                  EXEC tformula
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+# ROOTTEST_GENERATE_EXECUTABLE(tformula tformula.cpp LIBRARIES Core Hist Thread)
+#
+# ROOTTEST_ADD_TEST(roottest-root-multicore-tformula
+#                   EXEC tformula
+#                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
 ROOTTEST_GENERATE_EXECUTABLE(tprofile tprofile.cpp LIBRARIES Core Hist Thread)
 
@@ -49,7 +56,7 @@ ROOTTEST_ADD_TEST(roottest-root-multicore-tprofile
                   EXEC tprofile
                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
-# This fails sporadically: thread unsafety. See ROOT-7158
+# Disable test: see ROOT-7158
 #ROOTTEST_GENERATE_REFLEX_DICTIONARY(tsenums tsenums.h  SELECTION tsenums_selection.xml)
 
 #ROOTTEST_ADD_TEST(roottest-root-multicore-tsenums
