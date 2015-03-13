@@ -14,6 +14,10 @@ summary:
 	  echo "At least $$res tests have failed:" ; \
 	  grep -h FAILING $(SUMMARY).*.summary; \
           exit $$res; \
+	else \
+	  res=$$?; \
+	  echo "At least one test not captured in the summary file have failed." ; \
+	  exit $$res; \
 	fi
 
 # The previous line contains just ';' in order to disable the implicit 
