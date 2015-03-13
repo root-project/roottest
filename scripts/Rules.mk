@@ -9,9 +9,14 @@ test: tests ;
 summary:
 	@CALLDIR= ; $(MAKE) --no-print-directory  tests || \
 	if [ `ls $(SUMMARY).*.summary 2>/dev/null | wc -l` -gt 0 ] ; then \
-          res=`grep FAILING $(SUMMARY).*.summary  | wc -l` ; \
-	  echo "There is at least $$res failings test:" ; \
-	  grep -h FAILING $(SUMMARY).*.summary; \
+          res=`grep --text FAILING $(SUMMARY).*.summary  | wc -l` ; \
+	  echo "At least $$res tests have failed:" ; \
+	  grep --text -h FAILING $(SUMMARY).*.summary; \
+          exit $$res; \
+	else \
+	  res=$$?; \
+	  echo "At least one test not captured in the summary file have failed." ; \
+	  exit $$res; \
 	fi
 
 # The previous line contains just ';' in order to disable the implicit 
