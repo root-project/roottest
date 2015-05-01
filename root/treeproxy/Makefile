@@ -175,3 +175,14 @@ btagobjsProxy.clog: btagobjsSel_h.$(DllSuf) $(CORELIBS) btagobjs.root runbtagobj
 
 btagobjsProxy: btagobjsProxy.clog
 	$(TestDiff)
+
+createVectorProxyTest.log: createVectorProxyTest.C
+	$(CMDECHO) $(CALLROOTEXE) -q -l -b createVectorProxyTest.C > createVectorProxyTest.log 2>&1 ||  handleError.sh --result=$$? --log=reateVectorProxyTest.log --test=reateVectorProxyTest
+
+createVectorProxyTest: createVectorProxyTest.log
+	$(TestDiff)
+
+VectorProxyTestSel.h: createVectorProxyTest
+
+execVectorProxyTest.log: VectorProxyTestSel_h.$(DllSuf)
+
