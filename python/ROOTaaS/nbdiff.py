@@ -5,10 +5,13 @@ nbExtension=".ipynb"
 convCmdTmpl = "ipython nbconvert  --to notebook --ExecutePreprocessor.enabled=True %s --output %s"
 
 # Replace the criterion according to which a line shall be skipped
-def customLineJunkFilter(line):
-	# Skip the banner and empty lines
-	isJunk = "Welcome to ROOTaaS 6." in line
-	return not isJunk
+def customLineJunkFilter(line):    # Skip the banner and empty lines
+    junkLines =["Info in <TUnixSystem::ACLiC",
+                "Info in <TMacOSXSystem::ACLiC",
+                "Welcome to ROOTaaS 6."]
+    for junkLine in junkLines:
+        if junkLine in line: return False
+    return True
 
 def getFilteredLines(fileName):
     filteredLines =  filter(customLineJunkFilter, open(fileName).readlines())
