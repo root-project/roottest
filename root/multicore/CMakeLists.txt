@@ -103,4 +103,5 @@ configure_file(commands2.txt . COPYONLY)
 
 ROOTTEST_ADD_TEST(roottest-root-multicore-fork
                   EXEC fork
+                  FAILREGEX "Error in"
                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
