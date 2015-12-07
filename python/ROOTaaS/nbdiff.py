@@ -2,7 +2,7 @@ import difflib
 import subprocess
 
 nbExtension=".ipynb"
-convCmdTmpl = "ipython nbconvert  --to notebook --ExecutePreprocessor.enabled=True %s --output %s"
+convCmdTmpl = "ipython nbconvert  --to notebook --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 %s --output %s"
 
 # Replace the criterion according to which a line shall be skipped
 def customLineJunkFilter(line):    # Skip the banner and empty lines
