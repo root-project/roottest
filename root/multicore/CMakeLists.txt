@@ -106,11 +106,6 @@ ROOTTEST_GENERATE_EXECUTABLE(fork fork.cpp LIBRARIES Core)
 configure_file(commands1.txt . COPYONLY)
 configure_file(commands2.txt . COPYONLY)
 
-ROOTTEST_ADD_TEST(semaphore
-                 MACRO  tSemaphore.C
-                 OUTCNVCMD grep -v -e  "tSemaphore"
-                 OUTREF tSemaphore.ref)
-
 if(ROOTTEST_OS_ID MATCHES Scientific OR ROOTTEST_OS_ID MATCHES CentOS)
   set(ROOTTEST_ENV_EXTRA LD_PRELOAD=/usr/lib64/libGL.so)
 endif()
