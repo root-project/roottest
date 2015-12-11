@@ -18,7 +18,7 @@ ROOTTEST_ADD_TEST(roottest-python-cmdLineUtils-SimplePattern3
                   OUTREF SimplePattern3.ref)
 #########################################################################
 
-set(TOOLS_PREFIX ${PYTHON_EXECUTABLE} ${ROOTSYS}/bin)
+set(TOOLS_PREFIX ${ROOTSYS}/bin)
 
 ############################## ROOLS TESTS ##############################
 ROOTTEST_ADD_TEST(roottest-python-cmdLineUtils-SimpleRootls1
