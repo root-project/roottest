@@ -392,7 +392,7 @@ class Basic6ReturnValueTestCase( MyTestCase ):
 
       gROOT.LoadMacro( 'ReturnValues.C' )
       
-      tests = ROOT.testIntegerResults()
+      tests = testIntegerResults()
       for type in ["short", "int", "long", "longlong"]:
         for name, value in [("PlusOne", 1), ("MinusOne", -1)]:
           member = "%s%s" % (type, name)
