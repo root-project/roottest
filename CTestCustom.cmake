@@ -13,9 +13,9 @@ list(APPEND CTEST_CUSTOM_TESTS_IGNORE
 
 if(CTEST_BUILD_NAME MATCHES slc6|centos7)
   list(APPEND CTEST_CUSTOM_TESTS_IGNORE
-              roottest-root-meta-loadAllLibs-LoadAllLibs
-              roottest-root-meta-loadAllLibs-LoadAllLibsAZ
-              roottest-root-meta-loadAllLibs-LoadAllLibsZA
+              roottest-root-meta-LoadAllLibs
+              roottest-root-meta-LoadAllLibsAZ
+              roottest-root-meta-LoadAllLibsZA
               roottest-root-html-runMakeIndex
               roottest-root-multicore-fork)
 endif()
