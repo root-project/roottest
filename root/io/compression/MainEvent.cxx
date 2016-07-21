@@ -305,8 +305,14 @@ int main(int argc, char **argv)
       int expectedSize = -1;
       if (comp == 0) expectedSize = 5534559;
       else if (comp == 101) expectedSize = 1254808;
-      else if (comp == 201) expectedSize = 1111230;
-      else if (comp == 301) expectedSize = 1265018;
+      else if (comp == 201) {
+         gROOT->ProcessLine("extern \"C\" uint32_t lzma_version_number(void);");
+         long lzma_version = gROOT->ProcessLineFast("lzma_version_number();");
+         if (lzma_version < 50000000 )
+            expectedSize = 1116986;
+         else
+            expectedSize = 1111230;
+      } else if (comp == 301) expectedSize = 1265018;
       else if (comp == 5) expectedSize = 1208369;
 
       if (expectedSize > 0 &&
