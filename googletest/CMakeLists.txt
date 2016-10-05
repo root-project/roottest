@@ -58,7 +58,7 @@ endif()
 
 # Define helper functions and macros used by Google Test.
 include(cmake/internal_utils.cmake)
-
+include(CheckCXXCompilerFlag)
 config_compiler_and_linker()  # Defined in internal_utils.cmake.
 
 # Where Google Test's .h files can be found.
