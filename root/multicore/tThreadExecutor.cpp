@@ -1,4 +1,5 @@
 #include "TH1F.h"
+#include "TRandom.h"
 #include "ROOT/TThreadExecutor.hxx"
 #include <vector>
 #include <numeric> //accumulate
@@ -93,19 +94,40 @@ int PoolTest() {
    if(chunkedredres3 != 21)
       return 11;
 
+  //TObject::Merge() reduction signature.
+   TH1F *htot = new TH1F("htot", "htot", 50, 0, 1);
+   std::vector<TH1 *> vhist(5);
+   vhist[0] = new TH1F("h0", "h0", 10, 0, 1);
+   vhist[1] = new TH1F("h1", "h1", 10, 0, 1);
+   vhist[2] = new TH1F("h2", "h2", 10, 0, 1);
+   vhist[3] = new TH1F("h3", "h3", 10, 0, 1);
+   vhist[4] = new TH1F("h4", "h4", 10, 0, 1);
+
+   for(auto i=0; i<50; i++){
+       auto x = gRandom->Gaus(0,1);
+       vhist[i/10]->Fill(x);
+       htot->Fill(x);
+   }
+   auto h0 = pool.Reduce(vhist);
+
+   for(auto i = 0; i<50; i++){
+        if(htot->GetBinContent(i) != h0->GetBinContent(i))
+            return 12;     
+   }
+
    /***** other tests *****/
 
    //returning a c-string
     auto extrares1 = pool.Map([]() { return "42"; }, 25);
     for(auto c_str : extrares1)
        if(strcmp(c_str, "42") != 0)
-          return 12;
+          return 13;
 
    //returning a string
    auto extrares2 = pool.Map([]() { return std::string("fortytwo"); }, 25);
    for(auto str : extrares2)
       if(str != "fortytwo")
-         return 13;
+         return 14;
 
    return 0;
 }
