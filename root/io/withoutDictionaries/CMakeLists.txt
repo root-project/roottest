@@ -5,7 +5,8 @@ ROOTTEST_GENERATE_REFLEX_DICTIONARY(VectorDMWriteWithoutDictionary
 
 ROOTTEST_ADD_TEST(VectorDMWriteWithoutDictionary
                   OUTREF execVectorDMWriteWithoutDictionary.ref
-                  MACRO execVectorDMWriteWithoutDictionary.C)
+                  MACRO execVectorDMWriteWithoutDictionary.C
+                  DEPENDS ${GENERATE_REFLEX_TEST})
 
 ROOTTEST_GENERATE_REFLEX_DICTIONARY(IOWithoutDictionaries
                                     IOWithoutDictionaries.h
