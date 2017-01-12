@@ -6,3 +6,5 @@ ROOTTEST_ADD_TEST(assertHumanReadable
                   MACRO assertHumanReadable.cxx+
                   OUTREF assertHumanReadable.ref
                   )
+
+ROOTTEST_ADD_TESTDIRS()
