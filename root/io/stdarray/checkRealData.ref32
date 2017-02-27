@@ -5,13 +5,13 @@ B Real Data 1 b[3] offset 4
 B Real Data 2 c[3] offset 16
 ----------
 ArrayHolder Real Data 0 m_v offset 0
-ArrayHolder Real Data 1 m_a[3] offset 24
+ArrayHolder Real Data 1 m_a[3] offset 12
 ----------
 MetaArrayHolder Real Data 0 m_a[3] offset 0
 ----------
 MetaArrayHolder2 Real Data 0 m_a2 offset 0
 MetaArrayHolder2 Real Data 1 m_a2.m_v offset 0
-MetaArrayHolder2 Real Data 2 m_a2.m_a[3] offset 24
+MetaArrayHolder2 Real Data 2 m_a2.m_a[3] offset 12
 ----------
 A1 Real Data 0 m_a1 offset 0
 A1 Real Data 1 m_a1.m_a2[3] offset 0
