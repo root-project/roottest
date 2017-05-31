@@ -86,6 +86,30 @@ class PickleReadingSimpleObjectsTestCase( MyTestCase ):
       d = cPickle.load( self.in2 )
       __dodtest( self, d )
 
+   def test4ReadROOTObjInNamespace( self ):
+      """Test reading of a ROOT object in a namespace from a pickle file"""
+
+      def __doftest( self, d ):
+         self.assertEqual( d.__class__, ROOT.ROOT.Math.SVector('double',2) )
+         self.assertEqual( d.At(0) , 1 )
+         self.assertEqual( d.At(1) , 2 )
+            
+
+      d = pickle.load( self.in1 )
+      __doftest( self, d )
+
+      d = cPickle.load( self.in2 )
+      __doftest( self, d )
+
+   def test5ReadCustomTypes( self ):
+      """Test reading PyROOT custom types"""
+
+      o = pickle.load( self.in1 )
+      self.assertEqual(o, [123,123.123] )
+
+      o = cPickle.load( self.in2 )
+      self.assertEqual(o, [123,123.123] )
+
 
 ### Pretend-write and read back objects that gave complications ==============
 class PickleReadingComplicationsTestCase( MyTestCase ):

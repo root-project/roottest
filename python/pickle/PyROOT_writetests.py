@@ -61,6 +61,21 @@ class PickleWritingSimpleObjectsTestCase( MyTestCase ):
       pickle.dump(  d, self.out1 )
       cPickle.dump( d, self.out2 )
 
+   def test4WriteROOTObjInNamespace( self ):
+      """Test writing of a ROOT object in a namespace into a pickle file"""
+
+      v = ROOT.ROOT.Math.SVector('double',2)(1,2)
+
+      pickle.dump(  v, self.out1 )
+      cPickle.dump( v, self.out2 )
+
+   def test5WriteCustomTypes( self ):
+      """Test writing PyROOT custom types"""
+
+      o = [ ROOT.Long(123), ROOT.Double(123.123) ]
+      pickle.dump(  o, self.out1, protocol = 2 )
+      cPickle.dump( o, self.out2, protocol = 2 )
+
    def tearDown( self ):
       self.out1.flush()
       self.out2.flush()
