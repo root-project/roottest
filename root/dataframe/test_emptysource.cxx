@@ -8,6 +8,11 @@
 #include <atomic>
 
 int main() {
+#ifdef R__USE_IMT
+   unsigned int numThreads = 4;
+   ROOT::EnableImplicitMT(numThreads);
+#endif
+
    auto fileName = "test_emptysource.root";
    auto treeName = "test_emptysource";
    Long64_t numEntries = 1002;
@@ -29,11 +34,6 @@ int main() {
    TTree *t = (TTree*)f.Get(treeName);
    std::cout << "Number of snapshot entries: "  << t->GetEntries()   << std::endl;
    std::cout << "Number of snapshot branches: " << t->GetNbranches() << std::endl;
-
-#ifdef R__USE_IMT
-   unsigned int numThreads = 4;
-   ROOT::EnableImplicitMT(numThreads);
-#endif
 
    // Increment a counter for each entry
    std::atomic_int counter(0);
