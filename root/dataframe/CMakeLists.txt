@@ -7,6 +7,17 @@ endif()
 
 set(DFLIBRARIES Core TreePlayer Hist Tree RIO MathCore)
 
+ROOTTEST_GENERATE_EXECUTABLE(regression_emptysource regression_emptysource.cxx LIBRARIES ${DFLIBRARIES})
+ROOTTEST_ADD_TEST(regression_emptysource
+                  EXEC regression_emptysource
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+
+ROOTTEST_ADD_TEST(test_snapshotNFiles
+                  MACRO test_snapshotNFiles.C)
+
+ROOTTEST_ADD_TEST(test_listFilesCtor
+                  MACRO test_listFilesCtor.C)
+
 ROOTTEST_GENERATE_EXECUTABLE(emptysource test_emptysource.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(emptysource
                   EXEC emptysource
@@ -37,14 +48,8 @@ ROOTTEST_ADD_TEST(test_stringfiltercolumn
                   MACRO test_stringfiltercolumn.C+
                   OUTREF test_stringfiltercolumn.ref)
 
-# the version below makes test_glob hopefully more verbose
-#ROOTTEST_ADD_TEST(test_glob
-#                  MACRO test_glob.C+
-#                  OUTREF test_glob.ref)
 ROOTTEST_ADD_TEST(test_glob
-                  COPY_TO_BUILDDIR test_glob.C
-                  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/test_glob.sh
-                  FAILREGEX "ERROR"
+                  MACRO test_glob.C+
                   OUTREF test_glob.ref)
 
 ROOTTEST_ADD_TEST(test_reduce
@@ -85,12 +90,6 @@ ROOTTEST_ADD_TEST(misc
                   OUTREF test_misc.ref
                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
-ROOTTEST_GENERATE_EXECUTABLE(functiontraits test_functiontraits.cxx LIBRARIES ${DFLIBRARIES})
-ROOTTEST_ADD_TEST(functiontraits
-                  EXEC functiontraits
-                  OUTREF test_functiontraits.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
-
 ROOTTEST_ADD_TEST(ctors
                   MACRO test_ctors.C+
                   OUTREF test_ctors.ref)
@@ -117,9 +116,8 @@ ROOTTEST_ADD_TEST(regression_invalidref
 
 ROOTTEST_GENERATE_EXECUTABLE(regression_zeroentries regression_zeroentries.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(regression_zeroentries
-                     EXEC regression_zeroentries
-                     OUTREF regression_zeroentries.ref
-                     DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  EXEC regression_zeroentries
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
 
 ROOTTEST_GENERATE_EXECUTABLE(foreach test_foreach.cxx LIBRARIES ${DFLIBRARIES})
