@@ -7,6 +7,9 @@ endif()
 
 set(DFLIBRARIES Core TreePlayer Hist Tree RIO MathCore)
 
+ROOTTEST_ADD_TEST(templateRecursionLimit
+                  MACRO test_templateRecursionLimit.C)
+
 ROOTTEST_GENERATE_EXECUTABLE(regression_emptysource regression_emptysource.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(regression_emptysource
                   EXEC regression_emptysource
