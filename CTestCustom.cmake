@@ -9,7 +9,8 @@
 # Specify tests that will be ignored.
 
 list(APPEND CTEST_CUSTOM_TESTS_IGNORE
-            roottest-cling-parsing-semicolon)
+            roottest-cling-parsing-semicolon
+            roottest-python-JsMVA-NewMethods)
 
 if(CTEST_BUILD_NAME MATCHES slc6|centos7)
   list(APPEND CTEST_CUSTOM_TESTS_IGNORE
