@@ -12,7 +12,7 @@ list(APPEND CTEST_CUSTOM_TESTS_IGNORE
             roottest-cling-parsing-semicolon
             roottest-python-JsMVA-NewMethods)
 
-if(CTEST_BUILD_NAME MATCHES slc6|centos7)
+if(CTEST_BUILD_NAME MATCHES slc6|centos7|ubuntu14)
   list(APPEND CTEST_CUSTOM_TESTS_IGNORE
               roottest-root-meta-loadAllLibs-LoadAllLibs
               roottest-root-meta-loadAllLibs-LoadAllLibsAZ
