@@ -14,8 +14,11 @@ h->GetXaxis()->SetTi
 
 TObjArray
 TObjArrayIter
+TObjLink
+TObjOptLink
 TObjString
 TObject
+TObject::EStatusBits
 TObjectRefSpy
 TObjectSpy
 TObjectTable
