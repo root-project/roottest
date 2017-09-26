@@ -73,35 +73,35 @@ int execTestMultiMerge()
    Int_t result = 0;
    // Increasing tolerance due test fail for aarch64 builds with native compiler
    int hsimpleFTolerance = 10;
-   result += testMergedFile("mzfile1-4.root",206,4992, kIs32bits ? 2 : 0);
-   result += testMergedFile("mlz4file1-4.root",406,5029, kIs32bits ? 2 : 0);
-   result += testMergedFile("mzlibfile1-4.root",106,4917, kIs32bits ? 2 : 0);
-   result += testSimpleFile("hsimple.root",25000,1,414415, kIs32bits ? 10 : 8);
-   result += testSimpleFile("hsimple9.root",25000,9,432029,3);
+   result += testMergedFile("mzfile1-4.root",206,4988, kIs32bits ? 2 : 0);
+   result += testMergedFile("mlz4file1-4.root",406,5019, kIs32bits ? 2 : 0);
+   result += testMergedFile("mzlibfile1-4.root",106,4910, kIs32bits ? 2 : 0);
+   result += testSimpleFile("hsimple.root",25000,1,414395, kIs32bits ? 10 : 8);
+   result += testSimpleFile("hsimple9.root",25000,9,432015,3);
    // Increasing tolerance due test fail for fast-math builds and i686
 #ifdef R__FAST_MATH
-   result += testSimpleFile("hsimple101.root",25000,101,414590, 10);
+   result += testSimpleFile("hsimple101.root",25000,101,414570, 10);
 #else
-   result += testSimpleFile("hsimple101.root",25000,101,414590, kIs32bits ? 12 : 3);   
+   result += testSimpleFile("hsimple101.root",25000,101,414570, kIs32bits ? 12 : 3);   
 #endif
-   result += testSimpleFile("hsimple106.root",25000,106,432127,3);
+   result += testSimpleFile("hsimple106.root",25000,106,432108,3);
 #ifdef R__FAST_MATH
    // Increasing tolerance due test fail for fast-math builds
-   result += testSimpleFile("hsimple109.root",25000,109,432038,4);
+   result += testSimpleFile("hsimple109.root",25000,109,432024,4);
 #else
-   result += testSimpleFile("hsimple109.root",25000,109,432038,3);
+   result += testSimpleFile("hsimple109.root",25000,109,432024,3);
 #endif
-   result += testSimpleFile("hsimple9x2.root",2*25000,9,851123,9);
-   result += testSimpleFile("hsimple109x2.root",2*25000,109,851134,9);
-   result += testSimpleFile("hsimple209.root",25000,209,394077,8);
+   result += testSimpleFile("hsimple9x2.root",2*25000,9,851108,9);
+   result += testSimpleFile("hsimple109x2.root",2*25000,109,851115,9);
+   result += testSimpleFile("hsimple209.root",25000,209,394053,8);
 #ifdef R__FAST_MATH
    // Increasing tolerance due test fail for fast-math builds
-   result += testSimpleFile("hsimple401.root",25000,401,416534,14);
+   result += testSimpleFile("hsimple401.root",25000,401,416497,14);
 #else
-   result += testSimpleFile("hsimple401.root",25000,401,416534,8);
+   result += testSimpleFile("hsimple401.root",25000,401,416497,8);
 #endif
-   result += testSimpleFile("hsimple406.root",25000,406,516373,8);
-   result += testSimpleFile("hsimple409.root",25000,409,516321,8);
+   result += testSimpleFile("hsimple406.root",25000,406,516342,8);
+   result += testSimpleFile("hsimple409.root",25000,409,516297,8);
    result += testSimpleFile("hsimpleK.root",6*25000,209,2298976,16);
    if (lzma_version_number() < 50020010) {
       // lzma v5.2.0 produced larger files ...
@@ -110,7 +110,7 @@ int execTestMultiMerge()
    } else {
       result += testSimpleFile("hsimpleK202.root",12*25000,202,4631252,16);
    }
-   result += testSimpleFile("hsimpleK409.root",24*25000,409,12046517,16);
+   result += testSimpleFile("hsimpleK409.root",24*25000,409,12046524,16);
    result += testSimpleFile("hsimpleF.root",30*25000,9,12582457,hsimpleFTolerance);
    return result;
 }
