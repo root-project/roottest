@@ -76,7 +76,7 @@ int execTestMultiMerge()
    result += testMergedFile("mzfile1-4.root",206,4988, kIs32bits ? 2 : 0);
    result += testMergedFile("mlz4file1-4.root",406,5019, kIs32bits ? 2 : 0);
    result += testMergedFile("mzlibfile1-4.root",106,4910, kIs32bits ? 2 : 0);
-   result += testSimpleFile("hsimple.root",25000,1,414395, kIs32bits ? 10 : 8);
+   result += testSimpleFile("hsimple.root",25000,1,414395, kIs32bits ? 11 : 8);
    result += testSimpleFile("hsimple9.root",25000,9,432015,3);
    // Increasing tolerance due test fail for fast-math builds and i686
 #ifdef R__FAST_MATH
