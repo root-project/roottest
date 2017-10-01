@@ -10,6 +10,11 @@ set(DFLIBRARIES Core TreePlayer Hist Tree RIO MathCore)
 ROOTTEST_ADD_TEST(templateRecursionLimit
                   MACRO test_templateRecursionLimit.C)
 
+ROOTTEST_GENERATE_EXECUTABLE(test_snapshot_manytasks test_snapshot_manytasks.cxx LIBRARIES ${DFLIBRARIES})
+ROOTTEST_ADD_TEST(test_snapshot_manytasks
+                  EXEC test_snapshot_manytasks
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+
 ROOTTEST_GENERATE_EXECUTABLE(test_columnoverride test_columnoverride.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(test_columnoverride
                   EXEC test_columnoverride
