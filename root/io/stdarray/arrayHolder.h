@@ -20,7 +20,7 @@ class ArrayHolderT {
        Set(a,b,c);
    };
    ArrayHolderT() {};
-   std::string ToString() {
+   std::string ToString() const {
       std::stringstream ss;
       for (auto&& el : m_a) ss << el << "-";
       for (auto&& el : m_v) ss << el << "-";
@@ -48,7 +48,7 @@ class MetaArrayHolder {
    MetaArrayHolder() {
       Set(0,0,0);
    };
-   std::string ToString() {
+   std::string ToString() const {
       std::stringstream ss;
       for (auto& el : m_a)
          ss << el.ToString();
@@ -70,7 +70,7 @@ class MetaArrayHolder2 {
    MetaArrayHolder2() {
       Set(0,0,0);
    };
-   std::string ToString() {
+   std::string ToString() const {
       std::stringstream ss;
       ss << "MetaArrayHolder2: " << m_a2.ToString();
       return ss.str();
