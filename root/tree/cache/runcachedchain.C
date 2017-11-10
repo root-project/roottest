@@ -22,13 +22,7 @@
    
    if (res != 1) {
       fprintf(stdout,"ERROR: Could not find the basket bytes for the first basket of AliESDRun.fMagneticField in the cache\n");
-#ifdef ClingWorkAroundBrokenUnnamedReturn
-      int result1 =  1;
+      return 1;
    }
-   int result2 = 0;
-#else
-   return 1;
-}
-return 0;
-#endif
+   return 0;
 }
