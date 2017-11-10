@@ -17,15 +17,7 @@
    newTree->Fill();
    if ( newTree->GetBranchRef()->GetFile() != fFile ) {
       cout << "Error: the branch ref is not set correctly\n";
-#ifdef ClingWorkAroundBrokenUnnamedReturn
-      int res = 1;
-   } else {
-      int res= 0;
-   }
-#else
       return 1;
-   } else {
-      return 0;
    }
-#endif
+   return 0;
 }
