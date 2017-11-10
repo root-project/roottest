@@ -12,8 +12,7 @@
 #ifdef ClingWorkAroundJITandInline
    cout.setf(ios_base::hex, ios_base::basefield);
 #endif
-   cout << cl->GetName() << "'s streamerInfo #" 
-      << info->GetClassVersion() << " has a checksum of "; 
+   cout << cl->GetName() << "'s streamerInfo #" << info->GetClassVersion() << " has a checksum of ";
 #ifdef ClingWorkAroundJITandInline
    cout  << "0x" << info->GetCheckSum() << endl;
 #else
@@ -23,8 +22,7 @@
    cl = gROOT->GetClass("Tdata");
    info = cl->GetStreamerInfo();
    info->ls();
-   cout << cl->GetName() << "'s streamerInfo #" 
-      << info->GetClassVersion() << " has a checksum of "; 
+   cout << cl->GetName() << "'s streamerInfo #" << info->GetClassVersion() << " has a checksum of ";
 #ifdef ClingWorkAroundJITandInline
     cout  << "0x" << info->GetCheckSum() << endl;
 #else
@@ -38,8 +36,7 @@
    cl = gROOT->GetClass("data");
    info = cl->GetStreamerInfo();
    info->ls();
-   cout << cl->GetName() << "'s streamerInfo #" 
-      << info->GetClassVersion() << " has a checksum of " ;
+   cout << cl->GetName() << "'s streamerInfo #" << info->GetClassVersion() << " has a checksum of " ;
 #ifdef ClingWorkAroundJITandInline
    cout << "0x" << info->GetCheckSum() << endl;
 #else
@@ -54,8 +51,7 @@
    cl = gROOT->GetClass("Tdata");
    info = cl->GetStreamerInfo();
    info->ls();
-   cout << cl->GetName() << "'s streamerInfo #" 
-      << info->GetClassVersion() << " has a checksum of " ;
+   cout << cl->GetName() << "'s streamerInfo #" << info->GetClassVersion() << " has a checksum of " ;
 #ifdef ClingWorkAroundJITandInline
    cout << "0x" << info->GetCheckSum() << endl;
 #else

@@ -10,8 +10,9 @@
 #else
 
    TH1I *h1 = new TH1I("histo1","histo title", 100, -10., 10.);
-   for (Int_t bin=1;bin<=100;++bin)
+   for (Int_t bin=1;bin<=100;++bin) {
       h1->SetBinContent(bin, bin % 12);
+   }
    h1->ResetBit(kMustCleanup); // reset bit while it is always done in TH1::Streamer()
 
    TObject *obj = new TObject();
@@ -24,9 +25,10 @@
       arr->Add(b, Form("option_%d_option",n));
    }
 
-   TClonesArray *clones = new TClonesArray("TBox",10);
-   for(int n=0;n<10;n++)
+   TClonesArray* clones = new TClonesArray("TBox",10);
+   for(int n=0;n<10;n++) {
        new ((*clones)[n]) TBox(n*10,n*100,n*20,n*200);
+   }
 
    TMap *map = new TMap;
    for (int n=0;n<10;n++) {
