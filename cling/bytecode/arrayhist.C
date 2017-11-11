@@ -2,16 +2,14 @@
 gROOT->Reset();
 char name[4][50];
 
-for(int i=0; i<4; i++)
-{
+for(int i=0; i<4; i++) {
   sprintf(name[i],"hist_array_%d", i);
 }
 
 
 TH1F *hist_array[4];
 
-for(int i=0; i<4; i++)
-{
+for(int i=0; i<4; i++) {
 
    /*  h[i] = (TH1F*)gROOT->FindObject(name[i]);
   if(h[i]) 
@@ -37,8 +35,7 @@ for(int i=0; i<4; i++)
 TCanvas *c1 = new TCanvas("c1", "Test Canvas");
 c1->Divide(2,2);
 
-for(int i=0; i<4; i++)
-{
+for(int i=0; i<4; i++) {
   hist_array[i] = new TH1F(name[i], name[i], 100, -10, 10);
   hist_array[i]->FillRandom("gaus", 10000);
 
