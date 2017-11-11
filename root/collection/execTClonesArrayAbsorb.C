@@ -1,5 +1,5 @@
-{
-#ifdef ClingWorkAroundMissingImplicitAuto
+void execTClonesArrayAbsorb() {
+#ifndef ClingWorkAroundMissingImplicitAuto
    TClonesArray *tc, *tc2;
 #endif
 tc = new TClonesArray("TNamed",5); for(int i=0; i<20; ++i) tc->ConstructedAt(i);
