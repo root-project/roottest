@@ -1,7 +1,8 @@
 {
    TH1I* h1 = new TH1I("histo1","histo title", 100, -10., 10.);
-   for (Int_t bin=1;bin<=100;++bin)
+   for (Int_t bin=1;bin<=100;++bin) {
       h1->SetBinContent(bin, bin % 12);
+   }
 
    TObject* obj = new TObject();
 
@@ -14,8 +15,9 @@
    }
 
    TClonesArray* clones = new TClonesArray("TBox",10);
-   for(int n=0;n<10;n++)
+   for(int n=0;n<10;n++) {
        new ((*clones)[n]) TBox(n*10,n*100,n*20,n*200);
+   }
 
    TMap* map = new TMap;
    for (int n=0;n<10;n++) {
