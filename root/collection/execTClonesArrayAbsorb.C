@@ -1,9 +1,6 @@
 void execTClonesArrayAbsorb() {
-#ifndef ClingWorkAroundMissingImplicitAuto
-   TClonesArray *tc, *tc2;
-#endif
-tc = new TClonesArray("TNamed",5); for(int i=0; i<20; ++i) tc->ConstructedAt(i);
-tc2 = new TClonesArray("TNamed",5); for(int i=0; i<20; ++i) tc2->ConstructedAt(i);
+TClonesArray *tc = new TClonesArray("TNamed",5); for(int i=0; i<20; ++i) tc->ConstructedAt(i);
+TClonesArray *tc2 = new TClonesArray("TNamed",5); for(int i=0; i<20; ++i) tc2->ConstructedAt(i);
 tc->AbsorbObjects(tc2);
 if (tc2->GetEntries() != 0) {
   Error("execTClonesArrayAbsorb","Original TClonesArray still contains data: %d\n",tc2->GetEntries());
