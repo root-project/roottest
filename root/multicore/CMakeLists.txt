@@ -133,7 +133,7 @@ if(ROOT_imt_FOUND)
    ROOTTEST_ADD_TEST(generate_imt_tree
                      MACRO generate_imt_tree.C+)
 
-   ROOTTEST_GENERATE_EXECUTABLE(ttree_read_imt ttree_read_imt.cpp LIBRARIES Core Thread Tree RIO Imt)
+   ROOTTEST_GENERATE_EXECUTABLE(ttree_read_imt ttree_read_imt.cpp LIBRARIES Core Thread Tree RIO)
 
    ROOTTEST_ADD_TEST(ttree_read_imt
                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/ttree_read_imt.sh
