@@ -309,6 +309,8 @@ function(ROOTTEST_ADD_TEST testname)
     endif()
   endif()
 
+  set(command "${CMAKE_PROJECT_SOURCE_DIR}/scripts/watch.py ${timeout} -- ${command}")
+
   ROOT_ADD_TEST(${fulltestname} COMMAND ${command}
                         OUTPUT ${logfile}
                         ${infile}
