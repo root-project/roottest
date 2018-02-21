@@ -309,6 +309,8 @@ function(ROOTTEST_ADD_TEST testname)
     endif()
   endif()
 
+  set(command "${PROJECT_SOURCE_DIR}/scripts/watch.py^270^--^${command}")
+
   ROOT_ADD_TEST(${fulltestname} COMMAND ${command}
                         OUTPUT ${logfile}
                         ${infile}
