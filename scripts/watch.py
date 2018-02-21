@@ -22,12 +22,12 @@ class AsyncExecutor(threading.Thread):
                                    preexec_fn=os.setsid)
    def _OutputGenerator(self):
       while True:
-         self.canPoll = False
+         #self.canPoll = False
          lineo = self.proc.stdout.readline().rstrip()
          linee = self.proc.stderr.readline().rstrip()
          if not linee and not lineo:
             break
-         self.canPoll = True
+         #self.canPoll = True
          yield linee, lineo
 
    def Print(self):
@@ -108,5 +108,6 @@ def getArgs():
 if __name__ == "__main__":
    timeout, commandArgs = getArgs()
    sig = signal.SIGUSR2
+   #ret = subprocess.call(commandArgs)
    ret = launchAndSendSignal(commandArgs, sig, timeout)
    sys.exit(ret)
