@@ -10,10 +10,14 @@ Jitted branch: b1_square
 Jitted branch: b2_vector
 Jitted branch: a
 Jitted means:49 49
+Info in <Snapshot>: Column b1.b1 will be saved as b1_b1
+Info in <Snapshot>: Column b2.b2 will be saved as b2_b2
 Jitted branch: b1_square
 Jitted branch: b2_vector
 Jitted branch: b1
+Jitted branch: b1_b1
 Jitted branch: b2
+Jitted branch: b2_b2
 ---- Now with a tree in a subdirectory
 Branch: b1
 Branch: b1_square
@@ -25,10 +29,14 @@ Jitted branch: b1_square
 Jitted branch: b2_vector
 Jitted branch: a
 Jitted means:49 49
+Info in <Snapshot>: Column b1.b1 will be saved as b1_b1
+Info in <Snapshot>: Column b2.b2 will be saved as b2_b2
 Jitted branch: b1_square
 Jitted branch: b2_vector
 Jitted branch: b1
+Jitted branch: b1_b1
 Jitted branch: b2
+Jitted branch: b2_b2
 +++++++++ Now MT
 ---- Now with a tree in the root directory
 Branch: b1
@@ -41,10 +49,14 @@ Jitted branch: b1_square
 Jitted branch: b2_vector
 Jitted branch: a
 Jitted means:49 49
+Info in <Snapshot>: Column b1.b1 will be saved as b1_b1
+Info in <Snapshot>: Column b2.b2 will be saved as b2_b2
 Jitted branch: b1_square
 Jitted branch: b2_vector
 Jitted branch: b1
+Jitted branch: b1_b1
 Jitted branch: b2
+Jitted branch: b2_b2
 ---- Now with a tree in a subdirectory
 Branch: b1
 Branch: b1_square
@@ -56,8 +68,12 @@ Jitted branch: b1_square
 Jitted branch: b2_vector
 Jitted branch: a
 Jitted means:49 49
+Info in <Snapshot>: Column b1.b1 will be saved as b1_b1
+Info in <Snapshot>: Column b2.b2 will be saved as b2_b2
 Jitted branch: b1_square
 Jitted branch: b2_vector
 Jitted branch: b1
+Jitted branch: b1_b1
 Jitted branch: b2
+Jitted branch: b2_b2
 (int) 0
