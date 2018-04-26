@@ -63,15 +63,25 @@ ROOTTEST_ADD_TEST(processExecutorProcess
                   OUTREF tProcessExecutorProcessTest.ref
                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
-ROOTTEST_GENERATE_EXECUTABLE(processExecutor tProcessExecutor.cpp LIBRARIES MultiProc Core Net TreePlayer RIO Hist MathCore)
+ROOTTEST_GENERATE_EXECUTABLE(processExecutor tProcessExecutor.cpp LIBRARIES MultiProc Core)
 
 ROOTTEST_ADD_TEST(processExecutor
                   EXEC processExecutor
                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
 if(ROOT_imt_FOUND)
+  ROOTTEST_GENERATE_EXECUTABLE(tExecutor tExecutor.cpp LIBRARIES MultiProc Core Imt)
+else()
+  ROOTTEST_GENERATE_EXECUTABLE(tExecutor tExecutor.cpp LIBRARIES MultiProc Core)
+endif()
+
+ROOTTEST_ADD_TEST(tExecutor
+                  EXEC tExecutor
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+
+if(ROOT_imt_FOUND)
   include_directories(${TBB_INCLUDE_DIRS})
-  ROOTTEST_GENERATE_EXECUTABLE(threadExecutor tThreadExecutor.cpp LIBRARIES Core Imt Hist MathCore)
+  ROOTTEST_GENERATE_EXECUTABLE(threadExecutor tThreadExecutor.cpp LIBRARIES Core Imt)
 
   ROOTTEST_ADD_TEST(threadExecutor
                     EXEC threadExecutor
