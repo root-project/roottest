@@ -98,8 +98,7 @@ def getArgs():
    checkArgs(timeouts, commandArgs)
    timeout = float(timeouts)
    if timeout != -1:
-      timeout += timeoutOffset
-      print ('Adding to the timeout a safety margin of %s seconds to allow gdb to fire up: total timeout is %s s' %( timeoutOffset, timeout))
+      timeout -= timeoutOffset
    return timeout, commandArgs
 
 if __name__ == "__main__":
