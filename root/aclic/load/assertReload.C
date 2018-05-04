@@ -1,3 +1,6 @@
+#ifdef __assertReload__
+#define __assertReload__
+
 {
 #if !defined ClingWorkAroundUnloadingIOSTREAM
   gErrorIgnoreLevel = kError;
@@ -6,3 +9,5 @@
 #endif
   return 0;
 }
+
+#endif

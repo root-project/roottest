@@ -10,6 +10,9 @@ void foo1() { return ; }
      ^
 */
 
+#ifdef __assertROOT7027__
+#define __assertROOT7027__
+
 static const char filename1[] = "workfile.cxx";
 static const char filename2[] = "renamed.cxx";
 void out(const char* code) {
@@ -26,3 +29,5 @@ int assertROOT7027() {
    gSystem->CompileMacro(filename2, "fgs");
    return 0;
 }
+
+#endif
