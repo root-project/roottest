@@ -25,9 +25,12 @@ ROOTTEST_ADD_TEST(execInterpClassNew
                   OUTREF execInterpClassNew.ref
                   DEPENDS classlib.cxx)
 
+# FIXME: Temporary workaround for runtime_cxxmodules
+if(NOT ROOT_runtime_cxxmodules_FOUND)
 ROOTTEST_ADD_TEST(execProperties
                   MACRO execProperties.C
                   OUTREF execProperties.ref)
+endif()
 
 ROOTTEST_ADD_TEST(execState
                   COPY_TO_BUILDDIR tc_state.root libState.cxx
