@@ -135,7 +135,7 @@ void execUnloading(){
    } else {
       cerr << "<<method>> is declared, but not valid.\n";
    }
-   gROOT->ProcessLine(".undo 1");
+   gROOT->ProcessLine(".undo 2");
    cout << "Check state of class, expected: \"1\" (kForwardDeclared).\n";
    cout << "The state of MyClass is: "
         << TClass::GetClass("MyClass")->GetState() << "\n";
