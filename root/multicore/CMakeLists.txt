@@ -21,10 +21,13 @@ endif()
 
 ROOTTEST_GENERATE_EXECUTABLE(testSetAddress testSetAddress.cpp LIBRARIES Core RIO Tree)
 
+# FIXME: Temporary workaround for runtime_cxxmodule
+if(NOT ROOT_runtime_cxxmodules_FOUND)
 ROOTTEST_ADD_TEST(testSetAddressLoop
                   EXEC ./testSetAddressLoop.sh
                   COPY_TO_BUILDDIR just1entry.root
                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
+endif()
 
 ROOTTEST_ADD_TEST(checkTThreadedObjectCopies
                   MACRO checkTThreadedObjectCopies.C)
