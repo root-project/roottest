@@ -18,7 +18,7 @@ include $(ROOTTEST_HOME)/scripts/Event.mk
 
 #.SUFFIXES: .cxx .o .so
 
-CXXOPT:=-Z7
+CXXOPT:=-Z7 -std=c++11
 LDOPT:=-debug
 
 #all: bigeventTest
