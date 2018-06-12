@@ -24,7 +24,7 @@
    cout << json << endl << endl;
    cout << " ====== ROOT TObject/TNamed/TString as class members TJsonEx10 ===== " << endl;
    json = TBufferJSON::ToJSON(ex10);
-   testJsonReading(json);
+   testJsonReading(json, true);
    cout << json << endl << endl;
    cout << " ============ selected data members ======== " << endl;
    cout << "ex5.fObj1 = " << TBufferJSON::ToJSON(ex5, 0, "fObj1") << endl;

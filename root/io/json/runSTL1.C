@@ -29,7 +29,7 @@
    cout << json << endl << endl;
    cout << " ====== More exotic STL containers as set or map with TRef inside TJsonEx13 (len=1) ===== " << endl;
    json = TBufferJSON::ToJSON(ex13);
-   testJsonReading(json);
+   testJsonReading(json, true);
    cout << json << endl << endl;
 
    delete ex7;
