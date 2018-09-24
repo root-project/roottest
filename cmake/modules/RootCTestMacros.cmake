@@ -130,6 +130,11 @@ function(ROOTTEST_ADD_TEST testname)
     set(fulltestname ${testprefix}-${testname})
   endif()
 
+  string(REPLACE "-fimplicit-module-maps" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+  string(REPLACE "-fimplicit-module-maps" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+  string(REPLACE "-fimplicit-module-maps" "" ROOT_CXX_FLAGS "${ROOT_CXX_FLAGS}")
+  string(REPLACE "-fimplicit-module-maps" "" ROOT_C_FLAGS "${ROOT_C_FLAGS}")
+
   if (ARG_ENABLE_IF OR ARG_DISABLE_IF)
     ROOT_SHOW_OPTIONS(ROOT_ENABLED_FEATURES)
     # Turn the output into a cmake list which is easier to work with.
