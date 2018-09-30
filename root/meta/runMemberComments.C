@@ -5,9 +5,8 @@ class baseCl {
 public:
    baseCl() {}
    baseCl(const baseCl&) {}
-#if __cplusplus >= 201103L
-   baseCl &operator=(baseCl&&) = delete;
-#endif
+   int Deleted() = delete;
+
 public:
    virtual int fGetIndex(Int_t aIndex=0) { return 42; } // Title Base
 };
@@ -16,9 +15,7 @@ class basePrCl {
 public:
    basePrCl() {}
    basePrCl(const basePrCl&) {}
-#if __cplusplus >= 201103L
-   basePrCl &operator=(basePrCl&&) = delete;
-#endif
+
 public:
    virtual int fGetPrIndex(Int_t aIndex=0) { return 52; } // Title Base
 };
@@ -30,6 +27,14 @@ public:
    virtual int fGetIndex(Int_t aIndex); // Title Derived
 };
 
+static bool IsSpecialMember(TMethod& m) {
+   if (strstr(m.GetName(), m.GetClass()->GetName()))
+      return true;
+   if (strstr(m.GetName(), "operator"))
+      return true;
+   return false;
+}
+
 void runMemberComments() {
    printf("\nTH1F::Class()->GetListOfAllPublicDataMembers():\n");
    TH1F::Class()->GetListOfAllPublicDataMembers()->ls("noaddr");
@@ -37,6 +42,7 @@ void runMemberComments() {
    printf("\nTArrow::Class()->GetListOfAllPublicMethods():\n");
    TList arrowPubMeths;
    for (TObject* pubMeth: *TArrow::Class()->GetListOfAllPublicMethods()) {
+      if (IsSpecialMember(*static_cast<TMethod*>(pubMeth))) continue;
       arrowPubMeths.AddLast(pubMeth);
    }
    arrowPubMeths.Sort();
@@ -52,8 +58,7 @@ void runMemberComments() {
    TIter iPubMeth(pubMeth);
    TMethod* meth = 0;
    while ((meth = (TMethod*)iPubMeth())) {
-      // skip C++11 move c'tor, move op=
-      if (strstr(meth->GetSignature(), "&&")) continue;
+      if (IsSpecialMember(*meth)) continue;
       printf("%s::%s%s // %s\n", meth->GetClass()->GetName(), meth->GetName(), meth->GetSignature(),
              meth->GetTitle());
    }

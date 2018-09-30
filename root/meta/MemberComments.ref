@@ -479,38 +479,6 @@ OBJ: TList	TList	Doubly linked list : 0
       void TAttFill::StreamerNVirtual(TBuffer& ClassDef_StreamerNVirtual_b)
  OBJ: TMethod	SysError	 : 0
       void TObject::SysError(const char* method, const char* msgfmt) const
- OBJ: TMethod	TArrow	 : 0
-      TArrow TArrow::TArrow()
- OBJ: TMethod	TArrow	 : 0
-      TArrow TArrow::TArrow(Double_t x1, Double_t y1, Double_t x2, Double_t y2, Float_t arrowsize = 0.050000000000000003, Option_t* option = ">")
- OBJ: TMethod	TArrow	 : 0
-      TArrow TArrow::TArrow(const TArrow& arrow)
- OBJ: TMethod	TAttBBox2D	 : 0
-      TAttBBox2D TAttBBox2D::TAttBBox2D(const TAttBBox2D&)
- OBJ: TMethod	TAttBBox2D	 : 0
-      TAttBBox2D TAttBBox2D::TAttBBox2D()
- OBJ: TMethod	TAttFill	 : 0
-      TAttFill TAttFill::TAttFill()
- OBJ: TMethod	TAttFill	 : 0
-      TAttFill TAttFill::TAttFill(Color_t fcolor, Style_t fstyle)
- OBJ: TMethod	TAttFill	 : 0
-      TAttFill TAttFill::TAttFill(const TAttFill&)
- OBJ: TMethod	TAttLine	 : 0
-      TAttLine TAttLine::TAttLine()
- OBJ: TMethod	TAttLine	 : 0
-      TAttLine TAttLine::TAttLine(Color_t lcolor, Style_t lstyle, Width_t lwidth)
- OBJ: TMethod	TAttLine	 : 0
-      TAttLine TAttLine::TAttLine(const TAttLine&)
- OBJ: TMethod	TLine	 : 0
-      TLine TLine::TLine()
- OBJ: TMethod	TLine	 : 0
-      TLine TLine::TLine(Double_t x1, Double_t y1, Double_t x2, Double_t y2)
- OBJ: TMethod	TLine	 : 0
-      TLine TLine::TLine(const TLine& line)
- OBJ: TMethod	TObject	 : 0
-      TObject TObject::TObject()
- OBJ: TMethod	TObject	 : 0
-      TObject TObject::TObject(const TObject& object)
  OBJ: TMethod	TestBit	 : 0
       Bool_t TObject::TestBit(UInt_t f) const
  OBJ: TMethod	TestBits	 : 0
@@ -527,46 +495,6 @@ OBJ: TList	TList	Doubly linked list : 0
       void TLine::ls(Option_t* option = "") const
  OBJ: TMethod	ls	 : 0
       void TObject::ls(Option_t* option = "") const
- OBJ: TMethod	operator delete	 : 0
-      void TObject::operator delete(void* ptr)
- OBJ: TMethod	operator delete	 : 0
-      void TObject::operator delete(void* ptr, void* vp)
- OBJ: TMethod	operator delete[]	 : 0
-      void TObject::operator delete[](void* ptr)
- OBJ: TMethod	operator delete[]	 : 0
-      void TObject::operator delete[](void* ptr, void* vp)
- OBJ: TMethod	operator new	 : 0
-      void* TObject::operator new(size_t sz)
- OBJ: TMethod	operator new	 : 0
-      void* TObject::operator new(size_t sz, void* vp)
- OBJ: TMethod	operator new[]	 : 0
-      void* TObject::operator new[](size_t sz)
- OBJ: TMethod	operator new[]	 : 0
-      void* TObject::operator new[](size_t sz, void* vp)
- OBJ: TMethod	operator=	 : 0
-      TArrow& TArrow::operator=(const TArrow&)
- OBJ: TMethod	operator=	 : 0
-      TLine& TLine::operator=(const TLine&)
- OBJ: TMethod	operator=	 : 0
-      TObject& TObject::operator=(const TObject& rhs)
- OBJ: TMethod	operator=	 : 0
-      TAttLine& TAttLine::operator=(const TAttLine&)
- OBJ: TMethod	operator=	 : 0
-      TAttBBox2D& TAttBBox2D::operator=(const TAttBBox2D&)
- OBJ: TMethod	operator=	 : 0
-      TAttFill& TAttFill::operator=(const TAttFill&)
- OBJ: TMethod	~TArrow	 : 0
-      void TArrow::~TArrow()
- OBJ: TMethod	~TAttBBox2D	 : 0
-      void TAttBBox2D::~TAttBBox2D()
- OBJ: TMethod	~TAttFill	 : 0
-      void TAttFill::~TAttFill()
- OBJ: TMethod	~TAttLine	 : 0
-      void TAttLine::~TAttLine()
- OBJ: TMethod	~TLine	 : 0
-      void TLine::~TLine()
- OBJ: TMethod	~TObject	 : 0
-      void TObject::~TObject()
 
 TH1::Class()->GetMenuItems():
 OBJ: TList	TList	Doubly linked list : 0
@@ -624,13 +552,6 @@ OBJ: TList	TList	Doubly linked list : 0
       void TAttMarker::SetMarkerAttributes()
 
 childCl::Class()->GetListOfAllPublicMethods():
-childCl::childCl() // 
-childCl::childCl(const childCl&) // 
 childCl::fGetIndex(Int_t aIndex) // Title Derived
-childCl::operator=(const childCl&) // 
-childCl::~childCl() // 
-baseCl::baseCl() // 
-baseCl::baseCl(const baseCl&) // 
+baseCl::Deleted()//
 baseCl::fGetIndex(Int_t aIndex = 0) // Title Base
-baseCl::operator=(const baseCl&) // 
-baseCl::~baseCl() // 
