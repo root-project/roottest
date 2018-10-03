@@ -31,6 +31,22 @@ int PoolTest() {
    if(chunkedredres3 != 21)
       return 18;
 
+#ifndef R__WIN32 //POSIX only
+   char string_buf[1024];
+   auto fp = fmemopen(string_buf, 1024, "w");
+   auto old = stderr;
+   stderr = fp;
+
+   ROOT::TThreadExecutor poolWarning(2);
+
+   std::fclose(fp);
+   stderr = old;
+
+   auto warning = "Warning in <TThreadExecutor>: There's already an active pool of threads. Proceeding with " + std::to_string(pool.GetPoolSize()) + " threads\n";
+   if(strcmp(string_buf, warning.c_str())!=0)
+      return 19;
+#endif
+
   /***** Foreach tests *****/
 
   std::atomic<unsigned> i{};
@@ -38,26 +54,26 @@ int PoolTest() {
 
    pool.Foreach(lambdaNTimes, 4);
    if(i!=4)
-      return 19;
+      return 20;
 
    i=0;
    pool.Foreach(lambdaNTimes, 4, 4);
    if(i!=4)
-      return 20;
+      return 21;
 
    std::vector<int> vec{1,1,1,1};
    pool.Foreach([&](int &i){i=2;}, vec);
    if(redfunc(vec) != 8)
-      return 21;
+      return 22;
 
    pool.Foreach([&](int &i){i=1;}, vec, 4);
    if(redfunc(vec) != 4)
-      return 22;
+      return 23;
 
    std::vector<unsigned> vecSeq{3,2,1,3};
    pool.Foreach([&vecSeq](unsigned k){vecSeq[k]=1;}, ROOT::TSeqU(4), 4);
    if(std::accumulate(vecSeq.begin(), vecSeq.end(), 0u) != 4)
-      return 23;
+      return 24;
 
    return 0;
 }
