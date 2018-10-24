@@ -53,10 +53,16 @@ ROOTTEST_ADD_TEST(perfstattest-libevent-build
                   COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target TheEvent${fast} -- ${always-make})
 
 set(RootExeOptions -e "gSystem->Load(\"libTheEvent\")")
-if(compression_default STREQUAL "lz4")
+if((compression_default STREQUAL "lz4") AND (NOT builtin_zlib))
       ROOTTEST_ADD_TEST(perfstattest
                   MACRO execperfstattest.C
                   OUTREF execperfstattestLZ4.oref
+                  ERRREF execperfstattest.eref
+                  DEPENDS perfstattest-libevent-build)
+elseif((compression_default STREQUAL "lz4") AND (builtin_zlib))
+      ROOTTEST_ADD_TEST(perfstattest
+                  MACRO execperfstattest.C
+		  OUTREF execperfstattestZLIBCF.oref
                   ERRREF execperfstattest.eref
                   DEPENDS perfstattest-libevent-build)
 else()
