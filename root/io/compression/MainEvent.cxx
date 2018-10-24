@@ -97,7 +97,6 @@ constexpr int expectedcomplevel = 4;
 constexpr int expectedcomplevel = 1;
 #endif
 
-
 // define a test class because we need to use some protected methods in the test
 class TestTMessage : public TMessage {
 public:
@@ -312,7 +311,11 @@ int main(int argc, char **argv)
       }
       int expectedSize = -1;
       if (comp == 0) expectedSize = 5538619;
+#ifdef R__HAS_CLOUDFLARE_ZLIB
+      else if (comp == 101) expectedSize = 1239522;
+#else
       else if (comp == 101) expectedSize = 1254957;
+#endif
       else if (comp == 208) expectedSize = 1088187;
       else if (comp == 301) expectedSize = 1265145;
       else if (comp == 404) expectedSize = 1289623;
