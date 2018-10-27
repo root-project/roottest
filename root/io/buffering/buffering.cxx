@@ -27,16 +27,11 @@ int buffering()
    gEnv->SetValue("TFile.LocalBuffer", 1);
 
    // open the local if any
-   TString filename("atlasFlushed.root");
+   TString filename("MINBIASFlushed.root");
    if (gSystem->AccessPathName(filename, kReadPermission) && filename.Index(":") == kNPOS) {
       // otherwise open the http file
       filename.Prepend("http://root.cern.ch/files/");
    }
-   //filename = "atlasFlushed.root";
-   
-   TString library("atlasFlushed/atlasFlushed");
-   fprintf(stderr, "Starting to load the library\n");
-   gSystem->Load(library);
 
    fprintf(stderr,"Starting to open the file\n");
    TFile *file = TFile::Open(filename, "TIMEOUT=30");
@@ -48,8 +43,8 @@ int buffering()
 
    file->SetCacheRead(new TFileCacheRead(file, 0));
 
-   // Try the known names :)
-   const char *names [] = {"E", "Events", "CollectionTree", "ntuple", "T"};
+   // Try the known names; we iterate through several to make switching between tests easier.
+   const char *names [] = {"MinBiasTree", "E", "Events", "CollectionTree", "ntuple", "T"};
    TTree *T = nullptr;
    for (unsigned int i = 0; i < sizeof(names)/sizeof(names[0]); ++i) {
       file->GetObject(names[i], T);
@@ -67,9 +62,9 @@ int buffering()
    }
    unsigned blocks = file->GetCacheRead()->GetBufferedBlocks();
 
-   fprintf(stderr, "fFileBlocks = %lu\n", blocks);
+   fprintf(stderr, "fFileBlocks = %u\n", blocks);
 
    file->Close();
    delete file;
-   return (8-blocks);  // Correct number of blocks to cache is 8; return error if we saw a different #.
+   return (2-blocks);  // Correct number of blocks to cache is 2; return error if we saw a different #.
 }
