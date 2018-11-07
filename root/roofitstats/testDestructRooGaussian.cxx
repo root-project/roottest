@@ -1,9 +1,5 @@
-#include <random>
-#include "RooDataSet.h"
-#include "RooArgSet.h"
 #include "RooRealVar.h"
 #include "RooGaussian.h"
-#include "RooPlot.h"
 
 int main()
 {
@@ -13,8 +9,5 @@ int main()
 
   RooGaussian g("gaus", "", x, mass, sigma);
   auto f = mass.frame();
-  //f->ResetBit(kCanDelete);
   g.plotOn(f);
-  //  f->Draw();
-  //delete f; 
 }

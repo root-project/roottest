@@ -6,8 +6,14 @@ ROOTTEST_ADD_TEST(read-scientificnotation
                   OUTCNVCMD grep -v -e "Wouter"
                   OUTREF read_scientific_notation.ref)
 
-ROOTTEST_GENERATE_EXECUTABLE(test_destruct_RooGaussian testDestructRooGaussian testDestructRooGaussian.cxx LIBRARIES ${ROOFITLIBRARIES})
+ROOTTEST_GENERATE_EXECUTABLE(testDestructRooGaussian
+                  testDestructRooGaussian testDestructRooGaussian.cxx LIBRARIES ${ROOFITLIBRARIES})
+ROOTTEST_ADD_TEST(testDestructRooGaussian
+                  EXEC ./testDestructRooGaussian
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
-ROOTTEST_ADD_TEST(test_destruct_RooGaussian
-                  EXEC ./test_destruct_RooGaussian )
+ROOTTEST_GENERATE_EXECUTABLE(testRooSetMemPools testRooSetMemPools testRooSetMemPools.cxx LIBRARIES ${ROOFITLIBRARIES})
+ROOTTEST_ADD_TEST(testRooSetMemPools
+                  EXEC ./testRooSetMemPools
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
 endif()
