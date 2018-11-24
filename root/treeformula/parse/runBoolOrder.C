@@ -5,13 +5,12 @@
 #else
    printf("G__catchexception=0\n");
 #endif
-#ifdef ClingWorkAroundMissingDynamicScope
-   if (TFile *f = (TFile*)gROOT->ProcessLine("gFile;"))
+#ifndef ClingWorkAroundMissingDynamicScope
+   if (gFile!=0) {
 #else
-      if (gFile!=0)
-#endif         
-   {
-#ifdef ClingWorkAroundMissingDynamicScope
+   std::unique_ptr<TInterpreterValue> v = gInterpreter->MakeInterpreterValue();
+   gInterpreter->Evaluate("gFile", *v);
+   if (TFile *f = (TFile*)v->GetAsPointer()) {
       TTree *mk; f->GetObject("mk",mk);
 #endif
       mk->Scan("iem.mt:iem.i:Emcl[iem.i]._HMx8:iem.dphi_met","(iem.dphi_met>0.5) && (Emcl[iem.i]._HMx8<20)","colsize=18",2,211);
