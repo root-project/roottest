@@ -85,7 +85,7 @@ $(CXXSO): $(CXXOBJS)
 #	$(CMDECHO)$(SOCMD) $(SOFLAGS) $(CXXOBJS) $(OutPutOpt)$(CXXSO) $(EXPLLINKLIBS)
 
 depend: FORCE
-	$(CMDECHO)rmkdepend -f Makefile $(INCLUDES) $(CXXSOURCE)
+	$(CMDECHO)makedepend -f Makefile $(INCLUDES) $(CXXSOURCE)
 
 tar: FORCE
 	tar cvf badio.tar Makefile LinkDef.h $(CINTLIST) $(CXXSOURCES) *.C *.root
