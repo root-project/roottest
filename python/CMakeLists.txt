@@ -1,1 +1,3 @@
-ROOTTEST_ADD_TESTDIRS()
+if(NOT pyroot_experimental)
+  ROOTTEST_ADD_TESTDIRS()
+endif()

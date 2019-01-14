@@ -10,13 +10,15 @@ ROOTTEST_ADD_TEST(runreferenceuse
                   DEPENDS MyClassReferenceUse.C
                   LABELS roottest regression cling)
 
-ROOTTEST_ADD_TEST(testcint
-                  MACRO testcint.py
-                  PRECMD root -b -q -l -e .L\ t.h+
-                  OUTREF pythoncintrun.ref
-                  OUTCNVCMD grep -v "just a comment"
-                  WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR}
-                  LABELS roottest regression cling)
+if(NOT pyroot_experimental)
+  ROOTTEST_ADD_TEST(testcint
+                    MACRO testcint.py
+                    PRECMD root -b -q -l -e .L\ t.h+
+                    OUTREF pythoncintrun.ref
+                    OUTCNVCMD grep -v "just a comment"
+                    WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+                    LABELS roottest regression cling)
+endif()
 
 if(ROOT_cintex_FOUND)
   ROOTTEST_ADD_TEST(testreflex
