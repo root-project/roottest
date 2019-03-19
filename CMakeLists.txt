@@ -67,6 +67,8 @@ else()# testing using an installation
   enable_testing()
 endif()
 
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
+
 # Synchronizing default compression algorithm used for ROOT.
 # We need to have it for CMake settings for switching tests references.
 set(compression_default "zlib" CACHE STRING "" FORCE)
