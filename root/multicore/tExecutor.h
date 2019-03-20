@@ -2,6 +2,7 @@
 #include "TRandom.h"
 #include <functional>
 #include <vector>
+#include <memory>
 #include <numeric> //accumulate
 
 int f(int a)
@@ -29,6 +30,9 @@ int TExecutorPoolTest(T &pool) {
    auto res = pool.Map([](int a) -> int { return a+1; }, {0,0,0,0});
    if( res != truth)
       return 1;
+
+   // ... and move-only types
+   pool.Map([](int) { return std::make_unique<TList>(); }, { 1, 2, 3 });
 
    // vector and C++ function
    std::vector<int> vargs = {0,0,0,0};
