@@ -1,3 +1,9 @@
+if("${LZ4_VERSION}" STREQUAL "")
+   set(lz4_ver 1.8.3)
+else()   
+   set(lz4_ver ${LZ4_VERSION})
+endif()   
+
 ROOTTEST_ADD_TEST(execCreateAndMerge
                   MACRO execCreateAndMerge.C
                   OUTREF references/execCreateAndMerge.ref)
@@ -63,13 +69,13 @@ ROOTTEST_ADD_TEST(merged-lzma
                   DEPENDS datagen-hadd-mzfile12
                   DEPENDS datagen-hadd-mzfile34)
 
-if(${LZ4_VERSION} VERSION_LESS "1.7.5")
+if(${lz4_ver} VERSION_LESS "1.7.5")
    ROOTTEST_ADD_TEST(merged-lz4
                   PRECMD ${ROOT_hadd_CMD} -f404 mlz4file1-4.root mlz4file1-2.root mlz4file3-4.root
                   COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testMergedFile.C(\"mlz4file1-4.root\",404,5441,5)"
                   DEPENDS datagen-hadd-mlz4file12
                   DEPENDS datagen-hadd-mlz4file34)
-elseif(${LZ4_VERSION} VERSION_GREATER_EQUAL "1.7.5")
+elseif(${lz4_ver} VERSION_GREATER_EQUAL "1.7.5")
    ROOTTEST_ADD_TEST(merged-lz4
                   PRECMD ${ROOT_hadd_CMD} -f404 mlz4file1-4.root mlz4file1-2.root mlz4file3-4.root
                   COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testMergedFile.C(\"mlz4file1-4.root\",404,5407,5)"
@@ -175,7 +181,7 @@ if(${compression_default} STREQUAL "zlib")
                   DEPENDS simple-default-compr-level9
                   DEPENDS simplek-lz4-compr-level4)
 
-      if(${LZ4_VERSION} VERSION_LESS "1.7.5")
+      if(${lz4_ver} VERSION_LESS "1.7.5")
              ROOTTEST_ADD_TEST(simplek-lz4-compr-level4
                            PRECMD ${ROOT_hadd_CMD} -fk404 hsimpleK404.root hsimpleK209.root hsimpleK.root hsimple.root hsimple9.root hsimple209.root hsimple409.root hsimple92.root
                            COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK404.root\",24*25000,404,12047348,30)"
@@ -200,7 +206,7 @@ if(${compression_default} STREQUAL "zlib")
                            PRECMD ${ROOT_hadd_CMD} -f401 hsimple401.root hsimple.root
                            COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple401.root\",25000,401,447464,5)"
                            DEPENDS hsimple-filemergerfile)
-      elseif(${LZ4_VERSION} VERSION_GREATER_EQUAL "1.7.5")
+      elseif(${lz4_ver} VERSION_GREATER_EQUAL "1.7.5")
              ROOTTEST_ADD_TEST(simplek-lz4-compr-level4
                            PRECMD ${ROOT_hadd_CMD} -fk404 hsimpleK404.root hsimpleK209.root hsimpleK.root hsimple.root hsimple9.root hsimple209.root hsimple409.root hsimple92.root
                            COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK404.root\",24*25000,404,12047348,30)"
@@ -289,7 +295,7 @@ if(${compression_default} STREQUAL "zlib")
                   DEPENDS simplex2-default-compr-level9
                   DEPENDS simple-default-compr-level9
                   DEPENDS simplek-default-compr-deflevel)
-      if(${LZ4_VERSION} VERSION_LESS "1.7.5")
+      if(${lz4_ver} VERSION_LESS "1.7.5")
          ROOTTEST_ADD_TEST(simplek-lz4-compr-level4
                      PRECMD ${ROOT_hadd_CMD} -fk404 hsimpleK404.root hsimpleK209.root hsimpleK.root hsimple.root hsimple9.root hsimple209.root hsimple409.root hsimple92.root
                      COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK404.root\",24*25000,404,12047489,30)"
@@ -314,7 +320,7 @@ if(${compression_default} STREQUAL "zlib")
                         COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple401.root\",25000,401,418044,5)"
                         DEPENDS hsimple-filemergerfile)
 
-      elseif(${LZ4_VERSION} VERSION_GREATER_EQUAL "1.7.5")
+      elseif(${lz4_ver} VERSION_GREATER_EQUAL "1.7.5")
          ROOTTEST_ADD_TEST(simplek-lz4-compr-level4
                      PRECMD ${ROOT_hadd_CMD} -fk404 hsimpleK404.root hsimpleK209.root hsimpleK.root hsimple.root hsimple9.root hsimple209.root hsimple409.root hsimple92.root
                      COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK404.root\",24*25000,404,12047348,30)"
