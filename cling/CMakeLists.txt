@@ -1,1 +1,5 @@
-ROOTTEST_ADD_TESTDIRS()
+if(ROOT_runtime_cxxmodules_FOUND)
+  ROOTTEST_ADD_TESTDIRS(EXCLUDED_DIRS typedef_global)
+else()
+  ROOTTEST_ADD_TESTDIRS()
+endif()
