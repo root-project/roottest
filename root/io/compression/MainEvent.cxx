@@ -320,10 +320,11 @@ int main(int argc, char **argv)
       else if (comp == 208) expectedSize = 1088187;
       else if (comp == 301) expectedSize = 1265145;
       else if (comp == 404) expectedSize = 1289623;
+      else if (comp == 505) expectedSize = 1157266;
 #ifdef R__HAS_DEFAULT_LZ4
-      else if (comp == 5) expectedSize = 1285037;
+      else if (comp == 6) expectedSize = 1285037;
 #else
-      else if (comp == 5) expectedSize = 1208871;
+      else if (comp == 6) expectedSize = 1199107;
 #endif
 
       if (expectedSize > 0 &&
@@ -452,6 +453,8 @@ int main(int argc, char **argv)
       if (ROOT::CompressionSettings(ROOT::kLZMA, 99) != 299) exit(33);
       if (ROOT::CompressionSettings(ROOT::kLZ4, 0) != 400) exit(37);
       if (ROOT::CompressionSettings(ROOT::kLZ4, -1) != 400) exit(38);
+      if (ROOT::CompressionSettings(ROOT::kZSTD, 0) != 500) exit(39);
+      if (ROOT::CompressionSettings(ROOT::kZSTD, -1) != 500) exit(40);
       if (ROOT::CompressionSettings(ROOT::kOldCompressionAlgo, 100) != 399) exit(34);
       if (ROOT::CompressionSettings(ROOT::kUndefinedCompressionAlgorithm, 7) != 7) exit(35);
 
