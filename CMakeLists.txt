@@ -2,13 +2,13 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 project(roottest)
 
+# If we have ROOTSYS, let's use it.
+if(DEFINED ENV{ROOTSYS})
+  list(APPEND CMAKE_PREFIX_PATH ENV{ROOTSYS})
+endif()
+
 # Treat ROOT as a dependency for roottest.git
 find_package(ROOT REQUIRED CONFIG)
-
-# Deprecation of directly using ROOTSYS for roottest.git
-if(DEFINED ENV{ROOTSYS})
-  message(STATUS "Using directly ROOTSYS for roottest.git is under deprecation, please add ROOT in PATH.")
-endif()
 
 # If ROOT_SOURCE_DIR is set, roottest is built as part of the root build.
 # If ROOT_SOURCE_DIR is not set, search for an installation.
