@@ -10,6 +10,10 @@ endif()
 # Treat ROOT as a dependency for roottest.git
 find_package(ROOT REQUIRED CONFIG)
 
+# Add to CMake prefix path also ROOT_BINARY_DIR/../ (originally should be ROOT_BINARY_DIR) available from ROOTConfig.cmake.
+get_filename_component(PARENT_ROOT_BINARY_DIR ${ROOT_BINARY_DIR} DIRECTORY)
+list(APPEND CMAKE_PREFIX_PATH ${PARENT_ROOT_BINARY_DIR})
+
 # If ROOT_SOURCE_DIR is set, roottest is built as part of the root build.
 # If ROOT_SOURCE_DIR is not set, search for an installation.
 if(DEFINED ROOT_SOURCE_DIR)
