@@ -25,18 +25,29 @@ class TestClassPYTHONIZATIONS:
         import cppyy
         cls.test_dct = "Pythonizables_C"
         cls.pythonizables = cppyy.load_reflection_info(cls.test_dct)
+        cls.exp_pyroot = os.environ.get('EXP_PYROOT') == 'True'
 
     def test01_size_mapping(self):
         """Use composites to map GetSize() onto buffer returns"""
 
         import cppyy
 
+        exp_pyroot = self.exp_pyroot
         def set_size(self, buf):
-            buf.SetSize(self.GetN())
+            if exp_pyroot:
+                buf.reshape((self.GetN(),))
+            else:
+                buf.SetSize(self.GetN())
             return buf
 
-        cppyy.add_pythonization(
-            cppyy.compose_method("pythonizables::MyBufferReturner$", "Get[XY]$", set_size))
+        if exp_pyroot:
+            cppyy.py.add_pythonization(
+                cppyy.py.compose_method("pythonizables::MyBufferReturner$", "Get[XY]$", set_size)
+                )
+        else:
+            cppyy.add_pythonization(
+                cppyy.compose_method("pythonizables::MyBufferReturner$", "Get[XY]$", set_size)
+                )
 
         bsize, xval, yval = 3, 2, 5
         m = cppyy.gbl.pythonizables.MyBufferReturner(bsize, xval, yval)
@@ -53,12 +64,20 @@ class TestClassPYTHONIZATIONS:
         """Verify pinnability of returns"""
 
         import cppyy
-        cppyy.gbl.pythonizables.GimeDerived._creates = True
+        exp_pyroot = self.exp_pyroot
+
+        if exp_pyroot:
+            cppyy.gbl.pythonizables.GimeDerived.__creates__ = True
+        else:
+            cppyy.gbl.pythonizables.GimeDerived._creates = True
 
         result = cppyy.gbl.pythonizables.GimeDerived()
         assert type(result) == cppyy.gbl.pythonizables.MyDerived
 
-        cppyy.make_interface(cppyy.gbl.pythonizables.MyBase)
+        if exp_pyroot:
+            cppyy.py.pin_type(cppyy.gbl.pythonizables.MyBase)
+        else:
+            cppyy.make_interface(cppyy.gbl.pythonizables.MyBase)
         assert type(result) == cppyy.gbl.pythonizables.MyDerived
 
 
