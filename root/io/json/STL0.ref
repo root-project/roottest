@@ -73,3 +73,7 @@ TJsonEx13 store/read/store MATCHED len1:107 len2:107
   "vvvv" : []
 }
 
+ ====== Store derived from vector class as vector TJsonEx15 ===== 
+TJsonEx15 store/read/store MATCHED len1:2 len2:2
+[]
+

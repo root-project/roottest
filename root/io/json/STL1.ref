@@ -346,3 +346,7 @@ TJsonEx13 store/read/store MATCHED len1:959 len2:959
   "vvvv" : [[[[0]]]]
 }
 
+ ====== Store derived from vector class as vector TJsonEx15 ===== 
+TJsonEx15 store/read/store MATCHED len1:11 len2:11
+["string0"]
+

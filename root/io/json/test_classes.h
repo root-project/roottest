@@ -1008,6 +1008,19 @@ public:
    }
 };
 
+// _____________________________________________________________________________________
+
+class TJsonEx15 : public std::vector<std::string> {
+public:
+   TJsonEx15() = default; ///<  JSON_asbase
+
+   void Init(int cnt = 7)
+   {
+      for (int n=0;n<cnt;++n)
+         emplace_back(std::string("string") + std::to_string(n));
+   }
+};
+
 // ______________________________________________________________________________________
 
 bool testJsonReading(TString &json)

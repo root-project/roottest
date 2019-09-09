@@ -2136,3 +2136,7 @@ TJsonEx13 store/read/store MATCHED len1:5045 len2:5045
   "vvvv" : [[[[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]], [[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]], [[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]]], [[[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]], [[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]], [[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]]]]
 }
 
+ ====== Store derived from vector class as vector TJsonEx15 ===== 
+TJsonEx15 store/read/store MATCHED len1:77 len2:77
+["string0", "string1", "string2", "string3", "string4", "string5", "string6"]
+

@@ -13,6 +13,7 @@
    TJsonEx8 ex8; ex8.Init(1);
    TJsonEx12 ex12; ex12.Init(1);
    TJsonEx13 ex13; ex13.Init(1);
+   TJsonEx15 ex15; ex15.Init(1);
    TString json;
 
    cout << " ====== different STL containers TJsonEx7 (len=1) ===== " << endl;
@@ -30,6 +31,12 @@
    cout << " ====== More exotic STL containers as set or map with TRef inside TJsonEx13 (len=1) ===== " << endl;
    json = TBufferJSON::ToJSON(&ex13);
    testJsonReading(json);
+   cout << json << endl << endl;
+   cout << " ====== Store derived from vector class as vector TJsonEx15 ===== " << endl;
+   json = TBufferJSON::ToJSON(&ex15);
+   auto res15 = TBufferJSON::FromJSON<TJsonEx15>(json.Data());
+   TString json2 = TBufferJSON::ToJSON(res15.get());
+   printf("TJsonEx15 store/read/store %s len1:%d len2:%d\n", json == json2 ? "MATCHED" : "FAILED", json.Length(), json2.Length());
    cout << json << endl << endl;
 
 #endif
