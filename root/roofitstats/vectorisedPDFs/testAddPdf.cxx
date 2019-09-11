@@ -59,7 +59,7 @@ class TestGaussPlusPoisson : public PDFTest
       // Gauss is slightly less accurate
       _toleranceCompareBatches = 2.E-14;
       _toleranceParameter = 3.E-6;
-      _toleranceCorrelation = 3.E-4;
+      _toleranceCorrelation = 5.E-4;
     }
 };
 
