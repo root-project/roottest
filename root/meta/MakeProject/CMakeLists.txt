@@ -20,24 +20,26 @@ ROOTTEST_ADD_TEST(runaliceesd
 
 ROOTTEST_GENERATE_DICTIONARY(stl_makeproject_test stl_makeproject_test.h LINKDEF stl_makeproject_test_linkdef.h)
 
-if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/module.modulemap")
+if(ROOT_runtime_cxxmodules_FOUND)
+  #if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/module.modulemap")
   # For C++ modules builds, module.modulemap is generated during configuration time.
-  ROOTTEST_ADD_TEST(examples
-                   COPY_TO_BUILDDIR stl_makeproject_test.h
-                   MACRO create_makeproject_examples.C
-                   POSTCMD ${CMAKE_COMMAND} -E rename ${CMAKE_CURRENT_BINARY_DIR}/module.modulemap ${CMAKE_CURRENT_BINARY_DIR}/disabled.module.modulemap
-                   OUTREF create_makeproject_examples.ref
-                   DEPENDS ${GENERATE_DICTIONARY_TEST} stl_makeproject_test-build)
-elseif(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/disabled.module.modulemap")
-  # For C++ modules incremental builds.
-  ROOTTEST_ADD_TEST(examples
-                  COPY_TO_BUILDDIR stl_makeproject_test.h
-                  PRECMD ${CMAKE_COMMAND} -E rename ${CMAKE_CURRENT_BINARY_DIR}/disabled.module.modulemap ${CMAKE_CURRENT_BINARY_DIR}/module.modulemap
-                  MACRO create_makeproject_examples.C
-                  POSTCMD ${CMAKE_COMMAND} -E rename ${CMAKE_CURRENT_BINARY_DIR}/module.modulemap ${CMAKE_CURRENT_BINARY_DIR}/disabled.module.modulemap
-                  OUTREF create_makeproject_examples.ref
-                  DEPENDS ${GENERATE_DICTIONARY_TEST} stl_makeproject_test-build)
-elseif(NOT ROOT_runtime_cxxmodules_FOUND)
+    #ROOTTEST_ADD_TEST(examples
+    #               COPY_TO_BUILDDIR stl_makeproject_test.h
+    #               MACRO create_makeproject_examples.C
+    #               POSTCMD ${CMAKE_COMMAND} -E rename ${CMAKE_CURRENT_BINARY_DIR}/module.modulemap ${CMAKE_CURRENT_BINARY_DIR}/disabled.module.modulemap
+    #               OUTREF create_makeproject_examples.ref
+    #               DEPENDS ${GENERATE_DICTIONARY_TEST} stl_makeproject_test-build)
+  #elseif(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/disabled.module.modulemap")
+    # For C++ modules incremental builds.
+    #ROOTTEST_ADD_TEST(examples
+    #              COPY_TO_BUILDDIR stl_makeproject_test.h
+    #              PRECMD ${CMAKE_COMMAND} -E rename ${CMAKE_CURRENT_BINARY_DIR}/disabled.module.modulemap ${CMAKE_CURRENT_BINARY_DIR}/module.modulemap
+    #              MACRO create_makeproject_examples.C
+    #              POSTCMD ${CMAKE_COMMAND} -E rename ${CMAKE_CURRENT_BINARY_DIR}/module.modulemap ${CMAKE_CURRENT_BINARY_DIR}/disabled.module.modulemap
+    #              OUTREF create_makeproject_examples.ref
+    #              DEPENDS ${GENERATE_DICTIONARY_TEST} stl_makeproject_test-build)
+  #endif()
+else()
   ROOTTEST_ADD_TEST(examples
                     COPY_TO_BUILDDIR stl_makeproject_test.h
                     MACRO create_makeproject_examples.C
