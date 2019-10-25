@@ -158,9 +158,3 @@ void JetEvent::Reset(Option_t *)
    delete fgHitsA;  fgHitsA = 0;
    delete fgHitsB;  fgHitsB = 0;
 }
-
-
-
-
-
-
