@@ -49,8 +49,8 @@ else()
 
       ROOTTEST_ADD_TEST(treeCloneTest
                   PRECMD sh ${CMAKE_CURRENT_SOURCE_DIR}/generate-eventfile.sh ${ROOT_DIR}
-                  COMMAND ${ROOT_root_CMD} -b -q -l ${CMAKE_CURRENT_SOURCE_DIR}/run.C -e "gSystem->Load(\"../test/libEvent\")"
-                  POSTCMD ${ROOT_root_CMD} -b -q -l ${CMAKE_CURRENT_SOURCE_DIR}/runEvent.C -e "gSystem->Load(\"../test/libEvent\")"
+                  COMMAND ${ROOT_root_CMD} -b -q -l ${CMAKE_CURRENT_SOURCE_DIR}/run.C
+                  POSTCMD ${ROOT_root_CMD} -b -q -l ${CMAKE_CURRENT_SOURCE_DIR}/runEvent.C
                   OUTREF references/treeCloneTest.ref)
 
 endif()
