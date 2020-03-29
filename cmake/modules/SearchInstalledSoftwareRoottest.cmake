@@ -2,19 +2,31 @@ include(ExternalProject)
 
 if(NOT TARGET gtest)
 
-set(_gtest_byproduct_binary_dir
-    ${CMAKE_CURRENT_BINARY_DIR}/googletest-prefix/src/googletest-build/googlemock/)
-set(_gtest_byproducts
-    ${_gtest_byproduct_binary_dir}/gtest/libgtest.a
-    ${_gtest_byproduct_binary_dir}/gtest/libgtest_main.a
-    ${_gtest_byproduct_binary_dir}/libgmock.a
-    ${_gtest_byproduct_binary_dir}/libgmock_main.a
-)
+  set(_gtest_byproduct_binary_dir
+    ${CMAKE_CURRENT_BINARY_DIR}/googletest-prefix/src/googletest-build/)
+  set(_gtest_byproducts
+    ${_gtest_byproduct_binary_dir}/lib/libgtest.a
+    ${_gtest_byproduct_binary_dir}/lib/libgtest_main.a
+    ${_gtest_byproduct_binary_dir}/lib/libgmock.a
+    ${_gtest_byproduct_binary_dir}/lib/libgmock_main.a
+  ) 
 
-#---Download googletest--------------------------------------------------------------
-ExternalProject_Add(
+  if(MSVC)
+    set(EXTRA_GTEST_OPTS
+      -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=\\\"\\\"
+      -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_MINSIZEREL:PATH=\\\"\\\"
+      -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=\\\"\\\"
+      -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO:PATH=\\\"\\\")
+  endif()
+  if(APPLE)
+    set(EXTRA_GTEST_OPTS
+      -DCMAKE_OSX_SYSROOT=${CMAKE_OSX_SYSROOT})
+  endif()
+
+  ExternalProject_Add(
     googletest
     GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_SHALLOW 1
     GIT_TAG release-1.10.0
     UPDATE_COMMAND ""
     # TIMEOUT 10
@@ -31,6 +43,7 @@ ExternalProject_Add(
                   -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
                   -DCMAKE_AR=${CMAKE_AR}
                   -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+                  ${EXTRA_GTEST_OPTS}
     # Disable install step
     INSTALL_COMMAND ""
     BUILD_BYPRODUCTS ${_gtest_byproducts}
@@ -46,17 +59,21 @@ ExternalProject_Add(
 
   # Libraries
   ExternalProject_Get_Property(googletest binary_dir)
-  set(_G_LIBRARY_PATH ${binary_dir}/googlemock/)
+  set(_G_LIBRARY_PATH ${binary_dir}/lib/)
 
   # Register gtest, gtest_main, gmock, gmock_main
   foreach (lib gtest gtest_main gmock gmock_main)
     add_library(${lib} IMPORTED STATIC GLOBAL)
     add_dependencies(${lib} googletest)
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" AND
+        ${CMAKE_CXX_COMPILER_VERSION} VERSION_GREATER_EQUAL 9)
+      target_compile_options(${lib} INTERFACE -Wno-deprecated-copy)
+    endif()
   endforeach()
-  set_property(TARGET gtest PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}/gtest/libgtest.a)
-  set_property(TARGET gtest_main PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}/gtest/libgtest_main.a)
-  set_property(TARGET gmock PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}/libgmock.a)
-  set_property(TARGET gmock_main PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}/libgmock_main.a)
+  set_property(TARGET gtest PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX})
+  set_property(TARGET gtest_main PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}//${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+  set_property(TARGET gmock PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}/${CMAKE_STATIC_LIBRARY_PREFIX}gmock${CMAKE_STATIC_LIBRARY_SUFFIX})
+  set_property(TARGET gmock_main PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}/${CMAKE_STATIC_LIBRARY_PREFIX}gmock_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 endif(NOT TARGET gtest)
 
@@ -72,4 +89,3 @@ if(ROOT_mpi_FOUND)
       " Example: CMAKE_PREFIX_PATH=<MPI_install_path> (e.g. \"/usr/local/mpich\")")
   endif()
 endif()
-
