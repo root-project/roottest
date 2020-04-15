@@ -7,6 +7,7 @@ endif()
 
 add_library(VectorisedPDFTests STATIC VectorisedPDFTests.cxx)
 target_link_libraries(VectorisedPDFTests PUBLIC gtest ROOT::Gpad ROOT::RooFitCore ROOT::RooFit)
+target_include_directories(VectorisedPDFTests PUBLIC ${GTEST_INCLUDE_DIR})
 
 ROOT_ADD_GTEST(testCompatMode testCompatMode.cxx
               LIBRARIES VectorisedPDFTests)
