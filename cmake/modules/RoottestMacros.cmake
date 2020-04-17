@@ -179,9 +179,11 @@ macro(ROOTTEST_COMPILE_MACRO filename)
   # when using the scripts/build.C macro.
   get_directory_property(DirDefs COMPILE_DEFINITIONS)
 
-  foreach(d ${DirDefs})
-    list(APPEND RootMacroDirDefines "-e;#define ${d}")
-  endforeach()
+  if(NOT MSVC)
+    foreach(d ${DirDefs})
+      list(APPEND RootMacroDirDefines "-e;#define ${d}")
+    endforeach()
+  endif()
 
   set(RootMacroBuildDefines
         -e "#define CMakeEnvironment"
@@ -223,14 +225,31 @@ macro(ROOTTEST_COMPILE_MACRO filename)
 
   set(COMPILE_MACRO_TEST ${COMPILE_MACRO_TEST}-build)
 
-  add_test(NAME ${COMPILE_MACRO_TEST}
-           COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                    --target ${compile_target}${fast}
-                                    -- ${always-make})
+  if(MSVC)
+    add_test(NAME ${COMPILE_MACRO_TEST}
+             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                      --config $<CONFIG>
+                                      --target ${compile_target}${fast}
+                                      -- ${always-make})
+  else()
+    add_test(NAME ${COMPILE_MACRO_TEST}
+             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                      --target ${compile_target}${fast}
+                                      -- ${always-make})
+  endif()
   set_property(TEST ${COMPILE_MACRO_TEST} PROPERTY FAIL_REGULAR_EXPRESSION "Warning in")
   set_property(TEST ${COMPILE_MACRO_TEST} PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
   if(CMAKE_GENERATOR MATCHES Ninja)
     set_property(TEST ${COMPILE_MACRO_TEST} PROPERTY RUN_SERIAL true)
+  endif()
+
+  if(MSVC)
+    string(REPLACE "." "_" dll_name ${filename}) 
+    add_custom_command(TARGET ${compile_target} POST_BUILD
+       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${dll_name}.dll
+                                        ${CMAKE_CURRENT_BINARY_DIR}/${dll_name}.dll
+       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${dll_name}_ACLiC_dict_rdict.pcm
+                                        ${CMAKE_CURRENT_BINARY_DIR}/${dll_name}_ACLiC_dict_rdict.pcm)
   endif()
 
 endmacro(ROOTTEST_COMPILE_MACRO)
@@ -296,16 +315,32 @@ macro(ROOTTEST_GENERATE_DICTIONARY dictname)
 
   add_dependencies(${targetname_libgen} ${dictname})
 
-  add_test(NAME ${GENERATE_DICTIONARY_TEST}
-           COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                    --target  ${targetname_libgen}${fast}
-                                    -- ${always-make})
+  if(MSVC)
+    add_test(NAME ${GENERATE_DICTIONARY_TEST}
+             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                      --config $<CONFIG>
+                                      --target  ${targetname_libgen}${fast}
+                                      -- ${always-make})
+  else()
+    add_test(NAME ${GENERATE_DICTIONARY_TEST}
+             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                      --target  ${targetname_libgen}${fast}
+                                      -- ${always-make})
+  endif()
 
   set_property(TEST ${GENERATE_DICTIONARY_TEST} PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
   if(CMAKE_GENERATOR MATCHES Ninja)
     set_property(TEST ${GENERATE_DICTIONARY_TEST} PROPERTY RUN_SERIAL true)
   endif()
 
+  if(MSVC)
+    add_custom_command(TARGET ${targetname_libgen} POST_BUILD
+       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${dictname}_rdict.pcm
+                                        ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/${dictname}_rdict.pcm)
+    add_custom_command(TARGET ${targetname_libgen} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/${dictname}.dll
+                                       ${CMAKE_CURRENT_BINARY_DIR}/${dictname}.dll)
+  endif()
 
 endmacro(ROOTTEST_GENERATE_DICTIONARY)
 
@@ -374,16 +409,29 @@ macro(ROOTTEST_GENERATE_REFLEX_DICTIONARY dictionary)
 
   set(GENERATE_REFLEX_TEST ${targetname_libgen}-build)
 
-  add_test(NAME ${GENERATE_REFLEX_TEST}
-           COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                    --target ${targetname_libgen}${fast}
-                                    -- ${always-make})
+  if(MSVC)
+    add_test(NAME ${GENERATE_REFLEX_TEST}
+             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                      --config $<CONFIG>
+                                      --target ${targetname_libgen}${fast}
+                                      -- ${always-make})
+  else()
+    add_test(NAME ${GENERATE_REFLEX_TEST}
+             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                      --target ${targetname_libgen}${fast}
+                                      -- ${always-make})
+  endif()
 
   set_property(TEST ${GENERATE_REFLEX_TEST} PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
   if(CMAKE_GENERATOR MATCHES Ninja)
     set_property(TEST ${GENERATE_REFLEX_TEST} PROPERTY RUN_SERIAL true)
   endif()
 
+  if(MSVC)
+    add_custom_command(TARGET ${targetname_libgen} POST_BUILD
+       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/lib${dictionary}_dictrflx.dll
+                                        ${CMAKE_CURRENT_BINARY_DIR}/lib${dictionary}_dictrflx.dll)
+  endif()
 
 endmacro(ROOTTEST_GENERATE_REFLEX_DICTIONARY)
 
@@ -410,7 +458,14 @@ macro(ROOTTEST_GENERATE_EXECUTABLE executable)
   endif()
 
   if(ARG_LIBRARIES)
-    target_link_libraries(${executable} ${ARG_LIBRARIES})
+    if(MSVC)
+      foreach(library ${ARG_LIBRARIES})
+        set(libraries ${libraries} lib${library})
+      endforeach()
+      target_link_libraries(${executable} ${libraries})
+    else()
+      target_link_libraries(${executable} ${ARG_LIBRARIES})
+    endif()
   endif()
   if(TARGET ROOT::ROOTStaticSanitizerConfig)
     target_link_libraries(${executable} ROOT::ROOTStaticSanitizerConfig)
@@ -424,13 +479,27 @@ macro(ROOTTEST_GENERATE_EXECUTABLE executable)
 
   set(GENERATE_EXECUTABLE_TEST ${GENERATE_EXECUTABLE_TEST}-build)
 
-  add_test(NAME ${GENERATE_EXECUTABLE_TEST}
-           COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                    --target ${executable}${fast}
-                                    -- ${always-make})
+  if(MSVC)
+    add_test(NAME ${GENERATE_EXECUTABLE_TEST}
+             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                      --config $<CONFIG>
+                                      --target ${executable}${fast}
+                                      -- ${always-make})
+  else()
+    add_test(NAME ${GENERATE_EXECUTABLE_TEST}
+             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                      --target ${executable}${fast}
+                                      -- ${always-make})
+  endif()
   set_property(TEST ${GENERATE_EXECUTABLE_TEST} PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
   if(CMAKE_GENERATOR MATCHES Ninja)
     set_property(TEST ${GENERATE_EXECUTABLE_TEST} PROPERTY RUN_SERIAL true)
+  endif()
+
+  if(MSVC)
+    add_custom_command(TARGET ${executable} POST_BUILD
+       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/${executable}.exe
+                                        ${CMAKE_CURRENT_BINARY_DIR}/${executable}.exe)
   endif()
 
 endmacro()
@@ -451,6 +520,11 @@ function(ROOTTEST_ADD_OLDTEST)
                      WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR}
                      DEPENDS roottest-root-io-event
                      LABELS ${ARG_LABELS} TIMEOUT ${ARG_TIMEOUT})
+  if(MSVC)
+    ROOTTEST_TARGETNAME_FROM_FILE(testprefix .)
+    set(fulltestname "${testprefix}-make")
+    set_property(TEST ${fulltestname} PROPERTY DISABLED true)
+  endif()
 endfunction()
 
 #-------------------------------------------------------------------------------
@@ -462,9 +536,18 @@ macro(ROOTTEST_SETUP_MACROTEST)
 
   get_directory_property(DirDefs COMPILE_DEFINITIONS)
 
-  foreach(d ${DirDefs})
-    list(APPEND RootExeDefines "-e;#define ${d}")
-  endforeach()
+  if(NOT MSVC)
+    foreach(d ${DirDefs})
+      list(APPEND RootExeDefines "-e;#define ${d}")
+    endforeach()
+  else()
+    foreach(d ${DirDefs})
+      string(FIND ${d} "ClingWorkAround" APOS)
+      if( NOT ("${APOS}" STREQUAL "-1") )
+        list(APPEND RootExeDefines "-e;#define ${d}")
+      endif()
+    endforeach()
+  endif()
 
   set(root_cmd ${ROOT_root_CMD} ${RootExeDefines}
                -e "gSystem->SetBuildDir(\"${CMAKE_CURRENT_BINARY_DIR}\",true)"
@@ -719,6 +802,21 @@ function(ROOTTEST_ADD_TEST testname)
     set(postcmd POSTCMD ${ARG_POSTCMD})
   endif()
 
+  if(MSVC)
+    if(ARG_MACRO)
+      if(ARG_MACRO MATCHES "[.]C\\+" OR ARG_MACRO MATCHES "[.]cxx\\+")
+        string(REPLACE "+" "" macro_name "${ARG_MACRO}")
+        get_filename_component(fpath ${macro_name} REALPATH)
+        get_filename_component(fext ${fpath} EXT)
+        string(REPLACE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} fpath ${fpath})
+        string(REPLACE ${fext} "" fpath ${fpath})
+        string(REPLACE "." "" fext ${fext})
+        file(TO_NATIVE_PATH "${fpath}" fpath)
+        set(postcmd POSTCMD cmd /c if exist ${fpath}_${fext}.rootmap del ${fpath}_${fext}.rootmap)
+      endif()
+    endif()
+  endif()
+
   # Add dependencies. If the test depends on a macro file, the macro
   # will be compiled and the dependencies are set accordingly.
   if(ARG_DEPENDS)
@@ -746,18 +844,19 @@ function(ROOTTEST_ADD_TEST testname)
     set(run_serial RUN_SERIAL ${ARG_RUN_SERIAL})
   endif()
 
-  string(REPLACE ";" ":" _path "${ROOTTEST_ENV_PATH}")
-  string(REPLACE ";" ":" _pythonpath "${ROOTTEST_ENV_PYTHONPATH}")
-  string(REPLACE ";" ":" _librarypath "${ROOTTEST_ENV_LIBRARYPATH}")
+  if (NOT MSVC)
+    string(REPLACE ";" ":" _path "${ROOTTEST_ENV_PATH}")
+    string(REPLACE ";" ":" _pythonpath "${ROOTTEST_ENV_PYTHONPATH}")
+    string(REPLACE ";" ":" _librarypath "${ROOTTEST_ENV_LIBRARYPATH}")
 
-
-  set(environment ENVIRONMENT
-                  ${ROOTTEST_ENV_EXTRA}
-                  ${ARG_ENVIRONMENT}
-                  ROOTSYS=${ROOTSYS}
-                  PATH=${_path}:$ENV{PATH}
-                  PYTHONPATH=${_pythonpath}:$ENV{PYTHONPATH}
-                  ${ld_library_path}=${_librarypath}:$ENV{${ld_library_path}})
+    set(environment ENVIRONMENT
+                    ${ROOTTEST_ENV_EXTRA}
+                    ${ARG_ENVIRONMENT}
+                    ROOTSYS=${ROOTSYS}
+                    PATH=${_path}:$ENV{PATH}
+                    PYTHONPATH=${_pythonpath}:$ENV{PYTHONPATH}
+                    ${ld_library_path}=${_librarypath}:$ENV{${ld_library_path}})
+  endif()
 
   if(ARG_WORKING_DIR)
     get_filename_component(test_working_dir ${ARG_WORKING_DIR} ABSOLUTE)
@@ -786,7 +885,7 @@ function(ROOTTEST_ADD_TEST testname)
     endif()
   endif()
 
-  if(TIMEOUT_BINARY)
+  if(NOT MSVC AND TIMEOUT_BINARY)
     # It takes up to 30seconds to get the back trace!
     # And we want the backtrace before CTest sends kill -9.
     math(EXPR timeoutTimeout "${timeout}-30")
@@ -803,7 +902,7 @@ function(ROOTTEST_ADD_TEST testname)
                         ${outref}
                         ${errref}
                         WORKING_DIR ${test_working_dir}
-                        DIFFCMD ${ROOTTEST_DIR}/scripts/custom_diff.py
+                        DIFFCMD python ${ROOTTEST_DIR}/scripts/custom_diff.py
                         TIMEOUT ${timeout}
                         ${environment}
                         ${build}
@@ -820,6 +919,36 @@ function(ROOTTEST_ADD_TEST testname)
                         ${passregex}
                         ${copy_to_builddir}
                         DEPENDS ${deplist})
+
+  if(MSVC)
+    if (ARG_OUTCNV OR ARG_OUTCNVCMD)
+      set_property(TEST ${fulltestname} PROPERTY DISABLED true)
+    endif()
+    if(ARG_COMMAND)
+      string(FIND "${ARG_COMMAND}" ".sh" APOS)
+      if( NOT ("${APOS}" STREQUAL "-1") )
+        set_property(TEST ${fulltestname} PROPERTY DISABLED true)
+      endif()
+      string(FIND "${ARG_COMMAND}" "grep " APOS)
+      if( NOT ("${APOS}" STREQUAL "-1") )
+        set_property(TEST ${fulltestname} PROPERTY DISABLED true)
+      endif()
+      string(FIND "${ARG_COMMAND}" "make " APOS)
+      if( NOT ("${APOS}" STREQUAL "-1") )
+        set_property(TEST ${fulltestname} PROPERTY DISABLED true)
+      endif()
+    endif()
+    if(ARG_PRECMD)
+      string(FIND "${ARG_PRECMD}" "sh " APOS)
+      if( NOT ("${APOS}" STREQUAL "-1") )
+        set_property(TEST ${fulltestname} PROPERTY DISABLED true)
+      endif()
+      string(FIND "${ARG_PRECMD}" ".sh" APOS)
+      if( NOT ("${APOS}" STREQUAL "-1") )
+        set_property(TEST ${fulltestname} PROPERTY DISABLED true)
+      endif()
+    endif()
+  endif()
 
 endfunction(ROOTTEST_ADD_TEST)
 
@@ -922,19 +1051,19 @@ function(ROOTTEST_ADD_UNITTEST_DIR)
     endforeach()
   endif(ARG_DEPENDS)
 
-  string(REPLACE ";" ":" _path "${ROOTTEST_ENV_PATH}")
-  string(REPLACE ";" ":" _pythonpath "${ROOTTEST_ENV_PYTHONPATH}")
-  string(REPLACE ";" ":" _librarypath "${ROOTTEST_ENV_LIBRARYPATH}")
+  if(NOT MSVC)
+    string(REPLACE ";" ":" _path "${ROOTTEST_ENV_PATH}")
+    string(REPLACE ";" ":" _pythonpath "${ROOTTEST_ENV_PYTHONPATH}")
+    string(REPLACE ";" ":" _librarypath "${ROOTTEST_ENV_LIBRARYPATH}")
 
-
-  set(environment ENVIRONMENT
-                  ${ROOTTEST_ENV_EXTRA}
-                  ${ARG_ENVIRONMENT}
-                  ROOTSYS=${ROOTSYS}
-                  PATH=${_path}:$ENV{PATH}
-                  PYTHONPATH=${_pythonpath}:$ENV{PYTHONPATH}
-                  ${ld_library_path}=${_librarypath}:$ENV{${ld_library_path}})
-
+    set(environment ENVIRONMENT
+                    ${ROOTTEST_ENV_EXTRA}
+                    ${ARG_ENVIRONMENT}
+                    ROOTSYS=${ROOTSYS}
+                    PATH=${_path}:$ENV{PATH}
+                    PYTHONPATH=${_pythonpath}:$ENV{PYTHONPATH}
+                    ${ld_library_path}=${_librarypath}:$ENV{${ld_library_path}})
+  endif()
 
   ROOT_ADD_TEST(${fulltestname} COMMAND ${binary}
     ${environment}
