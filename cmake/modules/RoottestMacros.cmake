@@ -983,10 +983,17 @@ function(ROOTTEST_ADD_UNITTEST_DIR)
     "*.cc"
     "*.C"
     )
+  if(MSVC)
+    foreach(library ${ARG_UNPARSED_ARGUMENTS})
+      set(libraries ${libraries} lib${library})
+    endforeach()
+  else()
+    set (libraries ${ARG_UNPARSED_ARGUMENTS})
+  endif()
 
   add_executable(${binary} ${unittests_SRC})
   target_include_directories(${binary} PRIVATE ${GTEST_INCLUDE_DIR})
-  target_link_libraries(${binary} gtest gtest_main ${ARG_UNPARSED_ARGUMENTS})
+  target_link_libraries(${binary} gtest gtest_main ${libraries})
 
   if(TARGET ROOT::ROOTStaticSanitizerConfig)
     target_link_libraries(${binary} ROOT::ROOTStaticSanitizerConfig)
