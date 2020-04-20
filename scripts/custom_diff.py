@@ -14,6 +14,17 @@ import sys, os, time, difflib, optparse, re
 def filter(lines):
   outlines = []
   for line in lines:
+    if sys.platform == 'win32':
+      if 'Creating library ' in line:
+        continue
+      if '_ACLiC_dict' in line:
+        continue
+      if 'Warning in <TInterpreter::ReadRootmapFile>:' in line:
+        continue
+      if 'Warning in <TClassTable::Add>:' in line:
+        continue
+      if 'Error: Removing ' in line:
+        continue
     #---Processing line from interpreter (root.exe)------------------------------
     if re.match(r'^Processing ', line):
       continue
@@ -60,8 +71,12 @@ def main():
   
   fromdate = time.ctime(os.stat(fromfile).st_mtime)
   todate = time.ctime(os.stat(tofile).st_mtime)
-  fromlines = open(fromfile, 'U').readlines()
-  tolines = open(tofile, 'U').readlines()
+  if sys.platform == 'win32':
+    fromlines = open(fromfile).readlines()
+    tolines = open(tofile).readlines()
+  else:
+    fromlines = open(fromfile, 'U').readlines()
+    tolines = open(tofile, 'U').readlines()
 
   fromlines = filter(fromlines)
   tolines = filter(tolines)
