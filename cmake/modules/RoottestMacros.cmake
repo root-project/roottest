@@ -589,6 +589,14 @@ macro(ROOTTEST_SETUP_EXECTEST)
     set(realexec ${ARG_EXEC})
   endif()
 
+  if(MSVC)
+    if(${realexec} MATCHES "[.]py" AND NOT ${realexec} MATCHES "[.]exe")
+      set(realexec ${PYTHON_EXECUTABLE} ${realexec})
+    else()
+      set(realexec ${realexec})
+    endif()
+  endif()
+
   set(command ${realexec})
 
   unset(realexec CACHE)
