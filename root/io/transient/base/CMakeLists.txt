@@ -7,7 +7,7 @@ ROOT_LINKER_LIBRARY(base base_cling.cxx testobject.cpp testobjectderived.cpp TES
 set(RootExeOptions -e "gSystem->Load(\"libbase\")")   # Adding a ; to avoid the output is complicated
 
 ROOTTEST_ADD_TEST(WriteFile
-                  PRECMD ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target base${fast}
+                  PRECMD ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --config $<CONFIG> --target base${fast}
                   MACRO execWriteFile.cxx+
                   OUTREF execWriteFile.ref)
 if(${compression_default} STREQUAL "lz4")
