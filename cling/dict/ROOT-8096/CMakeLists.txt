@@ -1,12 +1,7 @@
 # ROOT-8096
 
-if(MSVC)
-   add_custom_command(OUTPUT dict.cxx
-      COMMAND ${ROOT_genreflex_CMD} ${CMAKE_CURRENT_SOURCE_DIR}/definitions.h -o dict.cxx  --selection_file=${CMAKE_CURRENT_SOURCE_DIR}/selection.xml --rootmap libROOT-8096.rootmap --rootmap-lib libROOT-8096.dll )
-else()
-   add_custom_command(OUTPUT dict.cxx
-      COMMAND ${ROOT_genreflex_CMD} ${CMAKE_CURRENT_SOURCE_DIR}/definitions.h -o dict.cxx  --selection_file=${CMAKE_CURRENT_SOURCE_DIR}/selection.xml --rootmap libROOT-8096.rootmap --rootmap-lib libROOT-8096.so )
-endif()
+add_custom_command(OUTPUT dict.cxx
+   COMMAND ${ROOT_genreflex_CMD} ${CMAKE_CURRENT_SOURCE_DIR}/definitions.h -o dict.cxx  --selection_file=${CMAKE_CURRENT_SOURCE_DIR}/selection.xml --rootmap libROOT-8096.rootmap --rootmap-lib libROOT-8096${CMAKE_SHARED_LIBRARY_SUFFIX} )
 
 set_source_files_properties(dict.cxx PROPERTIES GENERATED TRUE)
 
