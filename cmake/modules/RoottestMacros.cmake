@@ -225,18 +225,11 @@ macro(ROOTTEST_COMPILE_MACRO filename)
 
   set(COMPILE_MACRO_TEST ${COMPILE_MACRO_TEST}-build)
 
-  if(MSVC)
-    add_test(NAME ${COMPILE_MACRO_TEST}
-             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                      --config $<CONFIG>
-                                      --target ${compile_target}${fast}
-                                      -- ${always-make})
-  else()
-    add_test(NAME ${COMPILE_MACRO_TEST}
-             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                      --target ${compile_target}${fast}
-                                      -- ${always-make})
-  endif()
+  add_test(NAME ${COMPILE_MACRO_TEST}
+           COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                    --config $<CONFIG>
+                                    --target ${compile_target}${fast}
+                                    -- ${always-make})
   set_property(TEST ${COMPILE_MACRO_TEST} PROPERTY FAIL_REGULAR_EXPRESSION "Warning in")
   set_property(TEST ${COMPILE_MACRO_TEST} PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
   if(CMAKE_GENERATOR MATCHES Ninja)
@@ -315,18 +308,11 @@ macro(ROOTTEST_GENERATE_DICTIONARY dictname)
 
   add_dependencies(${targetname_libgen} ${dictname})
 
-  if(MSVC)
-    add_test(NAME ${GENERATE_DICTIONARY_TEST}
-             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                      --config $<CONFIG>
-                                      --target  ${targetname_libgen}${fast}
-                                      -- ${always-make})
-  else()
-    add_test(NAME ${GENERATE_DICTIONARY_TEST}
-             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                      --target  ${targetname_libgen}${fast}
-                                      -- ${always-make})
-  endif()
+  add_test(NAME ${GENERATE_DICTIONARY_TEST}
+           COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                    --config $<CONFIG>
+                                    --target  ${targetname_libgen}${fast}
+                                    -- ${always-make})
 
   set_property(TEST ${GENERATE_DICTIONARY_TEST} PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
   if(CMAKE_GENERATOR MATCHES Ninja)
@@ -409,18 +395,11 @@ macro(ROOTTEST_GENERATE_REFLEX_DICTIONARY dictionary)
 
   set(GENERATE_REFLEX_TEST ${targetname_libgen}-build)
 
-  if(MSVC)
-    add_test(NAME ${GENERATE_REFLEX_TEST}
-             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                      --config $<CONFIG>
-                                      --target ${targetname_libgen}${fast}
-                                      -- ${always-make})
-  else()
-    add_test(NAME ${GENERATE_REFLEX_TEST}
-             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                      --target ${targetname_libgen}${fast}
-                                      -- ${always-make})
-  endif()
+  add_test(NAME ${GENERATE_REFLEX_TEST}
+           COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                    --config $<CONFIG>
+                                    --target ${targetname_libgen}${fast}
+                                    -- ${always-make})
 
   set_property(TEST ${GENERATE_REFLEX_TEST} PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
   if(CMAKE_GENERATOR MATCHES Ninja)
@@ -479,18 +458,11 @@ macro(ROOTTEST_GENERATE_EXECUTABLE executable)
 
   set(GENERATE_EXECUTABLE_TEST ${GENERATE_EXECUTABLE_TEST}-build)
 
-  if(MSVC)
-    add_test(NAME ${GENERATE_EXECUTABLE_TEST}
-             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                      --config $<CONFIG>
-                                      --target ${executable}${fast}
-                                      -- ${always-make})
-  else()
-    add_test(NAME ${GENERATE_EXECUTABLE_TEST}
-             COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
-                                      --target ${executable}${fast}
-                                      -- ${always-make})
-  endif()
+  add_test(NAME ${GENERATE_EXECUTABLE_TEST}
+           COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+                                    --config $<CONFIG>
+                                    --target ${executable}${fast}
+                                    -- ${always-make})
   set_property(TEST ${GENERATE_EXECUTABLE_TEST} PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
   if(CMAKE_GENERATOR MATCHES Ninja)
     set_property(TEST ${GENERATE_EXECUTABLE_TEST} PROPERTY RUN_SERIAL true)
