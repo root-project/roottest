@@ -7,12 +7,12 @@ if(MSVC)
     ROOTTEST_ADD_TEST(skipLinkDef
                       COMMAND grep clingAutoload libSkippingDict.cxx
                       DEPENDS skipLinkDefDict
-                      OUTREF skippingDict.ref)
+                      OUTREF skippingDict_win32.ref)
 else()
     ROOTTEST_ADD_TEST(skipLinkDef
                       COMMAND grep clingAutoload libSkippingDict.cxx
                       DEPENDS skipLinkDefDict
-                      OUTREF skippingDict_win32.ref)
+                      OUTREF skippingDict.ref)
 endif()
 
 ROOTTEST_ADD_TESTDIRS()
