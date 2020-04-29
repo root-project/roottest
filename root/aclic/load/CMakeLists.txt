@@ -13,7 +13,12 @@ ROOTTEST_ADD_TEST(linktest
                   MACRO execlinktest.C
                   OUTREF execlinktest.ref)
 
+if(MSVC)
+    set(MIGHT_FAIL WILLFAIL)
+endif()
+
 ROOTTEST_ADD_TEST(autoloadNamespace
                   MACRO execautoloadNamespace.C
                   OUTREF execautoloadNamespace.ref
+                  ${MIGHT_FAIL}
                   DEPENDS MyClass.cxx autoload)

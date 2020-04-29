@@ -12,8 +12,13 @@ else()
   set(testcint OUTREF)
 endif()
 
+if(MSVC)
+  set(MIGHT_FAIL WILLFAIL)
+endif()
+
 ROOTTEST_ADD_TEST(VectorSort
                   MACRO VectorSort.C
                   ${testcint} VectorSort.ref
+                  ${MIGHT_FAIL}
                   # OUTCNV VectorSort_convert.sh
                   LABELS roottest regression cling)
