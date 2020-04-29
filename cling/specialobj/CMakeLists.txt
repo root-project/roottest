@@ -30,8 +30,12 @@ ROOTTEST_ADD_TEST(reread
                   MACRO reread.C
                   LABELS roottest regression cling)
 
+if(MSVC)
+  set(MIGHT_FAIL WILLFAIL)
+endif()
 ROOTTEST_ADD_TEST(unhappy
                   MACRO unhappy.C
                   ERRREF unhappy.eref
                   PASSRC 1
+                  ${MIGHT_FAIL}
                   LABELS roottest regression cling)

@@ -40,12 +40,14 @@ configure_file(typelist.v6.txt . COPYONLY)
 ROOTTEST_ADD_AUTOMACROS(DEPENDS ANSTmpltInt.C TmpltInt0.C TmpltInt1.C TmpltFloat.C
                                 TmpltNoSpec.C Event.cxx ${COMPILE_MACRO_TEST})
 
-ROOTTEST_ADD_TEST(drawing
-                  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/DrawTest.sh
-                  OUTCNVCMD grep -v -e "--- Switching to" -e "--- Using "
-                                    -e "^make" -e "Event.*root made" -e "dt.*made" -e ExecutionContext
-                  OUTREF drawing.ref
-                  WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+if(NOT MSVC OR ${win_broken_tests})
+    ROOTTEST_ADD_TEST(drawing
+                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/DrawTest.sh
+                      OUTCNVCMD grep -v -e "--- Switching to" -e "--- Using "
+                                        -e "^make" -e "Event.*root made" -e "dt.*made" -e ExecutionContext
+                      OUTREF drawing.ref
+                      WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
 
 ROOTTEST_ADD_TEST(namespaceconflict
                   MACRO execnamespaceconflict.C+)
