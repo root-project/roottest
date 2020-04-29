@@ -4,13 +4,15 @@ ROOTTEST_ADD_TEST(skipLinkDefDict
                   OUTREF skipLinkDefDict.ref)
 
 if(MSVC)
+    set(grep_cmd findstr)
     set(OUTREF_FILE skippingDict_win32.ref)
 else()
+    set(grep_cmd grep)
     set(OUTREF_FILE skippingDict.ref)
 endif()
 
 ROOTTEST_ADD_TEST(skipLinkDef
-                  COMMAND findstr clingAutoload libSkippingDict.cxx
+                  COMMAND ${grep_cmd} clingAutoload libSkippingDict.cxx
                   DEPENDS skipLinkDefDict
                   OUTREF ${OUTREF_FILE})
 
