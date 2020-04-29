@@ -6,7 +6,9 @@ if(MSVC)
     ROOT_LINKER_LIBRARY(base base_cling.cxx testobject.cpp testobjectderived.cpp TEST LIBRARIES libCore libRIO)
     add_custom_command(TARGET base POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/libbase.dll
-                                         ${CMAKE_CURRENT_BINARY_DIR}/libbase.dll)
+                                         ${CMAKE_CURRENT_BINARY_DIR}/libbase.dll
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/libbase.lib
+                                         ${CMAKE_CURRENT_BINARY_DIR}/libbase.lib)
     set(OUTREF_FILE execWriteFile_win32.ref)
 else()
     ROOT_LINKER_LIBRARY(base base_cling.cxx testobject.cpp testobjectderived.cpp TEST LIBRARIES Core RIO)
