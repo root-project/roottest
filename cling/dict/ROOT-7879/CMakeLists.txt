@@ -4,15 +4,14 @@ ROOTTEST_ADD_TEST(skipLinkDefDict
                   OUTREF skipLinkDefDict.ref)
 
 if(MSVC)
-    ROOTTEST_ADD_TEST(skipLinkDef
-                      COMMAND findstr clingAutoload libSkippingDict.cxx
-                      DEPENDS skipLinkDefDict
-                      OUTREF skippingDict_win32.ref)
+    set(OUTREF_FILE skippingDict_win32.ref)
 else()
-    ROOTTEST_ADD_TEST(skipLinkDef
-                      COMMAND grep clingAutoload libSkippingDict.cxx
-                      DEPENDS skipLinkDefDict
-                      OUTREF skippingDict.ref)
+    set(OUTREF_FILE skippingDict.ref)
 endif()
+
+ROOTTEST_ADD_TEST(skipLinkDef
+                  COMMAND findstr clingAutoload libSkippingDict.cxx
+                  DEPENDS skipLinkDefDict
+                  OUTREF ${OUTREF_FILE})
 
 ROOTTEST_ADD_TESTDIRS()

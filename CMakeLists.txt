@@ -25,6 +25,7 @@ find_package(ROOT REQUIRED CONFIG)
 if(MSVC)
 
   set(libsuffix .dll)
+  set(exesuffix .exe)
   set(CMAKE_CXX_FLAGS "/nologo /Zc:__cplusplus /MD /GR /EHsc- /W3 /D_WIN32")
 
   option(win_broken_tests "Enable broken tests on Windows" FALSE)

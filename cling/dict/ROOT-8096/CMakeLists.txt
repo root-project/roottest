@@ -21,9 +21,12 @@ add_test(NAME roottest-cling-dict-ROOT-8096-build
 #                                  --target  ${targetname_libgen}${fast})
 set_property(TEST roottest-cling-dict-ROOT-8096-build PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
 
-
+if(MSVC)
+   set(MIGHT_FAIL WILLFAIL)
+endif()
 ROOTTEST_ADD_TEST(load
                   MACRO load.C
+                  ${MIGHT_FAIL}
                   DEPENDS roottest-cling-dict-ROOT-8096-build
                   OUTREF load.ref)
 
