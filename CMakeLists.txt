@@ -24,6 +24,7 @@ find_package(ROOT REQUIRED CONFIG)
 
 if(MSVC)
 
+  set(libsuffix .dll)
   set(CMAKE_CXX_FLAGS "/nologo /Zc:__cplusplus /MD /GR /EHsc- /W3 /D_WIN32")
 
   option(win_broken_tests "Enable broken tests on Windows" FALSE)
@@ -70,6 +71,7 @@ if(MSVC)
 
 else()
 
+  set(libsuffix .so)
   # If ROOT_SOURCE_DIR is set, roottest is built as part of the root build.
   # If ROOT_SOURCE_DIR is not set, search for an installation.
   if(DEFINED ROOT_SOURCE_DIR)
