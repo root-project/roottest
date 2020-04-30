@@ -72,6 +72,7 @@ if(MSVC)
 
 else()
 
+  # We can not use CMAKE_SHARED_LIBRARY_SUFFIX as on macos it uses the standard dylib rather than the .so
   set(libsuffix .so)
   # If ROOT_SOURCE_DIR is set, roottest is built as part of the root build.
   # If ROOT_SOURCE_DIR is not set, search for an installation.
