@@ -179,11 +179,12 @@ macro(ROOTTEST_COMPILE_MACRO filename)
   # when using the scripts/build.C macro.
   get_directory_property(DirDefs COMPILE_DEFINITIONS)
 
-  if(NOT MSVC)
-    foreach(d ${DirDefs})
-      list(APPEND RootMacroDirDefines "-e;#define ${d}")
-    endforeach()
-  endif()
+  foreach(d ${DirDefs})
+    if(d MATCHES "_WIN32" OR d MATCHES "_XKEYCHECK_H" OR d MATCHES "NOMINMAX")
+      continue()
+    endif()
+    list(APPEND RootMacroDirDefines "-e;#define ${d}")
+  endforeach()
 
   set(RootMacroBuildDefines
         -e "#define CMakeEnvironment"
@@ -197,6 +198,9 @@ macro(ROOTTEST_COMPILE_MACRO filename)
   set(root_compile_macro ${ROOT_root_CMD} ${RootMacroBuildDefines} -q -l -b)
 
   get_filename_component(realfp ${filename} ABSOLUTE)
+  if(MSVC)
+    string(REPLACE "/" "\\\\" realfp ${realfp})
+  endif()
 
   set(BuildScriptFile ${ROOTTEST_DIR}/scripts/build.C)
 
