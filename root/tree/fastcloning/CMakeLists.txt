@@ -26,10 +26,16 @@ ROOTTEST_ADD_TEST(runabstract-datageneration
                   COPY_TO_BUILDDIR abstract.C
                   COMMAND ${ROOT_root_CMD} -b -q -l "${CMAKE_CURRENT_BINARY_DIR}/abstract.C+(0)")
 
+if(MSVC)
+   set(OUTREF_FILE references/abstract_win32.ref)
+else()
+   set(OUTREF_FILE references/abstract.ref)
+endif()
+
 ROOTTEST_ADD_TEST(runabstract-copy
                   MACRO runabstract.C
                   PRECMD ${ROOT_root_CMD} -b -q -l "${CMAKE_CURRENT_BINARY_DIR}/abstract.C+(1)"
-                  OUTREF references/abstract.ref
+                  OUTREF ${OUTREF_FILE}
                   DEPENDS runabstract-datageneration)
 
 ROOTTEST_ADD_TEST(runfilemergererror
@@ -57,9 +63,13 @@ ROOTTEST_ADD_TEST(runbadmix
                   PRECMD ${ROOT_root_CMD} -b -q -l ${CMAKE_CURRENT_SOURCE_DIR}/runbadmix.C
                   OUTREF references/runbadmix.ref)
 
+if(MSVC)
+   set(MIGHT_FAIL WILLFAIL)
+endif()
 ROOTTEST_ADD_TEST(runSplitMismatch
                   COPY_TO_BUILDDIR runSplitMismatch.C
                   MACRO ${CMAKE_CURRENT_BINARY_DIR}/runSplitMismatch.C+
+                  ${MIGHT_FAIL}
                   OUTREF references/runSplitMismatch.ref)
 
 ROOTTEST_ADD_TEST(make_CloneTree
