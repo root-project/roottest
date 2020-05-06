@@ -2,9 +2,11 @@ ROOTTEST_GENERATE_REFLEX_DICTIONARY(nestedTemplate
                                     nestedTemplate.h
                                     SELECTION sel1.xml)
 
-ROOTTEST_GENERATE_REFLEX_DICTIONARY(nestedTemplateClone
-                                    nestedTemplate_clone.h
-                                    SELECTION sel2.xml)
+if(NOT MSVC OR win_broken_tests)
+    ROOTTEST_GENERATE_REFLEX_DICTIONARY(nestedTemplateClone
+                                        nestedTemplate_clone.h
+                                        SELECTION sel2.xml)
+endif()
 
 ROOTTEST_ADD_TEST(nestedTemplate
                   MACRO execnestedTemplate.C
