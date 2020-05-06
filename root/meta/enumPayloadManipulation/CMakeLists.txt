@@ -9,10 +9,14 @@
 ROOTTEST_GENERATE_REFLEX_DICTIONARY(checkEnumFwdDeclxDict x.h SELECTION selection_x.xml)
 ROOTTEST_GENERATE_REFLEX_DICTIONARY(checkEnumFwdDeclyDict y.h SELECTION selection_y.xml)
 
+if(MSVC)
+    set(MIGHT_FAIL WILLFAIL)
+endif()
 ROOTTEST_ADD_TEST(checkEnumFwdDecl
                   MACRO checkEnumFwdDecl.py
                   OUTREF empty.ref
                   ERRREF empty.ref
+                  ${MIGHT_FAIL}
                   DEPENDS checkEnumFwdDeclyDict-libgen-build checkEnumFwdDeclxDict-libgen-build)
 
 ROOTTEST_ADD_TESTDIRS()
