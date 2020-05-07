@@ -244,9 +244,9 @@ macro(ROOTTEST_COMPILE_MACRO filename)
     string(REPLACE "." "_" dll_name ${filename}) 
     add_custom_command(TARGET ${compile_target} POST_BUILD
        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${dll_name}.dll
-                                        ${CMAKE_CURRENT_BINARY_DIR}/${dll_name}.dll
+                                        ${CMAKE_CURRENT_BINARY_DIR}/
        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${dll_name}_ACLiC_dict_rdict.pcm
-                                        ${CMAKE_CURRENT_BINARY_DIR}/${dll_name}_ACLiC_dict_rdict.pcm)
+                                        ${CMAKE_CURRENT_BINARY_DIR}/)
   endif()
 
 endmacro(ROOTTEST_COMPILE_MACRO)
@@ -411,9 +411,15 @@ macro(ROOTTEST_GENERATE_REFLEX_DICTIONARY dictionary)
   endif()
 
   if(MSVC)
-    add_custom_command(TARGET ${targetname_libgen} POST_BUILD
-       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/lib${dictionary}_dictrflx.dll
-                                        ${CMAKE_CURRENT_BINARY_DIR}/lib${dictionary}_dictrflx.dll)
+    if(ARG_LIBNAME)
+      add_custom_command(TARGET ${targetname_libgen} POST_BUILD
+         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/${ARG_LIBNAME}.dll
+                                          ${CMAKE_CURRENT_BINARY_DIR}/${ARG_LIBNAME}.dll)
+    else()
+      add_custom_command(TARGET ${targetname_libgen} POST_BUILD
+         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/lib${dictionary}_dictrflx.dll
+                                          ${CMAKE_CURRENT_BINARY_DIR}/lib${dictionary}_dictrflx.dll)
+    endif()
   endif()
 
 endmacro(ROOTTEST_GENERATE_REFLEX_DICTIONARY)

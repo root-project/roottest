@@ -180,16 +180,14 @@ configure_file(commands1.txt . COPYONLY)
 configure_file(commands2.txt . COPYONLY)
 
 if(MSVC)
-  ROOTTEST_ADD_TEST(semaphore
-                   MACRO  tSemaphore.C
-                   OUTCNVCMD findstr "tSemaphore"
-                   OUTREF tSemaphore.ref)
+    set(grep_cmd findstr)
 else()
-  ROOTTEST_ADD_TEST(semaphore
-                   MACRO  tSemaphore.C
-                   OUTCNVCMD grep -v -e  "tSemaphore"
-                   OUTREF tSemaphore.ref)
+    set(grep_cmd grep)
 endif()
+ROOTTEST_ADD_TEST(semaphore
+                 MACRO  tSemaphore.C
+                 OUTCNVCMD ${grep_dmd} "tSemaphore"
+                 OUTREF tSemaphore.ref)
 
 if(OPENGL_gl_LIBRARY AND ROOTTEST_OS_ID MATCHES Scientific|CentOS|Ubuntu|Fedora)
   set(ROOTTEST_ENV_EXTRA LD_PRELOAD=${OPENGL_gl_LIBRARY})

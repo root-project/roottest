@@ -31,9 +31,13 @@ ROOTTEST_GENERATE_REFLEX_DICTIONARY(tEnumGetEnumClasses
                                     SELECTION tEnumGetEnumClasses_selection.xml
                                     NO_ROOTMAP)
 
+if(MSVC)
+    set(MIGHT_FAIL WILLFAIL)
+endif()
 ROOTTEST_ADD_TEST(execTEnumGetEnum
                   MACRO execTEnumGetEnum.C
                   OUTREF execTEnumGetEnum.ref
+                  ${MIGHT_FAIL}
                   DEPENDS ${GENERATE_REFLEX_TEST})
 
 

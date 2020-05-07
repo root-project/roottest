@@ -18,7 +18,7 @@ add_custom_command(TARGET clingDictInBinary
                    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_CURRENT_BINARY_DIR}/clingDictInBinary${exesuffix}
                    )
 
-if(NOT MSVC OR ${win_broken_tests})
+if(NOT MSVC OR win_broken_tests)
     ROOTTEST_ADD_TEST(clingDictInBinary
                       COMMAND ${CMAKE_COMMAND} -E env "PATH=${CMAKE_CURRENT_BINARY_DIR}/libsubdir:$ENV{PATH}" clingDictInBinary
                       OUTREF check_dict_in_binary.ref

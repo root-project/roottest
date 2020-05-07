@@ -3,7 +3,7 @@
 #include "Math/GenVector/PositionVector3D.h"
 #include "Math/Point3Dfwd.h"
 
-#if defined(R__MACOSX)
+#if defined(R__MACOSX) || defined(_MSC_VER)
 #include <map>
 #else
 #include "hash_map"
