@@ -36,19 +36,40 @@ ROOTTEST_COMPILE_MACRO(fornamespace.C)
 configure_file(templateAutoload.rootmap . COPYONLY)
 configure_file(typelist.v5.txt . COPYONLY)
 configure_file(typelist.v6.txt . COPYONLY)
+configure_file(typelist_win32.v5.txt . COPYONLY)
+configure_file(typelist_win32.v6.txt . COPYONLY)
 
 ROOTTEST_ADD_AUTOMACROS(DEPENDS ANSTmpltInt.C TmpltInt0.C TmpltInt1.C TmpltFloat.C
-                                TmpltNoSpec.C Event.cxx ${COMPILE_MACRO_TEST})
+                                TmpltNoSpec.C Event.cxx ${COMPILE_MACRO_TEST}
+                                EXCLUDE runMemberComments runautoload)
+if(MSVC)
+    set(OUTREF_FILE MemberComments_win32.ref)
+else()
+    set(OUTREF_FILE MemberComments.ref)
+endif()
+ROOTTEST_ADD_TEST(runMemberComments
+                  MACRO runMemberComments.C
+                  OUTREF ${OUTREF_FILE})
 
-ROOTTEST_ADD_TEST(drawing
-                  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/DrawTest.sh
-                  OUTCNVCMD grep -v -e "--- Switching to" -e "--- Using "
-                                    -e "^make" -e "Event.*root made" -e "dt.*made" -e ExecutionContext
-                  OUTREF drawing.ref
-                  WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+if(NOT MSVC OR win_broken_tests)
+    ROOTTEST_ADD_TEST(drawing
+                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/DrawTest.sh
+                      OUTCNVCMD grep -v -e "--- Switching to" -e "--- Using "
+                                        -e "^make" -e "Event.*root made" -e "dt.*made" -e ExecutionContext
+                      OUTREF drawing.ref
+                      WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
 
 ROOTTEST_ADD_TEST(namespaceconflict
                   MACRO execnamespaceconflict.C+)
 
+if(MSVC)
+    set(AUTOLOADREF_FILE autoload_win32.ref)
+else()
+    set(AUTOLOADREF_FILE autoload.ref)
+endif()
+ROOTTEST_ADD_TEST(runautoload
+                  MACRO runautoload.C
+                  OUTREF ${AUTOLOADREF_FILE})
 
 ROOTTEST_ADD_TESTDIRS()

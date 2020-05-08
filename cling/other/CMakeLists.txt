@@ -12,9 +12,14 @@ ROOTTEST_ADD_TEST(runsavannah54662
                   DEPENDS ${COMPILE_MACRO_TEST}
                   LABELS roottest regression cling)
 
+if(MSVC)
+    set(MIGHT_FAIL WILLFAIL)
+endif()
+
 ROOTTEST_ADD_TEST(runsprintfselect
                   MACRO runsprintfselect.C
                   OUTREF sprintfselect.ref
+                  ${MIGHT_FAIL}
                   LABELS roottest regression cling)
 
 ROOTTEST_ADD_TEST(staticConstTest
@@ -45,11 +50,16 @@ ROOTTEST_ADD_TEST(execValuePrint
                   OUTREF execValuePrint.ref
                   LABELS roottest regression cling)
 
+if(MSVC)
+    set(ERREF_FILE checkMissingSymbolExitCode_win32.eref)
+else()
+    set(ERREF_FILE checkMissingSymbolExitCode.eref)
+endif()
 
 ROOTTEST_ADD_TEST(checkMissingSymbolExitCode
                   MACRO checkMissingSymbolExitCode.C
                   OUTREF checkMissingSymbolExitCode.oref
-                  ERRREF checkMissingSymbolExitCode.eref
+                  ERRREF ${ERREF_FILE}
                   PASSRC 1
                   LABELS roottest regression cling)
 
