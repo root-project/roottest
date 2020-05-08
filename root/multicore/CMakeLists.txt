@@ -189,7 +189,7 @@ else()
 endif()
 ROOTTEST_ADD_TEST(semaphore
                  MACRO  tSemaphore.C
-                 OUTCNVCMD ${grep_dmd} "tSemaphore"
+                 OUTCNVCMD ${grep_cmd} "tSemaphore"
                  OUTREF tSemaphore.ref)
 
 if(OPENGL_gl_LIBRARY AND ROOTTEST_OS_ID MATCHES Scientific|CentOS|Ubuntu|Fedora)
