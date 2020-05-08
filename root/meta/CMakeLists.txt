@@ -70,6 +70,7 @@ else()
 endif()
 ROOTTEST_ADD_TEST(runautoload
                   MACRO runautoload.C
-                  OUTREF ${AUTOLOADREF_FILE})
+                  OUTREF ${AUTOLOADREF_FILE}
+                  DEPENDS Event.cxx ${COMPILE_MACRO_TEST})
 
 ROOTTEST_ADD_TESTDIRS()
