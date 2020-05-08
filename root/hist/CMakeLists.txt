@@ -1,5 +1,10 @@
+if(MSVC)
+    set(MIGHT_FAIL WILLFAIL)
+endif()
+
 ROOTTEST_ADD_TEST(mergeTH2Poly
-                  MACRO th2PolyMerge.C)
+                  MACRO th2PolyMerge.C
+                  ${MIGHT_FAIL} )
 
 ROOTTEST_ADD_TEST(assertSparseToTHn
                   MACRO assertSparseToTHn.C

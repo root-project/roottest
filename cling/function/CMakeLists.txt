@@ -22,9 +22,13 @@ ROOTTEST_ADD_TEST(runlongArgTest
                   WILLFAIL
                   LABELS roottest regression cling)
 
+if(MSVC)
+    set(MIGHT_FAIL WILLFAIL)
+endif()
 ROOTTEST_ADD_TEST(runstaticfunc
                   MACRO runstaticfunc.C
                   OUTREF_CINTSPECIFIC staticfunc.ref
+                  ${MIGHT_FAIL}
                   # OUTCNV staticfunc_convert.sh
                   LABELS roottest regression cling)
 

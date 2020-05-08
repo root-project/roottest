@@ -13,9 +13,13 @@ ROOTTEST_ADD_TEST(runtemplateAutodict
                   OUTREF templateAutodict.ref
                   LABELS roottest regression cling)
 
+if(MSVC)
+    set(MIGHT_FAIL WILLFAIL)
+endif()
 ROOTTEST_ADD_TEST(runoperators
                   MACRO runoperators.C
                   OUTREF operators.ref
+                  ${MIGHT_FAIL}
                   LABELS roottest regression cling)
 
 ROOTTEST_ADD_TEST(runalgebra

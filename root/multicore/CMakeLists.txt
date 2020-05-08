@@ -21,10 +21,17 @@ endif()
 
 ROOTTEST_GENERATE_EXECUTABLE(testSetAddress testSetAddress.cpp LIBRARIES Core MathCore RIO Tree)
 
-ROOTTEST_ADD_TEST(testSetAddressLoop
-                  EXEC ${CMAKE_CURRENT_SOURCE_DIR}/testSetAddressLoop.sh
-                  COPY_TO_BUILDDIR just1entry.root
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+if(MSVC)
+  ROOTTEST_ADD_TEST(testSetAddressLoop
+                    EXEC ${CMAKE_CURRENT_SOURCE_DIR}/testSetAddressLoop.bat
+                    COPY_TO_BUILDDIR just1entry.root
+                    DEPENDS ${GENERATE_EXECUTABLE_TEST})
+else()
+  ROOTTEST_ADD_TEST(testSetAddressLoop
+                    EXEC ${CMAKE_CURRENT_SOURCE_DIR}/testSetAddressLoop.sh
+                    COPY_TO_BUILDDIR just1entry.root
+                    DEPENDS ${GENERATE_EXECUTABLE_TEST})
+endif()
 
 ROOTTEST_ADD_TEST(checkTThreadedObjectCopies
                   MACRO checkTThreadedObjectCopies.C)
@@ -42,32 +49,34 @@ else()
   set(PROCESSOREXECUTORH1TEST_EXE_COMPILE_FLAGS "-I${ROOTSYS}/tutorials/multicore")
 endif()
 
-ROOTTEST_GENERATE_EXECUTABLE(processExecutorH1Test tProcessExecutorH1Test.cpp COMPILE_FLAGS ${PROCESSOREXECUTORH1TEST_EXE_COMPILE_FLAGS} LIBRARIES MultiProc Core Net TreePlayer Tree RIO Hist Gpad Graf)
+if(NOT MSVC OR win_broken_tests)
+  ROOTTEST_GENERATE_EXECUTABLE(processExecutorH1Test tProcessExecutorH1Test.cpp COMPILE_FLAGS ${PROCESSOREXECUTORH1TEST_EXE_COMPILE_FLAGS} LIBRARIES MultiProc Core Net TreePlayer Tree RIO Hist Gpad Graf)
 
-ROOTTEST_ADD_TEST(processExecutorH1Test
-                  EXEC ${CMAKE_CURRENT_BINARY_DIR}/processExecutorH1Test
-                  OUTREF tProcessExecutorH1Test.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+  ROOTTEST_ADD_TEST(processExecutorH1Test
+                    EXEC ${CMAKE_CURRENT_BINARY_DIR}/processExecutorH1Test
+                    OUTREF tProcessExecutorH1Test.ref
+                    DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
-ROOTTEST_GENERATE_EXECUTABLE(processExecutorTreeTest tProcessExecutorTreeTest.cpp LIBRARIES MultiProc Core Net TreePlayer Tree RIO Hist)
+  ROOTTEST_GENERATE_EXECUTABLE(processExecutorTreeTest tProcessExecutorTreeTest.cpp LIBRARIES MultiProc Core Net TreePlayer Tree RIO Hist)
 
-ROOTTEST_ADD_TEST(processExecutorTreeTest
-                  EXEC ${CMAKE_CURRENT_BINARY_DIR}/processExecutorTreeTest
-                  OUTREF tProcessExecutorTreeTest.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+  ROOTTEST_ADD_TEST(processExecutorTreeTest
+                    EXEC ${CMAKE_CURRENT_BINARY_DIR}/processExecutorTreeTest
+                    OUTREF tProcessExecutorTreeTest.ref
+                    DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
-ROOTTEST_GENERATE_EXECUTABLE(processExecutorProcessTest tProcessExecutorProcessTest.cpp LIBRARIES MultiProc Core Net TreePlayer Tree RIO Hist)
+  ROOTTEST_GENERATE_EXECUTABLE(processExecutorProcessTest tProcessExecutorProcessTest.cpp LIBRARIES MultiProc Core Net TreePlayer Tree RIO Hist)
 
-ROOTTEST_ADD_TEST(processExecutorProcess
-                  EXEC ${CMAKE_CURRENT_BINARY_DIR}/processExecutorProcessTest
-                  OUTREF tProcessExecutorProcessTest.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+  ROOTTEST_ADD_TEST(processExecutorProcess
+                    EXEC ${CMAKE_CURRENT_BINARY_DIR}/processExecutorProcessTest
+                    OUTREF tProcessExecutorProcessTest.ref
+                    DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
-ROOTTEST_GENERATE_EXECUTABLE(processExecutor tProcessExecutor.cpp LIBRARIES MultiProc Core Net TreePlayer RIO Hist MathCore)
+  ROOTTEST_GENERATE_EXECUTABLE(processExecutor tProcessExecutor.cpp LIBRARIES MultiProc Core Net TreePlayer RIO Hist MathCore)
 
-ROOTTEST_ADD_TEST(processExecutor
-                  EXEC ${CMAKE_CURRENT_BINARY_DIR}/processExecutor
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+  ROOTTEST_ADD_TEST(processExecutor
+                    EXEC ${CMAKE_CURRENT_BINARY_DIR}/processExecutor
+                    DEPENDS ${GENERATE_EXECUTABLE_TEST})
+endif()
 
 if(ROOT_imt_FOUND)
   include_directories(${TBB_INCLUDE_DIRS})
@@ -76,6 +85,17 @@ if(ROOT_imt_FOUND)
   ROOTTEST_ADD_TEST(threadExecutor
                     EXEC ${CMAKE_CURRENT_BINARY_DIR}/threadExecutor
                     DEPENDS ${GENERATE_EXECUTABLE_TEST})
+<<<<<<< HEAD
+=======
+  if(NOT MSVC AND NOT TBB_LIBRARIES)
+    set(TBB_LIBRARIES tbb)
+  endif()
+
+  ROOTTEST_GENERATE_EXECUTABLE(poolManager testPoolManager.cpp LIBRARIES Core Imt ${TBB_LIBRARIES})
+  ROOTTEST_ADD_TEST(poolManager
+                    EXEC ${CMAKE_CURRENT_BINARY_DIR}/poolManager
+                    DEPENDS ${GENERATE_EXECUTABLE_TEST})
+>>>>>>> 50d088d0... Testing rebase error on Github PR
 endif()
 
 ROOTTEST_GENERATE_EXECUTABLE(current_dir current_dir.cpp LIBRARIES Core RIO Thread)
@@ -155,15 +175,21 @@ ROOTTEST_ADD_TEST(tsenums
                   OUTREF exectsenums.ref
                   DEPENDS ${GENERATE_REFLEX_TEST})
 
-ROOTTEST_GENERATE_EXECUTABLE(fork fork.cpp LIBRARIES Core)
+if(NOT MSVC OR win_broken_tests)
+  ROOTTEST_GENERATE_EXECUTABLE(fork fork.cpp LIBRARIES Core)
+endif()
 
 configure_file(commands1.txt . COPYONLY)
 configure_file(commands2.txt . COPYONLY)
 
-
+if(MSVC)
+    set(grep_cmd findstr)
+else()
+    set(grep_cmd grep)
+endif()
 ROOTTEST_ADD_TEST(semaphore
                  MACRO  tSemaphore.C
-                 OUTCNVCMD grep -v -e  "tSemaphore"
+                 OUTCNVCMD ${grep_dmd} "tSemaphore"
                  OUTREF tSemaphore.ref)
 
 if(OPENGL_gl_LIBRARY AND ROOTTEST_OS_ID MATCHES Scientific|CentOS|Ubuntu|Fedora)

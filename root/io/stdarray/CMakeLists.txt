@@ -87,20 +87,27 @@ ROOTTEST_ADD_TEST(modelReadDictTFile
                   OUTREF modelReadDict.ref
                   DEPENDS modelReadDictTXMLFile)
 
+if(MSVC)
+    set(MIGHT_FAIL WILLFAIL)
+endif()
+
 ROOTTEST_ADD_TEST(modelReadDictTXMLFile
                   MACRO  modelReadDict.C+
                   MACROARG "\"model.xml\""
                   OUTREF modelReadDict.ref
+                  ${MIGHT_FAIL}
                   DEPENDS aclicModelWrite)
 
 ROOTTEST_ADD_TEST(modelReadNoDictTFile
                   MACRO  modelReadNoDict.C
                   MACROARG "\"model.root\""
                   OUTREF modelReadNoDict.ref
+                  ${MIGHT_FAIL}
                   DEPENDS aclicModelWrite)
 
 ROOTTEST_ADD_TEST(modelCheckValues
                   MACRO modelCheckValues.C
+                  ${MIGHT_FAIL}
                   DEPENDS aclicModelWrite)
 
 # ROOTTEST_ADD_TEST(modelReadNoDictTXMLFile
