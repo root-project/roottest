@@ -179,14 +179,10 @@ endif()
 configure_file(commands1.txt . COPYONLY)
 configure_file(commands2.txt . COPYONLY)
 
-if(MSVC)
-    set(grep_cmd findstr)
-else()
-    set(grep_cmd grep)
-endif()
+
 ROOTTEST_ADD_TEST(semaphore
                  MACRO  tSemaphore.C
-                 OUTCNVCMD ${grep_cmd} "tSemaphore"
+                 OUTCNVCMD grep -v -e  "tSemaphore"
                  OUTREF tSemaphore.ref)
 
 if(OPENGL_gl_LIBRARY AND ROOTTEST_OS_ID MATCHES Scientific|CentOS|Ubuntu|Fedora)
