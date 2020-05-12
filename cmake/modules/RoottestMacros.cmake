@@ -234,7 +234,9 @@ macro(ROOTTEST_COMPILE_MACRO filename)
                                     --config $<CONFIG>
                                     --target ${compile_target}${fast}
                                     -- ${always-make})
-  set_property(TEST ${COMPILE_MACRO_TEST} PROPERTY FAIL_REGULAR_EXPRESSION "Warning in")
+  if(NOT MSVC)
+    set_property(TEST ${COMPILE_MACRO_TEST} PROPERTY FAIL_REGULAR_EXPRESSION "Warning in")
+  endif()
   set_property(TEST ${COMPILE_MACRO_TEST} PROPERTY ENVIRONMENT ${ROOTTEST_ENVIRONMENT})
   if(CMAKE_GENERATOR MATCHES Ninja)
     set_property(TEST ${COMPILE_MACRO_TEST} PROPERTY RUN_SERIAL true)
@@ -518,18 +520,12 @@ macro(ROOTTEST_SETUP_MACROTEST)
 
   get_directory_property(DirDefs COMPILE_DEFINITIONS)
 
-  if(NOT MSVC)
-    foreach(d ${DirDefs})
-      list(APPEND RootExeDefines "-e;#define ${d}")
-    endforeach()
-  else()
-    foreach(d ${DirDefs})
-      string(FIND ${d} "ClingWorkAround" APOS)
-      if( NOT ("${APOS}" STREQUAL "-1") )
-        list(APPEND RootExeDefines "-e;#define ${d}")
-      endif()
-    endforeach()
-  endif()
+  foreach(d ${DirDefs})
+    if(d MATCHES "_WIN32" OR d MATCHES "_XKEYCHECK_H" OR d MATCHES "NOMINMAX")
+      continue()
+    endif()
+    list(APPEND RootExeDefines "-e;#define ${d}")
+  endforeach()
 
   set(root_cmd ${ROOT_root_CMD} ${RootExeDefines}
                -e "gSystem->SetBuildDir(\"${CMAKE_CURRENT_BINARY_DIR}\",true)"
