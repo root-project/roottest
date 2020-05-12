@@ -6,6 +6,10 @@
 # system will complain at startup, making the test fail. Clearly for backwards
 # compatibility reasons the current behaviour should be preserved :)
 
+if(MSVC)
+    set(MIGHT_FAIL WILLFAIL)
+endif()
+
 ROOTTEST_GENERATE_REFLEX_DICTIONARY(FullheaderParsingOnDemand
                                     FullheaderParsingOnDemand.h
                                     SELECTION FullheaderParsingOnDemand_selection.xml
@@ -29,6 +33,7 @@ ROOTTEST_ADD_TEST(execCheckComplexTypedefs
                   COPY_TO_BUILDDIR complexTypedefs.rootmap
                   MACRO execCheckComplexTypedefs.C
                   OUTREF execCheckComplexTypedefs.ref
+                  ${MIGHT_FAIL}
                   DEPENDS ${GENERATE_REFLEX_TEST})
 
 ROOTTEST_ADD_TEST(execLDAPAttribute

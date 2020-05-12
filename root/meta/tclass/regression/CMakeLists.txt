@@ -20,6 +20,8 @@ ROOTTEST_ADD_TEST(execROOT_6019
                   MACRO execROOT_6019.C
                   OUTREF execROOT_6019.ref)
 
-ROOTTEST_ADD_TEST(execROOT_6277
-                  MACRO execROOT_6277.cxx+
-                  OUTREF execROOT_6277.ref)
+if(NOT MSVC OR win_broken_tests)
+    ROOTTEST_ADD_TEST(execROOT_6277
+                      MACRO execROOT_6277.cxx+
+                      OUTREF execROOT_6277.ref)
+endif()

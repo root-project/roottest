@@ -15,10 +15,15 @@ ROOTTEST_ADD_TEST(runtempParse
                   OUTREF tempParse.ref
                   DEPENDS tempParse.C)
 
+if(MSVC)
+  set(MIGHT_FAIL WILLFAIL)
+endif()
+
 ROOTTEST_ADD_TEST(runpairs
                   COPY_TO_BUILDDIR  pairs_v5.root
                   MACRO runpairs.C+
-                  OUTREF pairs.ref)
+                  OUTREF pairs.ref
+                  ${MIGHT_FAIL})
 
 ROOTTEST_ADD_TEST(execInterpClassNew
                   MACRO execInterpClassNew.C
@@ -37,7 +42,8 @@ ROOTTEST_ADD_TEST(execState
 
 ROOTTEST_ADD_TEST(execSharedPtr
                   MACRO execSharedPtr.C
-                  ERRREF execSharedPtr.eref)
+                  ERRREF execSharedPtr.eref
+                  ${MIGHT_FAIL})
 
 ROOTTEST_ADD_TEST(execMTInit
                   MACRO execMTInit.C
