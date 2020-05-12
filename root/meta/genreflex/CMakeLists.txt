@@ -139,6 +139,7 @@ ROOTTEST_ADD_TEST(escapedQuotesWriteTree
 ROOTTEST_ADD_TEST(escapedQuotesreadTree
                   MACRO execreadTree.C
                   OUTREF execreadTree.ref
+                  ${MIGHT_FAIL}
                   DEPENDS escapedQuotesWriteTree)
 
 ROOTTEST_ADD_TEST(classSelectedTwice
