@@ -1,4 +1,4 @@
-# roottest
+ # roottest
 
 Tests in the roottest repository can be added and executed using CMake and
 CTest. A CDash report for nightly and continuous builds can be found at:
