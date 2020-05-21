@@ -6,6 +6,7 @@ ROOTTEST_ADD_TEST(execNormalizationInf
                   MACRO execNormalizationInf.C
                   OUTREF execNormalizationInf.ref)
 
+if(ROOT_pyroot_FOUND)
 ROOTTEST_ADD_TEST(execNormalizationInfPy
                   MACRO execNormalizationInf.py
                   OUTREF execNormalizationInf.py.ref
