@@ -6,11 +6,13 @@ ROOTTEST_ADD_TEST(execNormalizationInf
                   MACRO execNormalizationInf.C
                   OUTREF execNormalizationInf.ref)
 
+if(ROOT_pyroot_FOUND)
 ROOTTEST_ADD_TEST(execNormalizationInfPy
                   MACRO execNormalizationInf.py
                   OUTREF execNormalizationInf.py.ref
 		  ENVIRONMENT CLING_STANDARD_PCH=none
                   CPPYY_BACKEND_LIBRARY=${CMAKE_BINARY_DIR}/lib/libcppyy_backend${PYTHON_UNDER_VERSION_STRING}.so)
+endif()
 
 ROOTTEST_ADD_TEST(execROOT_6038
                   MACRO execROOT_6038.C
