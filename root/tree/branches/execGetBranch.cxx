@@ -4,8 +4,11 @@
 #include <TTreeReader.h>
 #include <TTreeReaderValue.h>
 #include <iostream>
-#include <ROOT/RDataFrame.hxx>
 #include <TChain.h>
+
+#ifdef R__HAS_DATAFRAME
+#include <ROOT/RDataFrame.hxx>
+#endif
  
 struct Int {
    int x;
@@ -227,9 +230,11 @@ int execGetBranch()
    if (res)
       return res+50;
 
+#ifdef R__HAS_DATAFRAME
    std::cout << "RDataFrame columns:" << std::endl;
    for (const auto &c : ROOT::RDataFrame(*t).GetColumnNames())
       std::cout << c << std::endl;
+#endif
  
    return 0;
 }
