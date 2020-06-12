@@ -85,8 +85,6 @@ if(ROOT_imt_FOUND)
   ROOTTEST_ADD_TEST(threadExecutor
                     EXEC ${CMAKE_CURRENT_BINARY_DIR}/threadExecutor
                     DEPENDS ${GENERATE_EXECUTABLE_TEST})
-<<<<<<< HEAD
-=======
   if(NOT MSVC AND NOT TBB_LIBRARIES)
     set(TBB_LIBRARIES tbb)
   endif()
@@ -95,7 +93,6 @@ if(ROOT_imt_FOUND)
   ROOTTEST_ADD_TEST(poolManager
                     EXEC ${CMAKE_CURRENT_BINARY_DIR}/poolManager
                     DEPENDS ${GENERATE_EXECUTABLE_TEST})
->>>>>>> 50d088d0... Testing rebase error on Github PR
 endif()
 
 ROOTTEST_GENERATE_EXECUTABLE(current_dir current_dir.cpp LIBRARIES Core RIO Thread)
@@ -192,10 +189,12 @@ if(OPENGL_gl_LIBRARY AND ROOTTEST_OS_ID MATCHES Scientific|CentOS|Ubuntu|Fedora)
   set(ROOTTEST_ENV_EXTRA LD_PRELOAD=${OPENGL_gl_LIBRARY})
 endif()
 
-ROOTTEST_ADD_TEST(fork
-                  EXEC ${CMAKE_CURRENT_BINARY_DIR}/fork
-                  FAILREGEX "Error in" "cannot load any more object with static TLS"
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST} roottest-root-multicore-tsenums roottest-root-multicore-tclass_methods)
+if(NOT MSVC OR win_broken_tests)
+  ROOTTEST_ADD_TEST(fork
+                    EXEC ${CMAKE_CURRENT_BINARY_DIR}/fork
+                    FAILREGEX "Error in" "cannot load any more object with static TLS"
+                    DEPENDS ${GENERATE_EXECUTABLE_TEST} roottest-root-multicore-tsenums roottest-root-multicore-tclass_methods)
+endif()
 
 if(ROOT_imt_FOUND)
    ROOTTEST_GENERATE_EXECUTABLE(ttree_read_imt ttree_read_imt.cpp LIBRARIES Core Imt Thread Tree RIO)
