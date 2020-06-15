@@ -70,7 +70,7 @@ ROOTTEST_ADD_TEST(processExecutor
                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
 if(ROOT_imt_FOUND)
-  include_directories(${TBB_INCLUDE_DIRS})
+  include_directories(SYSTEM ${TBB_INCLUDE_DIRS})
   ROOTTEST_GENERATE_EXECUTABLE(threadExecutor tThreadExecutor.cpp LIBRARIES Core Imt Hist MathCore)
 
   ROOTTEST_ADD_TEST(threadExecutor
