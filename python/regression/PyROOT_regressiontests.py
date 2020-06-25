@@ -604,6 +604,27 @@ class Regression23TFractionFitter(MyTestCase):
       ff.Fit()
 
 
+class Regression24Inheritance(MyTestCase):
+   def test1DeletedConstructor(self):
+      """Test inheritance with deleted constructor in base class"""
+      # ROOT-10872
+      import cppyy
+
+      cppyy.gbl.gInterpreter.Declare('''
+      struct NoCopy {
+         NoCopy() = default;
+         NoCopy(const NoCopy&) = delete;
+         virtual ~NoCopy() = default;
+      };
+
+      struct MyClass : NoCopy {};
+      ''')
+
+      class MyDerived(cppyy.gbl.MyClass):
+         pass
+
+
+
 ## actual test run
 if __name__ == '__main__':
    from MyTextTestRunner import MyTextTestRunner
