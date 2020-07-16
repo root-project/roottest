@@ -95,7 +95,7 @@ int execTestMultiMerge()
    Int_t result = 0;
    int hsimpleFTolerance = 16;
    result += testMergedFile("mzfile1-4.root",206,4455 + lz4default*841 + kIs32bits*8 - kIs32bits*lz4default*16, kIs32bits ? 2 : 0);
-   result += testMergedFile("mlz4file1-4.root",406,5395 + lz4default*841 + kIs32bits*2 - kIs32bits*lz4default*16, kIs32bits ? 2 : 0);
+   result += testMergedFile("mlz4file1-4.root",406,5395 + lz4default*841 + kIs32bits*2 - kIs32bits*lz4default*16, kIs32bits ? 4 : 2);
    result += testMergedFile("mzlibfile1-4.root",106,4564 + lz4default*841 + kIs32bits*7 - kIs32bits*lz4default*16, kIs32bits ? 2 : 0);
    result += testSimpleFile("hsimple.root",25000,expectedcomplevel,414668 + lz4default*104060 + kIs32bits*2 + kIs32bits*lz4default*19, kIs32bits ? (12 + fastMath*10) : (8 + fastMath*10));
    result += testSimpleFile("hsimple9.root",25000,9,430870 + lz4default*86230 + kIs32bits*15 - kIs32bits*lz4default*8,4 + fastMath*27);
