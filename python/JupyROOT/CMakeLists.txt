@@ -36,6 +36,7 @@ if(PY_IPYTHON_FOUND)
     ROOTTEST_ADD_TEST(${NOTEBOOKBASE}_notebook
                       COPY_TO_BUILDDIR ${NOTEBOOK}
                       COMMAND ${PYTHON_EXECUTABLE} ${NBDIFFUTIL} ${NOTEBOOK}
+                      RUN_SERIAL
                       ${PYTESTS_WILLFAIL})
   endforeach()
 endif()
