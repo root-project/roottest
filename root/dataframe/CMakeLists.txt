@@ -118,7 +118,8 @@ ROOTTEST_ADD_TEST(test_stringfiltercolumn
 
 ROOTTEST_ADD_TEST(test_glob
                   MACRO test_glob.C+
-                  OUTREF test_glob.ref)
+                  OUTREF test_glob.ref
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_ADD_TEST(test_reduce
                   MACRO test_reduce.C+
@@ -134,76 +135,89 @@ ROOTTEST_GENERATE_EXECUTABLE(testIMT testIMT.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(testIMT
                   EXEC ./testIMT
                   OUTREF testIMT.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(test_readerarray test_readerarray.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(test_readerarray
                   EXEC ./test_readerarray
                   OUTREF test_readerarray.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(typeguessing test_typeguessing.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(typeguessing
                   EXEC ./typeguessing
                   OUTREF test_typeguessing.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(misc test_misc.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(misc
                   EXEC ./misc
                   OUTREF test_misc.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_ADD_TEST(ctors
                   MACRO test_ctors.C+
-                  OUTREF test_ctors.ref)
+                  OUTREF test_ctors.ref
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(branchoverwrite test_branchoverwrite.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(branchoverwrite
                   EXEC ./branchoverwrite
                   OUTREF test_branchoverwrite.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(regression_multipletriggerrun regression_multipletriggerrun.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(regression_multipletriggerrun
                   EXEC ./regression_multipletriggerrun
                   OUTREF regression_multipletriggerrun.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(regression_zeroentries regression_zeroentries.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(regression_zeroentries
                   EXEC ./regression_zeroentries
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 
 ROOTTEST_GENERATE_EXECUTABLE(foreach test_foreach.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(foreach
                   EXEC ./foreach
                   OUTREF test_foreach.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(reports test_reports.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(reports
                   EXEC ./reports
                   OUTREF test_reports.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(par test_par.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(par
                   EXEC ./par
                   OUTREF test_par.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(read_leaves test_read_leaves.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(read_leaves
                   EXEC ./read_leaves
                   COPY_TO_BUILDDIR test_read_leaves.h
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_GENERATE_EXECUTABLE(read_leaves_nodict test_read_leaves_nodict.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(read_leaves_nodict
                   EXEC ./read_leaves_nodict
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST} read_leaves)
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST} read_leaves
+                  RUN_SERIAL_ON_WIN32)
 
 ROOTTEST_ADD_TEST(test_readTotemNtuple
                   MACRO test_readTotemNtuple.C
@@ -215,4 +229,5 @@ ROOTTEST_ADD_TEST(test_progressiveCSV
                   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/test_progressiveCSV.sh
                   COPY_TO_BUILDDIR test_progressiveCSV.csv
                   OUTREF test_progressiveCSV.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+                  DEPENDS ${GENERATE_EXECUTABLE_TEST}
+                  RUN_SERIAL_ON_WIN32)

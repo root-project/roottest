@@ -33,6 +33,7 @@ if(MSVC)
 
   if(NOT win_broken_tests)
     set(WILLFAIL_ON_WIN32 WILLFAIL)
+    set(RUN_SERIAL_ON_WIN32 RUN_SERIAL)
   endif()
   if (NOT PYTHON_EXECUTABLE)
     find_package(PythonInterp)
