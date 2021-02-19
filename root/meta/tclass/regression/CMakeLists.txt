@@ -22,7 +22,8 @@ ROOTTEST_ADD_TEST(execROOT_6019
                   MACRO execROOT_6019.C
                   OUTREF execROOT_6019.ref)
 
+ROOTTEST_COMPILE_MACRO(execROOT_6277.cxx)
 ROOTTEST_ADD_TEST(execROOT_6277
                   MACRO execROOT_6277.cxx+
                   OUTREF execROOT_6277.ref
-                  ${WILLFAIL_ON_WIN32})
+                  DEPENDS ${COMPILE_MACRO_TEST})

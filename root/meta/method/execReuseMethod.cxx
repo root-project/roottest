@@ -21,6 +21,10 @@ int execReuseMethod() {
       Error("reuseMethod", "The reuse is not working properly, TFunction for 'size' is no longer there or has moved.");
       return 4;
    }
+#ifdef R__WIN32
+   // clean-up the rootmap file to prevent error when running the test several times in a row
+   gSystem->Exec("del AutoDict_vector_TObject__*.rootmap > nul 2>&1");
+#endif
    return 0;
 }
 

@@ -29,6 +29,7 @@ ROOTTEST_ADD_TEST(runabstract-datageneration
 ROOTTEST_ADD_TEST(runabstract-copy
                   MACRO runabstract.C
                   PRECMD ${ROOT_root_CMD} -b -q -l "${CMAKE_CURRENT_BINARY_DIR}/abstract.C+(1)"
+                  POSTCMD ${CMAKE_COMMAND} -E remove abstract_C.rootmap
                   OUTREF references/abstract${ref_suffix}
                   DEPENDS runabstract-datageneration)
 
@@ -60,8 +61,9 @@ ROOTTEST_ADD_TEST(runbadmix
 ROOTTEST_ADD_TEST(runSplitMismatch
                   COPY_TO_BUILDDIR runSplitMismatch.C
                   MACRO ${CMAKE_CURRENT_BINARY_DIR}/runSplitMismatch.C+
-                  ${WILLFAIL_ON_WIN32}
-                  OUTREF references/runSplitMismatch.ref)
+                  POSTCMD ${CMAKE_COMMAND} -E remove runSplitMismatch_C.rootmap
+                  OUTREF references/runSplitMismatch.ref
+                  DEPENDS runabstract-copy)
 
 ROOTTEST_ADD_TEST(make_CloneTree
                   MACRO make_CloneTree.C
