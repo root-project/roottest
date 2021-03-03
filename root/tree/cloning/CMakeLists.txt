@@ -1,7 +1,9 @@
 if(ROOTTEST_DIR)
       set(ROOT_EVENT_DIR ${ROOTTEST_DIR}/root/treeformula/event/)
+      set(ROOT_DIR ${ROOTSYS})
 else()
       set(ROOT_EVENT_DIR ${ROOT_SOURCE_DIR}/roottest/root/treeformula/event/)
+      set(ROOT_DIR ${ROOT_SOURCE_DIR})
 endif()
 
 # Generating dataset from roottest-treeformula-event-make test
@@ -69,12 +71,6 @@ else()
                   POSTCMD ${ROOT_root_CMD} -b -q -l ${CMAKE_CURRENT_SOURCE_DIR}/runEvent.C -e "gSystem->Load(\"../test/libEvent\")"
                   OUTREF references/treeCloneTest.ref)
    endif()
-endif()
-
-if(ROOTTEST_DIR)
-      set(ROOT_DIR ${ROOTSYS})
-else()
-      set(ROOT_DIR ${ROOT_SOURCE_DIR})
 endif()
 
 if(NOT TARGET hsimple)
