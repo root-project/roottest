@@ -1,9 +1,11 @@
 if(ROOTTEST_DIR)
       set(ROOT_EVENT_DIR ${ROOTTEST_DIR}/root/treeformula/event/)
       set(ROOT_DIR ${ROOTSYS})
+      execute_process(COMMAND root-config --tutdir OUTPUT_VARIABLE ROOT_TUTDIR OUTPUT_STRIP_TRAILING_WHITESPACE)
 else()
       set(ROOT_EVENT_DIR ${ROOT_SOURCE_DIR}/roottest/root/treeformula/event/)
       set(ROOT_DIR ${ROOT_SOURCE_DIR})
+      execute_process(COMMAND root-config --tutdir OUTPUT_VARIABLE ROOT_TUTDIR OUTPUT_STRIP_TRAILING_WHITESPACE)
 endif()
 
 # Generating dataset from roottest-treeformula-event-make test
@@ -76,7 +78,7 @@ endif()
 if(NOT TARGET hsimple)
       add_custom_target(hsimple-file ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/hsimple.root)
       add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/hsimple.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b ${ROOT_DIR}/tutorials/hsimple.C -e "{ TFile f(\"hsimple.root\"); TTree *ntuple; f.GetObject(\"ntuple\",ntuple); return ntuple ? 0 : 1; }" > hsimple.log
+                  COMMAND ${ROOT_root_CMD} -q -l -b ${ROOT_TUTDIR}/hsimple.C -e "{ TFile f(\"hsimple.root\"); TTree *ntuple; f.GetObject(\"ntuple\",ntuple); return ntuple ? 0 : 1; }" > hsimple.log
                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
                   DEPENDS ${HSimpleDependencies}
                   VERBATIM)
