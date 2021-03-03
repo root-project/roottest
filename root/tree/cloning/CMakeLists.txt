@@ -16,7 +16,7 @@ endif()
 
 if(NOT TARGET eventexe)
       ROOT_GENERATE_DICTIONARY(EventDict ${ROOT_EVENT_DIR}/Event.h
-                  LINKDEF ${ROOT_EVENT_DIR}/EventLinkDef.h)
+                               LINKDEF ${ROOT_EVENT_DIR}/EventLinkDef.h)
 
       if(MSVC)
         ROOT_LINKER_LIBRARY(EventTreeFormula TEST ${ROOT_EVENT_DIR}/Event.cxx EventDict.cxx
