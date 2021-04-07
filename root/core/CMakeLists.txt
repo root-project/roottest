@@ -34,3 +34,7 @@ ROOTTEST_ADD_TEST(execStatusBitsCheck
                   OUTCNV ../html/MakeIndex_convert.sh
                   OUTREF execStatusBitsCheck.ref
                   )
+
+ROOTTEST_ADD_TEST(CoreDynPathSetupUNIX
+                  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/test_dynpath_setup.sh ${ROOT_root_CMD}
+                 )
