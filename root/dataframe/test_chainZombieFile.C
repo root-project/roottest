@@ -15,15 +15,17 @@ int test_chainZombieFile() {
 
    bool allHaveThrown = true;
    try {
-   triggerBug();
-   } catch (const std::runtime_error &) {
+      triggerBug();
+   // Catch not only std::runtime_error, but also tbb::captured_exception from worker threads.
+   } catch (const std::exception &) {
       allHaveThrown &= true;
    }
 
    ROOT::EnableImplicitMT();
    try {
-   triggerBug();
-   } catch (const std::runtime_error &) {
+      triggerBug();
+   // Catch not only std::runtime_error, but also tbb::captured_exception from worker threads.
+   } catch (const std::exception &) {
       allHaveThrown &= true;
    }
 
