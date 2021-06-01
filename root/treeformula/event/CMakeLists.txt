@@ -8,7 +8,7 @@
 ROOT_GENERATE_DICTIONARY(EventDict ./Event.h LINKDEF ./EventLinkDef.h)
 
 ROOT_LINKER_LIBRARY(Event TEST ./Event.cxx EventDict.cxx
-   LIBRARIES Core RIO Net Tree Hist MathCore Event)
+   LIBRARIES Core Tree Hist MathCore)
 
 if(TARGET onepcm)
    set(EventDependencies "onepcm")
