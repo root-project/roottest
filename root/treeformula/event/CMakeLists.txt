@@ -17,11 +17,11 @@ endif()
 ROOTTEST_GENERATE_EXECUTABLE(EventGeneration ./MainEvent.cxx
    LIBRARIES Core RIO Net Tree Hist MathCore Event)
 
-ROOTTEST_ADD_TEST(event-write
+ROOTTEST_ADD_TEST(write
    COMMAND ./EventGeneration 10 1 1 1
    DEPENDS EventGeneration ${EventDependencies})
 
-ROOTTEST_ADD_TEST(event-read
+ROOTTEST_ADD_TEST(read
    COMMAND ./EventGeneration 10 1 1 20
    DEPENDS EventGeneration ${EventDependencies})
 
