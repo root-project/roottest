@@ -97,7 +97,7 @@
 using namespace std;
 
 //______________________________________________________________________________
-int main(int argc, char **argv)
+int ev_main(int argc, char const * *argv)
 {
    gRandom->SetSeed(42); // make tests reproducible
 
