@@ -11,7 +11,7 @@ ROOT_GENERATE_DICTIONARY(EventDict ./Event.h
 ROOT_LINKER_LIBRARY(Event TEST ./Event.cxx EventDict.cxx
   LIBRARIES Core Tree Hist MathCore)
 
-ROOTTEST_GENERATE_EXECUTABLE(EventGeneration EventMain.cxx
+ROOTTEST_GENERATE_EXECUTABLE(EventGeneration ./EventMain.cxx
   LIBRARIES Core RIO Net Tree Hist MathCore Event)
 
 if(TARGET onepcm)
