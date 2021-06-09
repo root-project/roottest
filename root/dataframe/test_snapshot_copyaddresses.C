@@ -8,6 +8,8 @@
 #include <TSystem.h>
 #include <TTree.h>
 
+#include <cstdlib> // exit
+
 constexpr static const char *fnamePrefix = "test_snapshot_copyaddresses";
 constexpr static int nfiles = 3;
 
@@ -21,8 +23,6 @@ void write_inputs()
    TwoInts ti{1, 2};
    for (int i = 0; i < nfiles; ++i, ti.x += 2, ti.y += 2) {
       const auto fname = fnamePrefix + std::to_string(i) + ".root";
-      if (gSystem->AccessPathName(fname.c_str()) == 0) // 0 means file already exists
-         continue;
       TFile f(fname.c_str(), "recreate");
       TTree t("t", "t");
       t.Branch("ti", &ti);
@@ -43,8 +43,17 @@ void test_snapshot_copyaddresses()
    int expected = 1;
    out_df->Foreach(
       [&](int x, int y) mutable {
-         R__ASSERT(x == expected++);
-         R__ASSERT(y == expected++);
+         if (x != expected) {
+            std::cerr << "Expected x == " << expected << ", found " << x << '\n';
+            std::exit(1);
+         }
+         ++expected;
+
+         if (y != expected) {
+            std::cerr << "Expected y == " << expected << ", found " << y << '\n';
+            std::exit(2);
+         }
+         ++expected;
       },
       {"x", "y"});
 
