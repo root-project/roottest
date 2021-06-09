@@ -1,10 +1,3 @@
-#-------------------------------------------------------------------------------
-#
-# Placeholder file to translate the tests to the new CTest system. Meanwhile we
-# define a CTest test that calls 'make' in ${CMAKE_CURRENT_SOURCE_DIR}
-#
-#-------------------------------------------------------------------------------
-
 ROOT_GENERATE_DICTIONARY(EventDict ./Event.h
   LINKDEF ./EventLinkDef.h)
 
@@ -18,9 +11,14 @@ if(TARGET onepcm)
   set(EventDependencies "onepcm")
 endif()
 
-ROOTTEST_ADD_TEST(read-write
-  COMMAND ./EventGeneration 10 1 1 1 &&
-          ./EventGeneration 10 1 1 20
-  DEPENDS EventGeneration)
+ROOTTEST_ADD_TEST(write
+  COMMAND ./EventGeneration 10 1 1 1
+  DEPENDS EventGeneration ${EventDependencies}
+  RUN_SERIAL)
 
- # TODO add DrawTest
+ROOTTEST_ADD_TEST(read
+  COMMAND ./EventGeneration 10 1 1 20
+  DEPENDS EventGeneration ${EventDependencies}
+  RUN_SERIAL)
+
+# TODO add DrawTest
