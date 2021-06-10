@@ -36,7 +36,7 @@ void test_snapshot_copyaddresses()
    write_inputs();
 
    const std::string outSuffix = "_out.root";
-
+   {
    ROOT::RDataFrame df("t", fnamePrefix + std::string("*.root"));
    auto out_df = df.Snapshot<int, int>("t", fnamePrefix + outSuffix, {"x", "y"});
 
@@ -56,7 +56,7 @@ void test_snapshot_copyaddresses()
          ++expected;
       },
       {"x", "y"});
-
+   }
    // clean up files
    for (int i = 0; i < nfiles; ++i) {
       gSystem->Unlink((fnamePrefix + std::to_string(i) + ".root").c_str());
