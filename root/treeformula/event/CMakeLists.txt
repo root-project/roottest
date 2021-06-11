@@ -1,11 +1,20 @@
-ROOT_GENERATE_DICTIONARY(EventDict ./Event.h
+ROOT_GENERATE_DICTIONARY(EventDict ${CMAKE_CURRENT_SOURCE_DIR}/Event.h
   LINKDEF ./EventLinkDef.h)
 
-ROOT_LINKER_LIBRARY(Event TEST ./Event.cxx EventDict.cxx
-  LIBRARIES Core Tree Hist MathCore)
+ROOT_LINKER_LIBRARY(TreeFormulaEvent ${CMAKE_CURRENT_SOURCE_DIR}/Event.cxx EventDict.cxx
+  LIBRARIES libCore libTree libHist libMathCore)
 
-ROOTTEST_GENERATE_EXECUTABLE(EventGeneration ./EventMain.cxx
-  LIBRARIES Core RIO Net Tree Hist MathCore Event)
+if(MSVC)
+  add_custom_command(TARGET TreeFormulaEvent POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/libTreeFormulaEvent.dll
+                                     ${CMAKE_CURRENT_BINARY_DIR}/libTreeFormulaEvent.dll
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/libTreeFormulaEvent.lib
+                                     ${CMAKE_CURRENT_BINARY_DIR}/libTreeFormulaEvent.lib)
+endif()
+
+ROOTTEST_GENERATE_EXECUTABLE(EventGeneration ${CMAKE_CURRENT_SOURCE_DIR}/EventMain.cxx
+  LIBRARIES Core RIO Net Tree Hist MathCore TreeFormulaEvent
+  DEPENDS TreeFormulaEvent)
 
 if(TARGET onepcm)
   set(EventDependencies "onepcm")
@@ -29,7 +38,7 @@ ROOTTEST_ADD_TEST(read
 #
 macro(EVENT_WRAP name mode)
   set("${name}-file" "${name}.root")
-  set("${name}-wrap" "${CMAKE_CURRENT_SOURCE_DIR}/dt_wrap.C\(\"${name}.root\",${mode}\)")
+  set("${name}-wrap" "${CMAKE_CURRENT_SOURCE_DIR}/dt_wrap.C\(\"Event.root\",${mode}\)")
 endmacro()
 
 EVENT_WRAP(new-split0 0)
