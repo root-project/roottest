@@ -1,7 +1,8 @@
-ROOT_GENERATE_DICTIONARY(EventDict ${CMAKE_CURRENT_SOURCE_DIR}/Event.h
-  LINKDEF ./EventLinkDef.h)
+ROOT_GENERATE_DICTIONARY(TreeFormulaEventDict ${CMAKE_CURRENT_SOURCE_DIR}/Event.h
+  LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/EventLinkDef.h)
 
-ROOT_LINKER_LIBRARY(TreeFormulaEvent ${CMAKE_CURRENT_SOURCE_DIR}/Event.cxx EventDict.cxx
+ROOT_LINKER_LIBRARY(TreeFormulaEvent
+  ${CMAKE_CURRENT_SOURCE_DIR}/Event.cxx TreeFormulaEventDict.cxx
   LIBRARIES Core Tree Hist MathCore)
 
 if(MSVC)
