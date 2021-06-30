@@ -51,7 +51,9 @@ ROOTTEST_ADD_TEST(read
 function(EVENT_GENERATE_FILE file_name size comp split action tracks)
   ROOTTEST_ADD_TEST("generation-${file_name}"
     COMMAND ./EventGeneration "${size}" "${comp}" "${split}" "${action}" "${tracks}"
-    POSTCMD mv Event.root "${file_name}.root"
+    POSTCMD ${CMAKE_COMMAND} -E rename
+      ${CMAKE_CURRENT_BINARY_DIR}/Event.root
+      "${CMAKE_CURRENT_BINARY_DIR}/${file_name}.root"
     DEPENDS EventGeneration
     RUN_SERIAL)
 endfunction()
