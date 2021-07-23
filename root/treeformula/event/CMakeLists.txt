@@ -15,7 +15,8 @@ endif()
 ROOTTEST_GENERATE_EXECUTABLE(EventGeneration
   ${CMAKE_CURRENT_SOURCE_DIR}/TreeFormulaEventMain.cxx
   LIBRARIES Core RIO Net Tree Hist MathCore TreeFormulaEvent
-  DEPENDS TreeFormulaEvent)
+  DEPENDS TreeFormulaEvent
+  FIXTURES_SETUP treeformula-event-generator)
 
 add_custom_command(TARGET G__TreeFormulaEvent
   COMMAND ${CMAKE_COMMAND} -E copy
@@ -34,13 +35,16 @@ endif()
 
 ROOTTEST_ADD_TEST(write
   COMMAND ./EventGeneration 10 1 1 1
-  DEPENDS EventGeneration ${EventDependencies}
-  RUN_SERIAL)
+  DEPENDS ${EventDependencies}
+  FIXTURES_SETUP treeformula-event-write
+  FIXTURES_REQUIRED treeformula-event-generator
+  RESOURCE_LOCK treeformula-event-file)
 
 ROOTTEST_ADD_TEST(read
   COMMAND ./EventGeneration 10 1 1 20
-  DEPENDS EventGeneration ${EventDependencies}
-  RUN_SERIAL)
+  DEPENDS ${EventDependencies}
+  FIXTURES_REQUIRED treeformula-event-write
+  RESOURCE_LOCK treeformula-event-file)
 
 #
 # function EVENT_GENERATE_FILE
@@ -54,8 +58,9 @@ function(EVENT_GENERATE_FILE file_name size comp split action tracks)
     POSTCMD ${CMAKE_COMMAND} -E rename
       ${CMAKE_CURRENT_BINARY_DIR}/Event.root
       "${CMAKE_CURRENT_BINARY_DIR}/${file_name}.root"
-    DEPENDS EventGeneration
-    RUN_SERIAL)
+    FIXTURES_SETUP "treeformula-event-generation-${file_name}"
+    FIXTURES_REQUIRED treeformula-event-generator
+    RESOURCE_LOCK treeformula-event-file)
 endfunction()
 
 #
@@ -68,8 +73,10 @@ function(EVENT_GENERATE_TESTS file_name)
   foreach(mode 0;1;2;3;4)
     ROOTTEST_ADD_TEST("${file_name}-${mode}"
       COMMAND ${ROOT_root_CMD} -q -b -l "${CMAKE_CURRENT_SOURCE_DIR}/dt_wrap.C\(\"${file_name}.root\",${mode}\)"
-      DEPENDS EventGeneration
-      RUN_SERIAL)
+      FIXTURES_REQUIRED "treeformula-event-generation-${file_name}"
+#     RUN_SERIAL would be enough be RESOURCE_LOCK allows the tests to be run in
+#     parallel with other compatible tests.
+      RESOURCE_LOCK "treeformula-event-file-${file_name}")
   endforeach()
 endfunction()
 
