@@ -23,7 +23,7 @@ add_custom_command(TARGET G__TreeFormulaEvent
     ${CMAKE_CURRENT_SOURCE_DIR}/dt_wrap.C
     ${CMAKE_CURRENT_BINARY_DIR}/dt_wrap.C
   COMMAND ${CMAKE_COMMAND} -E copy
-     ${CMAKE_CURRENT_SOURCE_DIR}/dt_DrawTest.C
+    ${CMAKE_CURRENT_SOURCE_DIR}/dt_DrawTest.C
     ${CMAKE_CURRENT_BINARY_DIR}/dt_DrawTest.C
   COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_CURRENT_SOURCE_DIR}/dt_RunDrawTest.C
