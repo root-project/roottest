@@ -1,6 +1,6 @@
 
 Processing runarray1test.C...
-a1 is  
-a2 is  
-array1.C          3   TString a1[1]=
-array1.C         10   TString a2[2]=
+a1 is not_null not_null
+a2 is not_null not_null
+array1.C          4 (address: NA) class TString a1[1], size =
+array1.C         11 (address: NA) class TString a2[2], size =
