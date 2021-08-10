@@ -14,10 +14,12 @@ ROOTTEST_ADD_TEST(expressiveErrorMessages
                   OUTCNV expressiveErrorMessages_filter.sh
                   DEPENDS ${GENERATE_REFLEX_TEST})
 
-ROOTTEST_ADD_TEST(rlibmap
-                  COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/rlibmapLauncher.py
-                  PASSRC 1
-                  OUTREF  rlibmap.ref)
+if (NOT ROOT_asan_FOUND)
+  ROOTTEST_ADD_TEST(rlibmap
+                    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/rlibmapLauncher.py
+                    PASSRC 1
+                    OUTREF  rlibmap.ref)
+endif()
 
 ROOTTEST_ADD_TEST(execpragmasTest
                   MACRO execpragmasTest.C+
