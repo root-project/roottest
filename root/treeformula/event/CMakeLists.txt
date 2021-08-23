@@ -18,16 +18,9 @@ ROOTTEST_GENERATE_EXECUTABLE(EventGeneration
   DEPENDS TreeFormulaEvent
   FIXTURES_SETUP treeformula-event-generator)
 
-add_custom_command(TARGET G__TreeFormulaEvent
-  COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_CURRENT_SOURCE_DIR}/dt_wrap.C
-    ${CMAKE_CURRENT_BINARY_DIR}/dt_wrap.C
-  COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_CURRENT_SOURCE_DIR}/dt_DrawTest.C
-    ${CMAKE_CURRENT_BINARY_DIR}/dt_DrawTest.C
-  COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_CURRENT_SOURCE_DIR}/dt_RunDrawTest.C
-    ${CMAKE_CURRENT_BINARY_DIR}/dt_RunDrawTest.C)
+configure_file(dt_wrap.C . COPYONLY)
+configure_file(dt_DrawTest.C . COPYONLY)
+configure_file(dt_RunDrawTest.C . COPYONLY)
 
 if(TARGET onepcm)
   set(EventDependencies "onepcm")
