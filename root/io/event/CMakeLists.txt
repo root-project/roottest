@@ -28,11 +28,11 @@ ROOTTEST_GENERATE_EXECUTABLE(IoEventGenerator
   FIXTURES_SETUP io-event-generator)
 
 ROOTTEST_ADD_TEST(write
-  COMMAND ./IoEventGeneration 10 1 1 1
+  COMMAND ./IoEventGenerator 10 1 1 1
   FIXTURES_REQUIRED io-event-generator
   RESOURCE_LOCK io-event-file)
 
 ROOTTEST_ADD_TEST(read
-  COMMAND ./IoEventGeneration 10 1 1 20
+  COMMAND ./IoEventGenerator 10 1 1 20
   FIXTURES_REQUIRED io-event-generator
   RESOURCE_LOCK io-event-file)
