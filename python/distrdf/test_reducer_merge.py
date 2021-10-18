@@ -233,7 +233,7 @@ class ReducerMergeTest(unittest.TestCase):
         npy = df.AsNumpy(columns=["x"])
 
         # Check the dictionary only has the desired column
-        self.assertListEqual(npy.keys(), ["x"])
+        self.assertListEqual(list(npy.keys()), ["x"])
 
         # Check correctness of the output array
         npy_x = npy["x"]
@@ -285,7 +285,7 @@ class ReducerMergeTest(unittest.TestCase):
                   .Define("d", "rdfentry_")
 
         expectedcolumns = ["a", "b"]
-        df.Snapshot("snapTree_columnlist", "snapFile_columnlist.root", columnList=expectedcolumns)
+        df.Snapshot("snapTree_columnlist", "snapFile_columnlist.root", expectedcolumns)
 
         # Create a traditional RDF from the snapshotted files to retrieve the
         # list of columns
