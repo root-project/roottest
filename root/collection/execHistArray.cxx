@@ -43,7 +43,7 @@ void write(const char *filename = "HistArray.root")
    f->WriteObjectAny(ti, "TArrayI", "ti");
 
    TArrayL* tl = new TArrayL(10);
-   Longptr_t al[5] = { 1000L, 10000L, 100000L, 1000000L, 2000000L };
+   Long_t al[5] = { 1000L, 10000L, 100000L, 1000000L, 2000000L };
    tl->Adopt(5, al);
    f->WriteObjectAny(tl, "TArrayL", "tl");
 
