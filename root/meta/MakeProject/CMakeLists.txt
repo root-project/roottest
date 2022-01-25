@@ -1,4 +1,4 @@
-ROOTTEST_GENERATE_DICTIONARY(stl_makeproject_test stl_makeproject_test.h LINKDEF stl_makeproject_test_linkdef.h)
+ROOTTEST_GENERATE_DICTIONARY(stl_makeproject_test stl_makeproject_test.h LINKDEF stl_makeproject_test_linkdef.h DEPENDS Hist)
 
 if(ROOT_runtime_cxxmodules_FOUND)
   # FIXME: For C++ modules builds, module.modulemap is generated during configuration time 
