@@ -11,26 +11,9 @@ from DistRDF.Backends import Spark
 class ReducerMergeTest(unittest.TestCase):
     """Check the working of merge operations in the reducer function."""
 
-    @classmethod
-    def setUpClass(cls):
-        """
-        Synchronize PYSPARK_PYTHON variable to the current Python executable.
-
-        Needed to avoid mismatch between python versions on driver and on
-        the fake executor on the same machine.
-        """
-        os.environ["PYSPARK_PYTHON"] = sys.executable
-
     def tearDown(self):
         """Stop any created SparkContext"""
         pyspark.SparkContext.getOrCreate().stop()
-
-    @classmethod
-    def tearDownClass(cls):
-        """
-        Stop the SparkContext and reset environment variable.
-        """
-        os.environ["PYSPARK_PYTHON"] = ""
 
     def assertHistoOrProfile(self, obj_1, obj_2):
         """Asserts equality between two 'ROOT.TH1' or 'ROOT.TH2' objects."""

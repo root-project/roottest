@@ -12,22 +12,11 @@ class SparkFriendTreesTest(unittest.TestCase):
     """Integration tests to check the working of DistRDF with friend trees"""
 
     @classmethod
-    def setUpClass(cls):
-        """
-        Synchronize PYSPARK_PYTHON variable to the current Python executable.
-
-        Needed to avoid mismatch between python versions on driver and on
-        the fake executor on the same machine.
-        """
-        os.environ["PYSPARK_PYTHON"] = sys.executable
-
-    @classmethod
     def tearDownClass(cls):
         """
-        Stop the SparkContext and reset environment variable.
+        Stop the SparkContext
         """
         pyspark.SparkContext.getOrCreate().stop()
-        os.environ["PYSPARK_PYTHON"] = ""
 
     def create_parent_tree(self):
         """Creates a .root file with the parent TTree"""

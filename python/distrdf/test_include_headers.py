@@ -13,26 +13,9 @@ class IncludesSparkTest(unittest.TestCase):
     environment.
     """
 
-    @classmethod
-    def setUpClass(cls):
-        """
-        Synchronize PYSPARK_PYTHON variable to the current Python executable.
-
-        Needed to avoid mismatch between python versions on driver and on
-        the fake executor on the same machine.
-        """
-        os.environ["PYSPARK_PYTHON"] = sys.executable
-
     def tearDown(self):
         """Stop any created SparkContext"""
         pyspark.SparkContext.getOrCreate().stop()
-
-    @classmethod
-    def tearDownClass(cls):
-        """
-        Stop the SparkContext and reset environment variable.
-        """
-        os.environ["PYSPARK_PYTHON"] = ""
 
     def test_includes_function_with_filter_and_histo(self):
         """

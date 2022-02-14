@@ -9,19 +9,27 @@ if (ROOT_dataframe_FOUND AND
 file(COPY test_headers DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY test_shared_libraries DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
+# Define environment variables needed in all pyspark tests
+set(PYSPARK_ENV_VARS PYSPARK_PYTHON=${PYTHON_EXECUTABLE_Development_Main})
+
 ROOTTEST_ADD_TEST(spark_test_friend_trees
-                  MACRO test_friend_trees.py)
+                  MACRO test_friend_trees.py
+                  ENVIRONMENT ${PYSPARK_ENV_VARS})
 
 ROOTTEST_ADD_TEST(spark_test_histo_write 
-                  MACRO test_histo_write.py)
+                  MACRO test_histo_write.py
+                  ENVIRONMENT ${PYSPARK_ENV_VARS})
 
 ROOTTEST_ADD_TEST(spark_test_include_headers 
-                  MACRO test_include_headers.py)
+                  MACRO test_include_headers.py
+                  ENVIRONMENT ${PYSPARK_ENV_VARS})
 
 ROOTTEST_ADD_TEST(spark_test_inv_mass 
-                  MACRO test_inv_mass.py)
+                  MACRO test_inv_mass.py
+                  ENVIRONMENT ${PYSPARK_ENV_VARS})
 
 ROOTTEST_ADD_TEST(spark_test_reducer_merge 
-                  MACRO test_reducer_merge.py)
+                  MACRO test_reducer_merge.py
+                  ENVIRONMENT ${PYSPARK_ENV_VARS})
 
 endif()

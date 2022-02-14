@@ -20,23 +20,15 @@ class SparkHistoWriteTest(unittest.TestCase):
 
         Set class parameters related to the histogram.
 
-        Synchronize PYSPARK_PYTHON variable to the current Python executable.
         """
         cls.nentries = 10000  # Number of fills
         cls.gaus_mean = 10  # Mean of the gaussian distribution
         cls.gaus_stdev = 1  # Standard deviation of the gaussian distribution
         cls.delta_equal = 0.01  # Delta to check for float equality
 
-        os.environ["PYSPARK_PYTHON"] = sys.executable
-
     def tearDown(self):
         """Clean up the `SparkContext` object that was created."""
         pyspark.SparkContext.getOrCreate().stop()
-
-    @classmethod
-    def tearDownClass(cls):
-        """Reset environment variable."""
-        os.environ["PYSPARK_PYTHON"] = ""
 
     def create_tree_with_data(self):
         """Creates a .root file with some data"""
