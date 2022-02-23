@@ -32,7 +32,6 @@ void runhenry(){
   vector<double> yEVec;
   double x(0),y(0),xE(0), yE(0);
   double output[3];
-  FILE *data;
   char datafname[]="henry.dat";
   
   std::ifstream in(datafname);
