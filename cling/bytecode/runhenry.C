@@ -35,8 +35,11 @@ void runhenry(){
   FILE *data;
   char datafname[]="henry.dat";
   
-  data = fopen(datafname,"r");
-  while (fscanf(data, "%lf %lf %lf %lf",&x,&xE,&y,&yE) != EOF) {
+  std::ifstream in(datafname);
+  while (in.is_open() && !in.eof()) {
+    in >> x >> xE >> y >> yE;
+    if (!in.good())
+      break;
     xVec.push_back(x);
     yVec.push_back(y);
     xEVec.push_back(xE);
