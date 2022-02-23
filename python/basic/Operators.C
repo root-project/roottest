@@ -74,8 +74,8 @@ struct OperatorInt {
 };
 
 struct OperatorLong {
-   operator long() { return m_long; }
-   long m_long;
+   operator intptr_t() { return m_long; }
+   intptr_t m_long;
 };
 
 struct OperatorDouble {
@@ -94,8 +94,8 @@ struct OperatorUnsignedInt {
 };
 
 struct OperatorUnsignedLong {
-   operator unsigned long() { return m_ulong; }
-   unsigned long m_ulong;
+   operator uintptr_t() { return m_ulong; }
+   uintptr_t m_ulong;
 };
 
 struct OperatorFloat {
