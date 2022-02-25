@@ -200,11 +200,13 @@ void iobug(int split = 0, int classtype = 0, int clonesmode = 0, int show = 0, i
    g2->SetMarkerSize(1.4);
    g2->SetMarkerStyle(27);
 
-   g3->SetPoint(7, 8, 9);
-   g3->SetPoint(10, 13, 14);
-   g3->SetMarkerColor(3);
-   g3->SetMarkerSize(1.5);
-   g3->SetMarkerStyle(30);
+   if (classtype == 0) {
+      g3->SetPoint(7, 8, 9);
+      g3->SetPoint(10, 13, 14);
+      g3->SetMarkerColor(3);
+      g3->SetMarkerSize(1.5);
+      g3->SetMarkerStyle(30);
+   }
 
    delete gFile; // This will set gFile to zero.
 
