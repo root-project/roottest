@@ -19,34 +19,42 @@ if (ROOT_test_distrdf_pyspark_FOUND)
 
     ROOTTEST_ADD_TEST(spark_test_backend
                     MACRO test_backend.py
-                    ENVIRONMENT ${PYSPARK_ENV_VARS})
+                    ENVIRONMENT ${PYSPARK_ENV_VARS}
+                    RUN_SERIAL)
 
     ROOTTEST_ADD_TEST(spark_test_definepersample
                     MACRO test_definepersample.py
-                    ENVIRONMENT ${PYSPARK_ENV_VARS})
+                    ENVIRONMENT ${PYSPARK_ENV_VARS}
+                    RUN_SERIAL)
 
     ROOTTEST_ADD_TEST(spark_test_friend_trees
                     MACRO test_friend_trees.py
-                    ENVIRONMENT ${PYSPARK_ENV_VARS})
+                    ENVIRONMENT ${PYSPARK_ENV_VARS}
+                    RUN_SERIAL)
 
     ROOTTEST_ADD_TEST(spark_test_histo_write
                     MACRO test_histo_write.py
-                    ENVIRONMENT ${PYSPARK_ENV_VARS})
+                    ENVIRONMENT ${PYSPARK_ENV_VARS}
+                    RUN_SERIAL)
 
     ROOTTEST_ADD_TEST(spark_test_include_headers
                     MACRO test_include_headers.py
-                    ENVIRONMENT ${PYSPARK_ENV_VARS})
+                    ENVIRONMENT ${PYSPARK_ENV_VARS}
+                    RUN_SERIAL)
 
     ROOTTEST_ADD_TEST(spark_test_inv_mass
                     MACRO test_inv_mass.py
-                    ENVIRONMENT ${PYSPARK_ENV_VARS})
+                    ENVIRONMENT ${PYSPARK_ENV_VARS}
+                    RUN_SERIAL)
 
     ROOTTEST_ADD_TEST(spark_test_rungraphs
                     MACRO test_rungraphs.py
-                    ENVIRONMENT ${PYSPARK_ENV_VARS})
+                    ENVIRONMENT ${PYSPARK_ENV_VARS}
+                    RUN_SERIAL)
 
     ROOTTEST_ADD_TEST(spark_test_reducer_merge
                     MACRO test_reducer_merge.py
-                    ENVIRONMENT ${PYSPARK_ENV_VARS})
+                    ENVIRONMENT ${PYSPARK_ENV_VARS}
+                    RUN_SERIAL)
 
 endif()
