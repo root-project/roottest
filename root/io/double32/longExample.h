@@ -69,7 +69,7 @@ This is what clang sees:
 ===========================================================================
 class m02<double>
 SIZE: 160 FILE: test01.cxx LINE: 15
-Base classes: --------------------------------------------------------
+Base classes: -------------------------------------------------------------
 0x0        private map2<double, double, struct alloc<struct std::__1::pair<double, double> > >
 List of member variables: -------------------------------------------------
 test01.cxx       17 0x0        public: int fN
