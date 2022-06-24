@@ -24,7 +24,11 @@ ROOTTEST_ADD_TEST(runTExMap
                   ERRREF runTExMap.eref )
 endif()
 
-ROOTTEST_ADD_TEST(runDeleteWarning
-                  MACRO runDeleteWarning.C
-                  OUTCNVCMD sed -e s:0x[0-9a-fA-F]*:0xRemoved:g
-                  OUTREF DeleteWarning.ref)
+# Disabled to avoid false positives.
+# This test relies on a use-after-delete (on purpose) to check that the use-after-delete-detection
+# logic in TList works properly. Since the kNotDeleted mechanism relies on UB, sometimes it does not work and this
+# test segfaults instead.
+#ROOTTEST_ADD_TEST(runDeleteWarning
+#                  MACRO runDeleteWarning.C
+#                  OUTCNVCMD sed -e s:0x[0-9a-fA-F]*:0xRemoved:g
+#                  OUTREF DeleteWarning.ref)
