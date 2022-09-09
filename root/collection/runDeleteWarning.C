@@ -1,16 +1,13 @@
 {
-   // Avoid actually accessing deleted memory but keeping the side-effect
-   // by replacing new/delete by new-with-placement/destructor.
-   auto slab = new char[2 * sizeof(TObject)];
-   auto o = new (slab) TObject();
+   auto o = new TObject();
    auto l = new TList();
    l->SetName("my own list");
    l->Add(o);
-   o->~TObject(); // instead of delete o;
+   delete o;
    l->Clear();
-   o = new (slab + sizeof(TObject)) TObject();
+   o = new TObject();
    l->Add(o);
-   o->~TObject(); // instead delete o;
+   delete o;
    l->Delete();
    return 0;
 }
