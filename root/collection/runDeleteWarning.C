@@ -1,4 +1,8 @@
 {
+   gDebug = 9;
+   ROOT::Internal::DeleteChangesMemory();
+   gDebug = 0;
+
    auto o = new TObject();
    auto l = new TList();
    l->SetName("my own list");
