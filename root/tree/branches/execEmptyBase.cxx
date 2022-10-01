@@ -1,7 +1,7 @@
 #include "Rtypes.h"
 
 class Empty {
-  ClassDef(Empty,0);
+  ClassDefOverride(Empty,0);
 };
 
 class Top {

@@ -17,7 +17,7 @@ class Track : public TObject {
 public:
    Track(double energy=-99.99) : fEnergy(energy) {}
    double GetEnergy() { return fEnergy; }
-   ClassDef(Track,1);
+   ClassDefOverride(Track,1);
 };
 #endif
 
@@ -36,7 +36,7 @@ public:
    const Track &GetTrack(int which) { return *(Track*)fTracks.At(which); }
 
 #ifdef WITHCLASSDEF
-   ClassDef(TopLevel,VERSION);
+   ClassDefOverride(TopLevel,VERSION);
 #endif
 };
 
@@ -61,7 +61,7 @@ public:
    const Track &GetTrack(int which) { return fTracks[which]; }
 
 #ifdef WITHCLASSDEF
-   ClassDef(TopLevel,VERSION);
+   ClassDefOverride(TopLevel,VERSION);
 #endif
 };
 
@@ -94,7 +94,7 @@ public:
    }
 
 #ifdef WITHCLASSDEF
-   ClassDef(TopLevel,VERSION);
+   ClassDefOverride(TopLevel,VERSION);
 #endif
 };
 

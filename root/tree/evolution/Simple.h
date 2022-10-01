@@ -14,7 +14,7 @@ public:
 #if VERSION==1
    int fData;
    std::vector<Content> fWillBeMissing;
-   ClassDef(Simple,1);
+   ClassDefOverride(Simple,1);
 #elif VERSION==2
    float fData;
    ClassDef(Simple,2);

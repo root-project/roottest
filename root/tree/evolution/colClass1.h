@@ -6,7 +6,7 @@ public:
    MoreNested(int i = 0) : fMoreNestedValue(i) {}
    int fMoreNestedValue;
    virtual ~MoreNested() {}
-   ClassDef(MoreNested,2);
+   ClassDefOverride(MoreNested,2);
 };
 
 class Nested {
@@ -15,7 +15,7 @@ class Nested {
    int fNestedValue;
    MoreNested fOther;
    virtual ~Nested() {}
-   ClassDef(Nested,2);
+   ClassDefOverride(Nested,2);
 };
 
 class Inside {
@@ -24,7 +24,7 @@ class Inside {
    int fValue;
    Nested fSub;
    virtual ~Inside() {}
-   ClassDef(Inside,2);
+   ClassDefOverride(Inside,2);
 };
 
 class colClass {
@@ -42,7 +42,7 @@ public:
    std::vector<double> fMeans;
 
    virtual ~colClass() {}
-   ClassDef(colClass,2);
+   ClassDefOverride(colClass,2);
 };
 
 #ifdef __MAKECINT__
