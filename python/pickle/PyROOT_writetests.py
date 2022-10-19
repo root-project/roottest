@@ -95,6 +95,9 @@ class PickleWritingSimpleObjectsTestCase( MyTestCase ):
       # Silence the RooFit banner
       ROOT.gEnv.SetValue("RooFit.Banner", 0)
 
+      if os.environ.get('ROOFIT') == 'False':
+          self.skipTest("ROOT was built without RooFit")
+
       var = ROOT.RooRealVar('var' ,'variable',0,10)
       w = ROOT.RooRealVar('w' ,'weight',0,10)
       vs = ROOT.RooArgSet ( var , w )
