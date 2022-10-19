@@ -135,6 +135,10 @@ class PickleReadingSimpleObjectsTestCase( MyTestCase ):
    def test6ReadCustomTypes( self ):
       """[ROOT-10810] Test reading a RooDataSet with weights"""
       ROOT.gEnv.SetValue("RooFit.Banner", 0)
+
+      if os.environ.get('ROOFIT') == 'False':
+          self.skipTest("ROOT was built without RooFit")
+
       ds = pickle.load( self.in1 )
       dsc= cPickle.load( self.in2 )
       self.assertEqual(ds.get(1)['var'].getVal(), 1)
