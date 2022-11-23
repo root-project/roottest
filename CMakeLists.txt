@@ -34,6 +34,7 @@ if(MSVC)
   set(grep_cmd "findstr")
 
   option(win_broken_tests "Enable broken tests on Windows" FALSE)
+  option(llvm13_broken_tests "Enable broken tests with LLVM 13 on Windows" FALSE)
 
   if(NOT win_broken_tests)
     set(WILLFAIL_ON_WIN32 WILLFAIL)
