@@ -40,7 +40,7 @@ if(MSVC)
     set(ROOT_${_opt} TRUE)
   endforeach()
   # _llvm13_broken_tests only exists with LLVM 13
-  if(NOT _llvm13_broken_tests OR ROOT_llvm13_broken_tests_FOUND)
+  if(NOT ROOT_llvm13_broken_tests OR ROOT_llvm13_broken_tests_FOUND)
     set(llvm13_broken_tests TRUE)
   endif()
 
