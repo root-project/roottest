@@ -35,15 +35,13 @@ if(MSVC)
 
   option(win_broken_tests "Enable broken tests on Windows" FALSE)
   option(llvm13_broken_tests "Enable broken tests with LLVM 13 on Windows" FALSE)
-  if(NOT DEFINED ROOT_SOURCE_DIR)  # testing using an installation
-    include(${ROOT_USE_FILE})
-    foreach(_opt ${_root_all_options})
-      set(ROOT_${_opt} TRUE)
-    endforeach()
-    # _llvm13_broken_tests only exists with LLVM 13
-    if(NOT _llvm13_broken_tests OR ROOT_llvm13_broken_tests_FOUND)
-      set(llvm13_broken_tests TRUE)
-    endif()
+  include(${ROOT_USE_FILE})
+  foreach(_opt ${_root_all_options})
+    set(ROOT_${_opt} TRUE)
+  endforeach()
+  # _llvm13_broken_tests only exists with LLVM 13
+  if(NOT _llvm13_broken_tests OR ROOT_llvm13_broken_tests_FOUND)
+    set(llvm13_broken_tests TRUE)
   endif()
 
   if(NOT win_broken_tests)
