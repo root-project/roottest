@@ -185,7 +185,7 @@ ROOTTEST_ADD_TEST(tprofile
                   EXEC ${CMAKE_CURRENT_BINARY_DIR}/tprofile
                   DEPENDS ${GENERATE_EXECUTABLE_TEST})
 
-if(NOT MSVC OR ${LLVM_VERSION} VERSION_LESS 13.0.0 OR llvm13_broken_tests)
+if(NOT MSVC OR llvm13_broken_tests)
   # Re-Enabled Disable test: see ROOT-7158
   ROOTTEST_GENERATE_REFLEX_DICTIONARY(tsenums tsenums.h  SELECTION tsenums_selection.xml)
 
