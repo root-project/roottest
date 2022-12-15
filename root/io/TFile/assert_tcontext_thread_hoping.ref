@@ -1,0 +1,14 @@
+Testing update of gDirectory upon file deletion
+thread tree create a.root
+thread six waits for thread three
+thread six deletes a.root
+thread six completed deletion of a.root
+Testing race condition between TContext and gDirectory updates
+thread one create a.root
+thread two waits for thread one
+thread two returns from waiting for thread one
+thread two deletes a.root
+thread one creates context
+thread one create b.root
+thread one deletes b.root
+thread two completed delete a.root
