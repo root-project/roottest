@@ -1,5 +1,4 @@
 
-Processing /home/dpiparo/RootDevel/Root6/head/roottest/root/dataframe/test_trainCache.C...
 
 ----------- With TChain
 Warning in <TClass::Init>: no dictionary for class RPRootDumpPatternInfo is available
@@ -33,6 +32,22 @@ Cached Reading.....................: 166 bytes in 1 transactions
 Reading............................: 0 bytes in 0 uncached transactions
 Readahead..........................: 256000 bytes with overhead = 0 bytes
 Average transaction................: 0.166000 Kbytes
+Number of blocks in current cache..: 1, total size: 166
+ ====> Bytes Read: 166
+
+----------- With TTreeReaderAndTwoBranches
+Sum is 27.6706
+******TreeCache statistics for tree: TotemNtuple in file: bigFile.root ******
+Number of branches in the cache ...: 2
+Cache Efficiency ..................: 1.000000
+Cache Efficiency Rel...............: 1.000000
+Secondary Efficiency ..............: 0.000000
+Secondary Efficiency Rel ..........: 0.000000
+Learn entries......................: 100
+Cached Reading.....................: 287 bytes in 2 transactions
+Reading............................: 0 bytes in 0 uncached transactions
+Readahead..........................: 256000 bytes with overhead = 0 bytes
+Average transaction................: 0.143500 Kbytes
 Number of blocks in current cache..: 1, total size: 166
  ====> Bytes Read: 166
 
