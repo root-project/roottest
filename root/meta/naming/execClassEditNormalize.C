@@ -27,14 +27,14 @@ template <typename KeyFromValue, typename Compare =std::less<typename KeyFromVal
 //template <typename KeyFromValue, typename Compare /* =std::less<typename KeyFromValue::result_type> */ > class ordered_unique<DefaultTag,KeyFromValue,Compare> {};
 //template <typename KeyFromValue> class ordered_unique<DefaultTag,KeyFromValue,std::less<typename KeyFromValue::result_type> > {};
 
-template <typename A> class identity { public: typedef A result_type; };
+template <typename A> class TheIdentity { public: typedef A result_type; };
 template <typename A> class tag {};
 template <typename A, typename B> class composite_key {};
 template<class Class, typename Type, Type (Class::*PtrToMemberFunction)()const> struct const_mem_fun {};
 
 /// Base class for our complex class
 typedef multi_index_container< ComplexElement*,
-                               indexed_by< ordered_unique< identity< ComplexElement > >,
+                               indexed_by< ordered_unique< TheIdentity< ComplexElement > >,
                                            ordered_unique< tag< DummyCounter >,
                                                            composite_key< ComplexElement*,
                                                                           const_mem_fun< ComplexElement,
@@ -176,13 +176,13 @@ int execClassEditNormalize() {
    std::string input2 = "boost::multi_index::ordered_unique<boost::multi_index::tag<DummyCounter,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na>,boost::multi_index::composite_key<ComplexElement*,boost::multi_index::const_mem_fun<ComplexElement,int,&ComplexElement::level>,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type>,mpl_::na>";
    if (!test(input2)) return 4;
 
-   std::string input1 = "boost::multi_index::ordered_unique<boost::multi_index::identity<ComplexElement>,mpl_::na,mpl_::na>";
+   std::string input1 = "boost::multi_index::ordered_unique<boost::multi_index::TheIdentity<ComplexElement>,mpl_::na,mpl_::na>";
    if (!test(input1)) return 3;
 
-   std::string input0 = "boost::multi_index::indexed_by<boost::multi_index::ordered_unique<boost::multi_index::identity<ComplexElement>,mpl_::na,mpl_::na>,boost::multi_index::ordered_unique<boost::multi_index::tag<DummyCounter,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na>,boost::multi_index::composite_key<ComplexElement*,boost::multi_index::const_mem_fun<ComplexElement,int,&ComplexElement::level>,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type>,mpl_::na>,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na>";
+   std::string input0 = "boost::multi_index::indexed_by<boost::multi_index::ordered_unique<boost::multi_index::TheIdentity<ComplexElement>,mpl_::na,mpl_::na>,boost::multi_index::ordered_unique<boost::multi_index::tag<DummyCounter,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na>,boost::multi_index::composite_key<ComplexElement*,boost::multi_index::const_mem_fun<ComplexElement,int,&ComplexElement::level>,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type>,mpl_::na>,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na>";
    if (!test(input0)) return 2;
 
-   std::string input_full = "boost::multi_index::multi_index_container<ComplexElement*,boost::multi_index::indexed_by<boost::multi_index::ordered_unique<boost::multi_index::identity<ComplexElement>,mpl_::na,mpl_::na>,boost::multi_index::ordered_unique<boost::multi_index::tag<DummyCounter,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na>,boost::multi_index::composite_key<ComplexElement*,boost::multi_index::const_mem_fun<ComplexElement,int,&ComplexElement::level>,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type>,mpl_::na>,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na>,allocator<ComplexElement*> >";
+   std::string input_full = "boost::multi_index::multi_index_container<ComplexElement*,boost::multi_index::indexed_by<boost::multi_index::ordered_unique<boost::multi_index::TheIdentity<ComplexElement>,mpl_::na,mpl_::na>,boost::multi_index::ordered_unique<boost::multi_index::tag<DummyCounter,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na>,boost::multi_index::composite_key<ComplexElement*,boost::multi_index::const_mem_fun<ComplexElement,int,&ComplexElement::level>,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type,boost::tuples::null_type>,mpl_::na>,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na,mpl_::na>,allocator<ComplexElement*> >";
 
    if (!test(input_full)) return 1;
    return 0;
