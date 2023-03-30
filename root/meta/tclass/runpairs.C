@@ -47,20 +47,20 @@ public:
    T value;
 };
 
-class regular {
+class MyRegular {
    Int_t val1;
    tp<Int_t> val2;
    vector<Int_t> val3;
    std::vector<std::pair<Char_t, UChar_t> > val4;
 public:
-   regular() : val1(0) {}
+   MyRegular() : val1(0) {}
    int get() { return val1*sizeof(val2)*val3.size()*val4.size(); }
 };
 
 #ifdef __MAKECINT__
 #pragma link C++ class std::vector<std::pair<Char_t, UChar_t> >+;
 #pragma link C++ class std::pair<Char_t, UChar_t>+;
-#pragma link C++ class regular+;
+#pragma link C++ class MyRegular+;
 #pragma link C++ class tp<Int_t>+;
 #pragma link C++ class tp<Long_t>+;
 #endif
@@ -69,7 +69,7 @@ public:
 
 void write2file(const char*filename="pairs.root",int debug =0) {
    TFile *f = new TFile(filename,"RECREATE");
-   regular r;
+   MyRegular r;
    f->WriteObject(&r,"myr");
    f->Write();
    if (debug) cout << "wrote " << filename << endl;
@@ -85,7 +85,7 @@ void readfile(const char*filename="pairs.root",int debug = 0) {
    checkRegular(TClass::GetClass("tp<Int_t>"),"tp<int>");
    check(TClass::GetClass("vector<Int_t>"));
    check(TClass::GetClass("vector<std::pair<Char_t, UChar_t> >"));
-   regular *r;
+   MyRegular *r;
    f->GetObject("myr",r);
 }
  
