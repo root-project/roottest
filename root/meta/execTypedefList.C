@@ -145,7 +145,7 @@ int execTypedefList() {
       res = check_file("typelist_win32.v6.txt",1420); if (res) return res;
    #endif
 #else
-   res = check_file("typelist.v5.txt",349); if (res) return res;
+   res = check_file("typelist.v5.txt",348); if (res) return res;
    res = check_file("typelist.v6.txt",1465); if (res) return res;
 #endif
 
