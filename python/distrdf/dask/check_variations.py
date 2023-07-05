@@ -2,18 +2,17 @@ import pytest
 
 import ROOT
 
-import DistRDF
 from DistRDF.Backends import Dask
 
+VariationsFor = ROOT.RDF.Experimental.VariationsFor
 
 class TestVariations:
     """Tests usage of systematic variations with Dask backend"""
-
     def test_histo(self, connection):
         df = Dask.RDataFrame(10, daskclient=connection, npartitions=2).Define("x", "1")
         df1 = df.Vary("x", "ROOT::RVecI{-2,2}", ["down", "up"])
         h = df1.Histo1D(("name", "title", 10, -10, 10), "x")
-        histos = DistRDF.VariationsFor(h)
+        histos = VariationsFor(h)
 
         expectednames = ["nominal", "x:up", "x:down"]
         expectedmeans = [1, 2, -2]
@@ -26,7 +25,7 @@ class TestVariations:
     def test_graph(self, connection):
         df = Dask.RDataFrame(10, daskclient=connection, npartitions=2).Define("x", "1")
         g = df.Vary("x", "ROOT::RVecI{-1, 2}", nVariations=2).Graph("x", "x")
-        gs = DistRDF.VariationsFor(g)
+        gs = VariationsFor(g)
 
         assert g.GetMean() == 1
 
@@ -41,7 +40,7 @@ class TestVariations:
         df = Dask.RDataFrame(10, daskclient=connection, npartitions=2).Define("x", "1").Define("y", "42")
         h = df.Vary("x", "ROOT::RVecI{-1, 2}",
                     variationTags=["down", "up"]).Histo1D(("name", "title", 10, -500, 500), "x", "y")
-        histos = DistRDF.VariationsFor(h)
+        histos = VariationsFor(h)
 
         expectednames = ["nominal", "x:down", "x:up"]
         expectedmeans = [1, -1, 2]
@@ -57,7 +56,7 @@ class TestVariations:
         h = df.Vary(["x", "y"],
                     "ROOT::RVec<ROOT::RVecI>{{-1, 2, 3}, {41, 43, 44}}",
                     ["down", "up", "other"], "xy").Histo1D(("name", "title", 10, -500, 500), "x", "y")
-        histos = DistRDF.VariationsFor(h)
+        histos = VariationsFor(h)
 
         expectednames = ["nominal", "xy:down", "xy:up", "xy:other"]
         expectedmeans = [1, -1, 2, 3]
@@ -74,7 +73,7 @@ class TestVariations:
 
         assert df_sum.GetValue() == 10
 
-        sums = DistRDF.VariationsFor(df_sum)
+        sums = VariationsFor(df_sum)
 
         expectednames = ["nominal", "myvariation:down", "myvariation:up"]
         expectedsums = [10, 0, 20]
