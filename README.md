@@ -8,7 +8,17 @@ CTest. These tests are executed as part of ROOT's Continuous Integration setup.
 
 ### Configuration and Build
 
-There are two ways to generate and execute the tests:
+Two ways to generate and execute the tests are listed below, after the a copy-paste recipe for the impatient developer.
+
+#### Copy and paste recipe for the impatient developer
+
+       git clone https://github.com/root-project/root
+       git clone https://github.com/root-project/roottest
+       mkdir build
+       cd build
+       cmake  -DCMAKE_BUILD_TYPE=Debug -Droottest=ON -Dtesting=ON ../root
+
+Enabling the `Debug` build type can be key to debug potential issues you detect testing the newly developed code with a debugger.
 
 #### Option 1: roottest as part of a ROOT build
 
