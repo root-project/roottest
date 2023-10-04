@@ -13,3 +13,9 @@ pandas
 
 # Needed by pyroot/tests
 setuptools # for pkg_resources
+
+#needed by tmva tests
+tensorflow
+torch
+sklearn
+
