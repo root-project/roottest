@@ -1,0 +1,18 @@
+
+Processing /home/pcanal/root_working/code/root/roottest/root/io/uniquePointer/privacyLoad.C...
+Data member list for test
+  filesystem::path persistent_path
+
+Data member list for test1
+  test1::Inner* unique_data
+  test1::Inner* ptr_data
+
+Data member list for test2
+  test1 persistent_data
+
+Data member list for test3
+  tuple<int,test3::Inner> persistent_data
+
+Data member list for test4
+
+(int) 0
