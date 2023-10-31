@@ -1,6 +1,15 @@
 int  privacyLoad() {
   gSystem->Load("privacy");
 
+  // On Windows <fstream> leads to a forward declaration of
+  // std::filesystem::path and since we do not generate a dictonary for that
+  // class, there is also no autoparsing.  This leads to a state that is
+  // different from the state in other platform and incurred an additional
+  // spurrious:
+  // ```Warning in <TClass::Init>: no dictionary for class filesystem::path is available```
+  // (due to the forward declaration only state).
+  gInterpreter->Declare("#include <filesystem>");
+
   const char *names[] = {
     "test",
     "test1",
