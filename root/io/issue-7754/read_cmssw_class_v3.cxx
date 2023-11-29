@@ -59,10 +59,10 @@ void Print(const Holder &h)
 }
 
 #ifdef __ROOTCLING__
-#pragma read sourceClass="SubContent" targetClass="SubContent" versions="[2]" source="int fValue" target="fValue" code="{ fValue = 100 * onfile.fValue; }"
-#pragma read sourceClass="SubContent" targetClass="SubContent" versions="[2]" source="int fValue" target="fNewValue" code="{ fNewValue = 3000 * onfile.fValue; }"
-#pragma read sourceClass="Content" targetClass="Content" versions="[2]" source="float fAfter" target="fAfter" code="{ fAfter = 10 * onfile.fAfter; }"
-#pragma read sourceClass="Content" targetClass="Content" versions="[2]" source="float fAfter" target="fNewData" code="{ fNewData = 20 * onfile.fAfter; }"
+#pragma read sourceClass="SubContent" targetClass="SubContent" version="[2]" source="int fValue" target="fValue" code="{ fValue = 100 * onfile.fValue; }"
+#pragma read sourceClass="SubContent" targetClass="SubContent" version="[2]" source="int fValue" target="fNewValue" code="{ fNewValue = 3000 * onfile.fValue; }"
+#pragma read sourceClass="Content" targetClass="Content" version="[2]" source="float fAfter" target="fAfter" code="{ fAfter = 10 * onfile.fAfter; }"
+#pragma read sourceClass="Content" targetClass="Content" version="[2]" source="float fAfter" target="fNewData" code="{ fNewData = 20 * onfile.fAfter; }"
 
 #endif
 

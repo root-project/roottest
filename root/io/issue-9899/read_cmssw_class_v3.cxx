@@ -43,11 +43,11 @@ struct Values {
 
 #ifdef __ROOTCLING__
 #pragma read sourceClass="RefVectorBase" targetClass="RefVectorBase" source="" \
-        versions="1-" target="fTransient" code="{ fTransient.clear(); }"
+        version="1-" target="fTransient" code="{ fTransient.clear(); }"
 #pragma read sourceClass="RefVectorMemberPointersHolder" targetClass="RefVectorMemberPointersHolder" source="" \
-        versions="1-" target="fTransient" code="{ fTransient.clear(); }"
+        version="1-" target="fTransient" code="{ fTransient.clear(); }"
 #pragma read sourceClass="LowData" targetClass="LowData" source="Values fValues" \
-        versions="1-" target="fNewValues" code="{ fNewValues = onfile.fValues; }"
+        version="1-" target="fNewValues" code="{ fNewValues = onfile.fValues; }"
 #endif
 
 struct LowData {
