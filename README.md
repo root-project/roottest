@@ -5,6 +5,7 @@ CTest. These tests are executed as part of ROOT's Continuous Integration setup.
 
 ## Run tests locally
 
+
 ### Configuration and Build
 
 There are two ways to generate and execute the tests:
