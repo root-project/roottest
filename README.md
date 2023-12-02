@@ -14,21 +14,21 @@ There are two ways to generate and execute the tests:
 
 Before building, create a build directory, change into it, enable the 'testing' and 'roottest' option:
 
-   mkdir build
-   cd build
-   cmake -Dtesting=ON -Droottest=ON $PATH_TO_ROOT_SOURCES
-   cmake --build . -j8
+    mkdir build
+    cd build
+    cmake -Dtesting=ON -Droottest=ON $PATH_TO_ROOT_SOURCES
+    cmake --build . -j8
 
 #### Option 2: roottest as a stand-alone project
 
 Set the ROOT environment to an existing build / installation:
 
-   . ${ROOTSYS}/thisroot.[c]sh
+    . ${ROOTSYS}/thisroot.[c]sh
 
 Create a build directory, change into it and execute
 
-   cmake $PATH_TO_ROOTTEST
-   cmake --build . -j8
+    cmake $PATH_TO_ROOTTEST
+    cmake --build . -j8
 
 ### Running the test suite
 
@@ -42,8 +42,11 @@ Tests can then be executed using the ctest command in the build directory:
     ctest -L regex          (run all tests that contain the label regex)
     ctest --print-labels    (list all existing labels)
 
-You can combine most of the ctest options, e.g. ctest -V -j4 -R root-meta is a
-valid call.
+You can combine most of the ctest options, for example:
+
+    ctest -V -j4 -R root-meta 
+
+is a valid call.
 
 
 ## Adding tests
