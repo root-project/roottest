@@ -4,7 +4,6 @@ import pytest
 
 import ROOT
 
-import DistRDF
 from DistRDF.Backends import Dask
 
 
@@ -36,7 +35,7 @@ class TestRunGraphs:
         for proxy in histoproxies:
             assert proxy.proxied_node.value is None
 
-        DistRDF.RunGraphs(histoproxies)
+        ROOT.RDF.RunGraphs(histoproxies)
 
         # After RunGraphs all histograms are correctly assigned to the
         # node objects
