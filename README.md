@@ -1,4 +1,4 @@
-# roottest
+ # roottest
 
 Tests in the roottest repository can be added and executed using CMake and
 CTest. These tests are executed as part of ROOT's Continuous Integration setup.
