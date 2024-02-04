@@ -280,6 +280,11 @@ if(ROOT_pyroot_FOUND)
   set(PYTESTS_WILLFAIL WILLFAIL)
 endif()
 
+#---Make sure the vdt target is imported when necessary
+if(ROOT_vdt_FOUND AND NOT TARGET VDT::VDT)
+  find_package(Vdt REQUIRED)
+endif()
+
 # Find OpenGL
 find_library(OPENGL_gl_LIBRARY NAMES GL)
 
