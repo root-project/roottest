@@ -24,23 +24,36 @@ CreateMyCounterClass = ROOT.CreateMyCounterClass
 
 ### C++11 standard library classes ===========================================
 class Cpp1Cpp11StandardClassesTestCase( MyTestCase ):
-   def test01SharedPtr( self ):
-      """Test usage and access of std::shared_ptr<>"""
+    def test01SharedPtr( self ):
+        """Test usage and access of std::shared_ptr<>"""
 
-    # proper memory accounting
-      self.assertEqual( MyCounterClass.counter, 0 )
+        # proper memory accounting
+        self.assertEqual( MyCounterClass.counter, 0 )
 
-      ptr1 = CreateMyCounterClass()
-      self.assertTrue( not not ptr1 )
-      self.assertEqual( MyCounterClass.counter, 1 )
+        ptr1 = CreateMyCounterClass()
+        self.assertTrue( not not ptr1 )
+        self.assertEqual( MyCounterClass.counter, 1 )
 
-      ptr2 = CreateMyCounterClass()
-      self.assertTrue( not not ptr2 )
-      self.assertEqual( MyCounterClass.counter, 2 )
+        ptr2 = CreateMyCounterClass()
+        self.assertTrue( not not ptr2 )
+        self.assertEqual( MyCounterClass.counter, 2 )
 
-      del ptr2, ptr1
-      import gc; gc.collect()
-      self.assertEqual( MyCounterClass.counter, 0 )
+        del ptr2, ptr1
+        import gc; gc.collect()
+        self.assertEqual( MyCounterClass.counter, 0 )
+
+    def test02InitializerList(self):
+        """
+        Check if we can convert a list of strings to a Python initializer list.
+
+        Reproducer of https://github.com/root-project/root/issues/11411
+        """
+
+        ROOT.gInterpreter.Declare("""
+        void foo(std::initializer_list<std::string> const& columns) {}
+        """)
+        ROOT.foo(["x"])
+    
 
 
 ### C++11 language constructs test cases =====================================
