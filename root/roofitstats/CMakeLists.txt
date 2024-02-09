@@ -7,11 +7,18 @@ if(ROOT_roofit_FOUND)
   ROOTTEST_ADD_TEST(RooDataSet_ASCII_in
                     MACRO ${CMAKE_CURRENT_SOURCE_DIR}/ASCII-in-out.C
                     MACROARG "false, \"${CMAKE_CURRENT_SOURCE_DIR}/ASCII-in-out_data.txt\"")
+if(MSVC AND MSVC_VERSION LESS 1938)
   ROOTTEST_ADD_TEST(RooDataSet_ASCII_out
                     MACRO ${CMAKE_CURRENT_SOURCE_DIR}/ASCII-in-out.C
                     MACROARG "true, \"./ASCII-in-out_result.txt\""
                     ${WILLFAIL_ON_WIN32}
                     POSTCMD diff ${CMAKE_CURRENT_SOURCE_DIR}/ASCII-in-out_data.txt ./ASCII-in-out_result.txt)
+else()
+  ROOTTEST_ADD_TEST(RooDataSet_ASCII_out
+                    MACRO ${CMAKE_CURRENT_SOURCE_DIR}/ASCII-in-out.C
+                    MACROARG "true, \"./ASCII-in-out_result.txt\""
+                    POSTCMD diff ${CMAKE_CURRENT_SOURCE_DIR}/ASCII-in-out_data.txt ./ASCII-in-out_result.txt)
+endif()
 
   if(MSVC AND DEFINED ROOT_SOURCE_DIR)
     ROOT_ADD_GTEST(stabilityTests stabilityTests.cxx LIBRARIES RooFit
