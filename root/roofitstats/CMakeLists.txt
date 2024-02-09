@@ -9,7 +9,7 @@ if(ROOT_roofit_FOUND)
   ROOTTEST_ADD_TEST(RooDataSet_ASCII_in
                     MACRO ${CMAKE_CURRENT_SOURCE_DIR}/ASCII-in-out.C
                     MACROARG "false, \"${CMAKE_CURRENT_SOURCE_DIR}/ASCII-in-out_data.txt\"")
-if(MSVC AND MSVC_VERSION LESS 1929)
+if(MSVC AND MSVC_VERSION LESS 1938)
   ROOTTEST_ADD_TEST(RooDataSet_ASCII_out
                     MACRO ${CMAKE_CURRENT_SOURCE_DIR}/ASCII-in-out.C
                     MACROARG "true, \"./ASCII-in-out_result.txt\""
