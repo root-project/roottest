@@ -15,7 +15,8 @@ endif()
 ROOTTEST_GENERATE_EXECUTABLE(EventGeneration
   ${CMAKE_CURRENT_SOURCE_DIR}/TreeFormulaEventMain.cxx
   LIBRARIES Core RIO Net Tree Hist MathCore TreeFormulaEvent
-  DEPENDS TreeFormulaEvent)
+  DEPENDS TreeFormulaEvent
+  FIXTURES_SETUP EventGeneration)
 
 add_custom_command(TARGET G__TreeFormulaEvent
   COMMAND ${CMAKE_COMMAND} -E copy
@@ -50,12 +51,10 @@ ROOTTEST_ADD_TEST(read
 #
 function(EVENT_GENERATE_FILE file_name size comp split action tracks)
   ROOTTEST_ADD_TEST("generation-${file_name}"
-    COMMAND ./EventGeneration "${size}" "${comp}" "${split}" "${action}" "${tracks}"
-    POSTCMD ${CMAKE_COMMAND} -E rename
-      ${CMAKE_CURRENT_BINARY_DIR}/Event.root
-      "${CMAKE_CURRENT_BINARY_DIR}/${file_name}.root"
+    COMMAND ./EventGeneration "${size}" "${comp}" "${split}" "${action}" "${tracks}" "${file_name}.root"
     DEPENDS EventGeneration
-    RUN_SERIAL)
+    FIXTURES_REQUIRED EventGeneration
+    FIXTURES_SETUP EventGeneration-${file_name})
 endfunction()
 
 #
@@ -69,7 +68,8 @@ function(EVENT_GENERATE_TESTS file_name)
     ROOTTEST_ADD_TEST("${file_name}-${mode}"
       COMMAND ${ROOT_root_CMD} -q -b -l "${CMAKE_CURRENT_SOURCE_DIR}/dt_wrap.C\(\"${file_name}.root\",${mode}\)"
       DEPENDS EventGeneration
-      RUN_SERIAL)
+      RUN_SERIAL
+      FIXTURES_REQUIRED EventGeneration-${file_name})
   endforeach()
 endfunction()
 
@@ -83,6 +83,9 @@ EVENT_GENERATE_TESTS(split-zero)
 
 EVENT_GENERATE_FILE(split-one ${size} ${comp} 1 ${action} ${tracks})
 EVENT_GENERATE_TESTS(split-one)
+
+EVENT_GENERATE_FILE(split-two ${size} ${comp} 2 ${action} ${tracks})
+EVENT_GENERATE_TESTS(split-two)
 
 EVENT_GENERATE_FILE(split-nine ${size} ${comp} 9 ${action} ${tracks})
 EVENT_GENERATE_TESTS(split-nine)

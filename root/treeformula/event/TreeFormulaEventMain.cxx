@@ -110,12 +110,14 @@ int main(int argc, char **argv)
    Int_t arg4   = 1;
    Int_t arg5   = 600;     //default number of tracks per event
    Int_t netf   = 0;
+   std::string outputFileName{"Event.root"};
 
    if (argc > 1)  nevent = atoi(argv[1]);
    if (argc > 2)  comp   = atoi(argv[2]);
    if (argc > 3)  split  = atoi(argv[3]);
    if (argc > 4)  arg4   = atoi(argv[4]);
    if (argc > 5)  arg5   = atoi(argv[5]);
+   if (argc > 6)  outputFileName   = std::string(argv[6]);
    if (arg4 ==  0) { write = 0; hfill = 0; read = 1;}
    if (arg4 ==  1) { write = 1; hfill = 0;}
    if (arg4 ==  2) { write = 0; hfill = 0;}
@@ -155,7 +157,7 @@ int main(int argc, char **argv)
       if (netf) {
          hfile = new TNetFile("root://localhost/root/test/EventNet.root");
       } else
-         hfile = new TFile("Event.root");
+         hfile = new TFile(outputFileName.c_str());
       tree = (TTree*)hfile->Get("T");
       TBranch *branch = tree->GetBranch("event");
       branch->SetAddress(&event);
@@ -188,7 +190,7 @@ int main(int argc, char **argv)
       if (netf) {
          hfile = new TNetFile("root://localhost/root/test/EventNet.root","RECREATE","TTree benchmark ROOT file");
       } else
-         hfile = new TFile("Event.root","RECREATE","TTree benchmark ROOT file");
+         hfile = new TFile(outputFileName.c_str(),"RECREATE","TTree benchmark ROOT file");
       hfile->SetCompressionLevel(comp);
 
      // Create histogram to show write_time in function of time
