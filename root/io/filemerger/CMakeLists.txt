@@ -171,19 +171,19 @@ if(${compression_default} STREQUAL "zlib")
 
       ROOTTEST_ADD_TEST(simplex2-default-compr-level9
                   PRECMD  ${ROOT_hadd_CMD} -f9 -a hsimple9x2.root hsimple.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple9x2.root\",50000,9,871048,30)"
+                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple9x2.root\",75000,9,871048,30)"
                   POSTCMD ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/hsimple9x2.root ${CMAKE_CURRENT_BINARY_DIR}/hsimple92.root
                   DEPENDS simple-default-compr-level9-datageneration)
 
       ROOTTEST_ADD_TEST(simplex2-zlib-compr-level9
                   PRECMD  ${ROOT_hadd_CMD} -f109 -a hsimple109x2.root hsimple.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple109x2.root\",50000,109,871053,30)"
+                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple109x2.root\",75000,109,871053,30)"
                   POSTCMD ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/hsimple109x2.root ${CMAKE_CURRENT_BINARY_DIR}/hsimple1092.root
                   DEPENDS simple-zlib-compr-level9-datageneration)
 
       ROOTTEST_ADD_TEST(simplek-default-compr-deflevel
                   PRECMD ${ROOT_hadd_CMD} -fk hsimpleK.root hsimple209.root hsimple409.root hsimple.root hsimple9.root hsimple92.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK.root\",6*25000,209,2297616,30)"
+                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK.root\",6*25000,209,1916475,30)"
                   DEPENDS roottest-root-io-filemerger-hsimple
                   DEPENDS simple-lz4-compr-level9
                   DEPENDS simple-lzma-compr-level9
@@ -192,7 +192,7 @@ if(${compression_default} STREQUAL "zlib")
 
       ROOTTEST_ADD_TEST(simplek-lzma-compr-level9
                   PRECMD ${ROOT_hadd_CMD} -fk209 hsimpleK209.root hsimpleK.root hsimple209.root hsimple409.root hsimple.root hsimple9.root hsimple92.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK209.root\",12*25000,209,4583840,30)"
+                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK209.root\",12*25000,209,3822014,30)"
                   DEPENDS roottest-root-io-filemerger-hsimple
                   DEPENDS simple-lz4-compr-level9
                   DEPENDS simple-lzma-compr-level9
@@ -213,7 +213,7 @@ if(${compression_default} STREQUAL "zlib")
       if(${LZ4_VERSION} VERSION_LESS "1.7.5")
             ROOTTEST_ADD_TEST(simplek-lz4-compr-level4
                            PRECMD ${ROOT_hadd_CMD} -fk404 hsimpleK404.root hsimpleK209.root hsimpleK.root hsimple.root hsimple9.root hsimple209.root hsimple409.root hsimple92.root
-                           COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK404.root\",24*25000,404,12047492,30)"
+                           COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleK404.root\",24*25000,404,10042617,30)"
                            DEPENDS roottest-root-io-filemerger-hsimple
                            DEPENDS simple-lz4-compr-level9
                            DEPENDS simple-lzma-compr-level9
@@ -296,13 +296,13 @@ if(${compression_default} STREQUAL "zlib")
 
       ROOTTEST_ADD_TEST(simplex2-default-compr-level9
                   PRECMD  ${ROOT_hadd_CMD} -f9 -a hsimple9x2.root hsimple.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple9x2.root\",50000,9,850127,30)"
+                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple9x2.root\",50000,9,1270137,30)"
                   POSTCMD ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/hsimple9x2.root ${CMAKE_CURRENT_BINARY_DIR}/hsimple92.root
                   DEPENDS simple-default-compr-level9-datageneration)
 
       ROOTTEST_ADD_TEST(simplex2-zlib-compr-level9
                   PRECMD  ${ROOT_hadd_CMD} -f109 -a hsimple109x2.root hsimple.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple109x2.root\",50000,109,850136,30)"
+                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple109x2.root\",50000,109,1270146,30)"
                   POSTCMD ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/hsimple109x2.root ${CMAKE_CURRENT_BINARY_DIR}/hsimple1092.root
                   DEPENDS simple-zlib-compr-level9-datageneration)
 
@@ -383,7 +383,7 @@ if(${compression_default} STREQUAL "zlib")
 
       ROOTTEST_ADD_TEST(simplef-default-compr-level9
                   PRECMD ${ROOT_hadd_CMD} -ff hsimpleF.root hsimple9.root hsimple209.root hsimple409.root hsimpleK404.root hsimple.root hsimple92.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleF.root\",30*25000,9,12581462,30)"
+                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimpleF.root\",30*25000,9,10485269,30)"
                   DEPENDS roottest-root-io-filemerger-hsimple
                   DEPENDS simple-lz4-compr-level9
                   DEPENDS simple-lzma-compr-level9
