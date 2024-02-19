@@ -961,7 +961,6 @@ THnD
 THnF
 THnI
 THnL
-THnL64
 THnS
 THnSparseC
 THnSparseD
