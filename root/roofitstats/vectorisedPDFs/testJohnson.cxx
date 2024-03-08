@@ -24,7 +24,7 @@ class TestJohnson : public PDFTest
 {
   protected:
     TestJohnson() :
-      PDFTest("Johnson", 200000)
+      PDFTest("Johnson")
   {
       auto mass = new RooRealVar("mass", "mass", 0., 0., 500.);
       auto mu = new RooRealVar("mu", "Location parameter of normal distribution", 300., 0., 500.);
@@ -67,7 +67,7 @@ class TestJohnsonInMassAndMu : public PDFTest
 {
   protected:
     TestJohnsonInMassAndMu() :
-      PDFTest("Johnson in mass and mu", 200000)
+      PDFTest("Johnson in mass and mu")
   {
       auto mass = new RooRealVar("mass", "mass", 0., -100., 500.);
       auto mu = new RooRealVar("mu", "Location parameter of normal distribution", 100., 90., 110.);
@@ -110,7 +110,7 @@ class TestJohnsonWithFormulaParameters : public PDFTest
 {
   protected:
     TestJohnsonWithFormulaParameters() :
-      PDFTest("Johnson with formula", 100000)
+      PDFTest("Johnson with formula")
   {
       // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
       auto mass = new RooRealVar("mass", "mass", 0., -500., 500.);

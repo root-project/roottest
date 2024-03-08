@@ -21,7 +21,7 @@ class TestChiSquarePdfinX: public PDFTest
 {
   protected:
     TestChiSquarePdfinX() :
-      PDFTest("ChiSquarePdf", 100000)
+      PDFTest("ChiSquarePdf")
     {
       auto x = new RooRealVar("x", "x", 0.1, 100);
       auto ndof = new RooRealVar("ndof", "ndof of chiSquarePdf", 2, 1, 5);

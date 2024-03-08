@@ -185,7 +185,7 @@ class TestNonVecGauss : public PDFTest
 {
   protected:
     TestNonVecGauss() :
-      PDFTest("GaussNoBatches", 200000) {
+      PDFTest("GaussNoBatches") {
       auto x = new RooRealVar("x", "x", -10, 10);
       auto mean = new RooRealVar("mean", "mean of gaussian", 1, -10, 10);
       auto sigma = new RooRealVar("sigma", "width of gaussian", 1, 0.1, 10);

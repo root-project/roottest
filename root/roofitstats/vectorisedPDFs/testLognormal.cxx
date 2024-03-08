@@ -22,7 +22,7 @@ class TestLognormal : public PDFTest
 {
   protected:
     TestLognormal() :
-      PDFTest("Lognormal", 100000)
+      PDFTest("Lognormal")
   {
         auto x = new RooRealVar("x", "x", 1, 0.1, 10);
         auto m0 = new RooRealVar("m0", "m0", 5, 0.1, 10);
@@ -54,7 +54,7 @@ class TestLognormalInMeanAndX : public PDFTest
 {
   protected:
     TestLognormalInMeanAndX() :
-      PDFTest("Lognormal(x, mean)", 100000)
+      PDFTest("Lognormal(x, mean)")
   {
         auto x = new RooRealVar("x", "x", 1, 0.1, 10);
         auto m0 = new RooRealVar("m0", "m0", 1, 0.1, 10);
