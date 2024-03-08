@@ -28,7 +28,7 @@ class TestNestedPDFs : public PDFTest
 {
   protected:
     TestNestedPDFs() :
-      PDFTest("Gauss + RooRealSumPdf(pol2)", 50000)
+      PDFTest("Gauss + RooRealSumPdf(pol2)")
   {
       auto x = new RooRealVar("x", "x", -5., 5.);
 

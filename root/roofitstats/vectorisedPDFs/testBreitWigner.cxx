@@ -21,7 +21,7 @@ class TestBreitWigner : public PDFTest
 {
   protected:
     TestBreitWigner() :
-      PDFTest("BreitWigner", 100000)
+      PDFTest("BreitWigner")
   {
         auto x = new RooRealVar("x", "x", -10, 10);
         auto mean = new RooRealVar("mean", "mean", 1, -7, 7);
