@@ -23,7 +23,7 @@ class TestBukin : public PDFTest
 {
   protected:
     TestBukin() :
-      PDFTest("Bukin", 100000)
+      PDFTest("Bukin")
   { 
       auto x = new RooRealVar("x", "x", 0.6, -15., 10.);
       auto Xp = new RooRealVar("Xp", "Xp", 0.5, -3., 5.);
