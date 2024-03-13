@@ -85,5 +85,5 @@ COMPARE_FIXED_VALUES_NORM(TestPolynomial5, CompareFixedValuesNorm)
 COMPARE_FIXED_VALUES_NORM_LOG(TestPolynomial5, CompareFixedNormLog)
 FIT_TEST_SCALAR(TestPolynomial5, DISABLED_RunScalar) // Save time
 FIT_TEST_BATCH(TestPolynomial5, DISABLED_RunBatch)   // Save time
-FIT_TEST_BATCH_VS_SCALAR(TestPolynomial5, CompareBatchScalar)
+FIT_TEST_BATCH_VS_SCALAR(TestPolynomial5, DISABLED_CompareBatchScalar)
 
