@@ -35,13 +35,22 @@ int runindex64(){
     tree->Fill();
   }
   tree->Write();
-  tree->Scan("run:event","","colsize=30");
+  //tree->Scan("run:event","","colsize=30");
 
   cout<<"Tree BuildIndex returns "<<tree->BuildIndex("run", "event")<<endl;
-  for(int i=0; i<sizeof(events)/sizeof(*events); i++){
+  for (int i=0; i<sizeof(events)/sizeof(*events); i++) {
     run = runs[i];
     event = events[i];
-    cout << i << ": Run " << run << ", Event " << event << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
+    // in the cout, artificially convert to short longdouble for comparing with just one .ref instead of two based on the platforms
+    ULong64_t     run2 = run;
+    ULong64_t     event2 = event;
+    if (!shortlongdouble) {
+       if (run == bigval) run2 = 0xFFFFFFFFFFFF;
+       else if(run == ubigval) run2 = 0xFFFFFFFFFFFF0;
+       if(event == bigval) event2 = 0xFFFFFFFFFFFF;
+       else if(event == ubigval) event2 = 0xFFFFFFFFFFFF0;
+    }
+    cout << i << ": Run " << run2 << ", Event " << event2 << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
   }
 
   test(tree);
