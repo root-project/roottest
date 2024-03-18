@@ -8,8 +8,8 @@ const char* fname = "index64.root";
 // Apple M1 has long double == double; these values exceed its range
 // and cannot be represented as (even temporary) expression results.
 // There would be a warning if you'd try.
-static constexpr bool shortlongdouble = sizeof(long double) < 16; // was true for __APPLE__ and __arm64__
-const Long64_t bigval   = shortlongdouble ? 0xFFFFFFFFFFFF : 0xFFFFFFFFFFFFFFF; // still positive number
+static constexpr bool shortlongdouble = sizeof(long double) < 16 || true; // was true for __APPLE__ and __arm64__
+const Long64_t bigval   = shortlongdouble ?  0xFFFFFFFFFFFF :  0xFFFFFFFFFFFFFFF; // still positive number
 const ULong64_t biguval = shortlongdouble ?  0xFFFFFFFFFFFF0 : 0xFFFFFFFFFFFFFFF0; // "negative" number
 const Long64_t maxMajor = 0x1ffffffff;
 const Long64_t maxMinor = 0x7fffffff; // unless major = 0
@@ -41,16 +41,7 @@ int runindex64(){
   for (int i=0; i<sizeof(events)/sizeof(*events); i++) {
     run = runs[i];
     event = events[i];
-    // in the cout, artificially convert to short longdouble for comparing with just one .ref instead of two based on the platforms
-    ULong64_t     run2 = run;
-    ULong64_t     event2 = event;
-    if (!shortlongdouble) {
-       if (run == bigval) run2 = 0xFFFFFFFFFFFF;
-       else if(run == biguval) run2 = 0xFFFFFFFFFFFF0;
-       if(event == bigval) event2 = 0xFFFFFFFFFFFF;
-       else if(event == biguval) event2 = 0xFFFFFFFFFFFF0;
-    }
-    cout << i << ": Run " << run2 << ", Event " << event2 << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
+    cout << i << ": Run " << run << ", Event " << event << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
   }
 
   test(tree);
