@@ -35,7 +35,7 @@ int runindex64(){
     tree->Fill();
   }
   tree->Write();
-  tree->Print();
+  tree->Scan("run:event","","colsize=30");
 
   cout<<"Tree BuildIndex returns "<<tree->BuildIndex("run", "event")<<endl;
   for(int i=0; i<sizeof(events)/sizeof(*events); i++){
