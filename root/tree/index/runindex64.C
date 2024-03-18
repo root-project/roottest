@@ -46,9 +46,9 @@ int runindex64(){
     ULong64_t     event2 = event;
     if (!shortlongdouble) {
        if (run == bigval) run2 = 0xFFFFFFFFFFFF;
-       else if(run == ubigval) run2 = 0xFFFFFFFFFFFF0;
+       else if(run == biguval) run2 = 0xFFFFFFFFFFFF0;
        if(event == bigval) event2 = 0xFFFFFFFFFFFF;
-       else if(event == ubigval) event2 = 0xFFFFFFFFFFFF0;
+       else if(event == biguval) event2 = 0xFFFFFFFFFFFF0;
     }
     cout << i << ": Run " << run2 << ", Event " << event2 << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
   }
