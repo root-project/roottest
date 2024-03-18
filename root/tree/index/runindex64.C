@@ -27,8 +27,8 @@ int runindex64(){
   tree->Branch("run", &run, "run/l");
   tree->Branch("event", &event, "event/l");
 
-  ULong64_t   runs[] = { 5,5,5,      0,       0,  5,      4, 6, biguval,          1, maxMajor, maxMajor+1};
-  ULong64_t events[] = { 1,2,3, bigval, biguval,  5, bigval, 3,  bigval, maxMinor+1, maxMinor, 0};
+  ULong64_t   runs[] = { 8,5,5,5,      0,       0,  5,      4, 6, biguval,          1, maxMajor, maxMajor+1};
+  ULong64_t events[] = { 0,1,3,2, bigval, biguval,  5, bigval, 3,  bigval, maxMinor+1, maxMinor, 0};
   for(int i=0; i<sizeof(events)/sizeof(*events); i++){
     run = runs[i];
     event = events[i];
@@ -41,7 +41,7 @@ int runindex64(){
   for(int i=0; i<sizeof(events)/sizeof(*events); i++){
     run = runs[i];
     event = events[i];
-    cout << "New position of entry " << i << ": " << tree->GetEntryNumberWithIndex(run, event) << endl;
+    cout << i << ": Run " << run << ", Event " << event << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
   }
 
   test(tree);
@@ -66,6 +66,7 @@ bool test(TTree *chain)
   cout<<"BuildIndex returns "<<chain->BuildIndex("run", "event")<<endl;
   cout<<"Try to get value that is not in the chain, this should return a -1:"<<endl;
   cout<<chain->GetEntryWithIndex(500)<<endl;
+  cout<<"Try to get value that is in the chain, this should return a 4:"<<endl;
   cout<<(int)chain->GetEntryNumberWithIndex(0, bigval)<<endl;
   return (chain->GetEntryNumberWithIndex(500)==-1);
 }
