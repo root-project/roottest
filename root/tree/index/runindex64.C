@@ -8,11 +8,12 @@ const char* fname = "index64.root";
 // Apple M1 has long double == double; these values exceed its range
 // and cannot be represented as (even temporary) expression results.
 // There would be a warning if you'd try.
-static constexpr bool shortlongdouble = sizeof(long double) < 16 || true; // was true for __APPLE__ and __arm64__
+// More info: https://github.com/root-project/roottest/commit/f3c97809c9064feccaed3844007de9e7c6a5980d and https://github.com/root-project/roottest/commit/9e3843d4bf50bc34e6e15dfe7c027f029417d6c0
+static constexpr bool shortlongdouble = sizeof(long double) < 16; // was true for __APPLE__ and __arm64__
 const Long64_t bigval   = shortlongdouble ?  0xFFFFFFFFFFFF :  0xFFFFFFFFFFFFFFF; // still positive number
 const ULong64_t biguval = shortlongdouble ?  0xFFFFFFFFFFFF0 : 0xFFFFFFFFFFFFFFF0; // "negative" number
-const Long64_t maxMajor = 0x1ffffffff;
-const Long64_t maxMinor = 0x7fffffff; // unless major = 0
+const Long64_t maxMajor = 0x1ffffffff;// equals pow(2,33) - 1. This is because major will be stored between bits [31,63] of a 64-bit variable
+const Long64_t maxMinor = 0x7fffffff; // equals pow(2,31) - 1. This is because minor will be stored between bits [ 0,30] of a 64-bit variable. In case major = 0, minor will be allowed to reach <Long64_t>::max() = pow(2,64) - 1
 
 int runindex64(){
 
@@ -35,7 +36,7 @@ int runindex64(){
     tree->Fill();
   }
   tree->Write();
-  //tree->Scan("run:event","","colsize=30");
+  tree->Scan("run:event","","colsize=30");
 
   cout<<"Tree BuildIndex returns "<<tree->BuildIndex("run", "event")<<endl;
   for (int i=0; i<sizeof(events)/sizeof(*events); i++) {
@@ -64,9 +65,9 @@ bool test(TTree *chain)
 {
   cout<<"Entries in chain: "<<chain->GetEntries()<<endl;
   cout<<"BuildIndex returns "<<chain->BuildIndex("run", "event")<<endl;
-  cout<<"Try to get value that is not in the chain, this should return a -1:"<<endl;
+  cout<<"Try to find the position of run=0, event=500 in the chain, as it does not exist, this should return a -1:"<<endl;
   cout<<chain->GetEntryWithIndex(500)<<endl;
-  cout<<"Try to get value that is in the chain, this should return a 4:"<<endl;
-  cout<<(int)chain->GetEntryNumberWithIndex(0, bigval)<<endl;
+  cout<<"Try to find the position of run=0, event=bigval in the chain, which was inserted in position 4:"<<endl;
+  cout<<chain->GetEntryNumberWithIndex(0, bigval)<<endl;
   return (chain->GetEntryNumberWithIndex(500)==-1);
 }
