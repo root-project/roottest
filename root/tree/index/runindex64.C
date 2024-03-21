@@ -37,7 +37,7 @@ int runindex64(){
   tree->Scan("run:event","","colsize=30");
 
   cout<<"Tree BuildIndex returns "<<tree->BuildIndex("run", "event")<<endl;
-  for (int i=0; i<sizeof(events)/sizeof(*events); i++) {
+  for (size_t i=0; i<sizeof(events)/sizeof(*events); i++) {
     run = runs[i];
     event = events[i];
     cout << i << ": Run " << run << ", Event " << event << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
