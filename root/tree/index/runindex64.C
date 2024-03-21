@@ -28,7 +28,7 @@ int runindex64(){
 
   ULong64_t   runs[] = { 8,5,5,5,      5,       5,  0,      4, 6, biguval,  bigval, bigval, biguval};
   ULong64_t events[] = { 0,1,3,2, bigval, biguval,  5, bigval, 3,  bigval, biguval, bigval, biguval};
-  for(int i=0; i<sizeof(events)/sizeof(*events); i++){
+  for(size_t i=0; i<sizeof(events)/sizeof(*events); i++){
     run = runs[i];
     event = events[i];
     tree->Fill();
