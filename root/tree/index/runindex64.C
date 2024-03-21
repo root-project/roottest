@@ -12,8 +12,6 @@ const char* fname = "index64.root";
 static constexpr bool shortlongdouble = sizeof(long double) < 16; // was true for __APPLE__ and __arm64__
 const Long64_t bigval   = shortlongdouble ?  0xFFFFFFFFFFFF :  0xFFFFFFFFFFFFFFF; // still positive number
 const ULong64_t biguval = shortlongdouble ?  0xFFFFFFFFFFFF0 : 0xFFFFFFFFFFFFFFF0; // "negative" number
-const Long64_t maxMajor = 0x1ffffffff;// equals pow(2,33) - 1. This is because major will be stored between bits [31,63] of a 64-bit variable
-const Long64_t maxMinor = 0x7fffffff; // equals pow(2,31) - 1. This is because minor will be stored between bits [ 0,30] of a 64-bit variable. In case major = 0, minor will be allowed to reach <Long64_t>::max() = pow(2,64) - 1
 
 int runindex64(){
 
@@ -28,8 +26,8 @@ int runindex64(){
   tree->Branch("run", &run, "run/l");
   tree->Branch("event", &event, "event/l");
 
-  ULong64_t   runs[] = { 8,5,5,5,      0,       0,  5,      4, 6, biguval,          1, maxMajor, maxMajor+1};
-  ULong64_t events[] = { 0,1,3,2, bigval, biguval,  5, bigval, 3,  bigval, maxMinor+1, maxMinor, 0};
+  ULong64_t   runs[] = { 8,5,5,5,      5,       5,  0,      4, 6, biguval,  bigval, bigval, biguval};
+  ULong64_t events[] = { 0,1,3,2, bigval, biguval,  5, bigval, 3,  bigval, biguval, bigval, biguval};
   for(int i=0; i<sizeof(events)/sizeof(*events); i++){
     run = runs[i];
     event = events[i];
