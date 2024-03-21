@@ -65,7 +65,7 @@ bool test(TTree *chain)
   cout<<"BuildIndex returns "<<chain->BuildIndex("run", "event")<<endl;
   cout<<"Try to find the position of run=0, event=500 in the chain, as it does not exist, this should return a -1:"<<endl;
   cout<<chain->GetEntryWithIndex(500)<<endl;
-  cout<<"Try to find the position of run=0, event=bigval in the chain, which was inserted in position 4:"<<endl;
-  cout<<chain->GetEntryNumberWithIndex(0, bigval)<<endl;
-  return (chain->GetEntryNumberWithIndex(500)==-1);
+  cout<<"Try to find the position of run=5, event=bigval in the chain, which was inserted in position 4:"<<endl;
+  cout<<chain->GetEntryNumberWithIndex(5, bigval)<<endl;
+  return (chain->GetEntryNumberWithIndex(500)==-1) && (chain->GetEntryNumberWithIndex(5, bigval) == 4);
 }
