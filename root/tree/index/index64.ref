@@ -35,7 +35,7 @@ Entries in chain: 13
 BuildIndex returns 13
 Try to find the position of run=0, event=500 in the chain, as it does not exist, this should return a -1:
 -1
-Try to find the position of run=0, event=bigval in the chain, which was inserted in position 4:
+Try to find the position of run=5, event=bigval in the chain, which was inserted in position 4:
 4
 Entries in chain: 13
 BuildIndex returns 1
