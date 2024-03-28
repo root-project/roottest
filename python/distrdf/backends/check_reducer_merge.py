@@ -490,12 +490,13 @@ class TestReducerMerge:
         assert sum_before.GetValue() == 10.0
         assert sum_after.GetValue() == 20.0
 
-    def test_distributed_stddev(self, payload):
+    @pytest.mark.parametrize("datasource", ["ttree","rntuple"])
+    def test_distributed_stddev(self, payload, datasource):
         """Test support for the StdDev action."""
 
         # Create dataset with fixed series of entries
         treename = "tree"
-        filename = "../data/ttree/distrdf_roottest_check_reducer_merge_1.root"
+        filename = f"../data/{datasource}/distrdf_roottest_check_reducer_merge_1.root"
 
         connection, backend = payload
         if backend == "dask":
@@ -511,11 +512,12 @@ class TestReducerMerge:
 
         assert std.GetValue() == pytest.approx(expected, rel), f"{std.GetValue()}!={expected}"
 
-    def test_distributed_stats(self, payload):
+    @pytest.mark.parametrize("datasource", ["ttree","rntuple"])
+    def test_distributed_stats(self, payload, datasource):
         """Test support for the Stats action."""
         # Create dataset with fixed series of entries
         treename = "tree"
-        filename = "../data/ttree/distrdf_roottest_check_reducer_merge_1.root"
+        filename = f"../data/{datasource}/distrdf_roottest_check_reducer_merge_1.root"
 
         connection, backend = payload
         if backend == "dask":

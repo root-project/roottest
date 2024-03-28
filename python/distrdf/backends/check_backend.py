@@ -123,7 +123,7 @@ class TestInitialization:
 
         df = df.Define("u", "userValue").Histo1D(
             ("name", "title", 1, 100, 130), "u")
-        
+
         h = df.GetValue()
         assert h.GetMean() == 123
 
@@ -133,22 +133,23 @@ class TestEmptyTreeError:
     Tests with emtpy trees.
     """
 
-    def test_histo_from_empty_root_file(self, payload):
+    @pytest.mark.parametrize("datasource", ["ttree","rntuple"])
+    def test_histo_from_empty_root_file(self, payload, datasource):
         """
         Check that when performing operations with the distributed backend on
         an RDataFrame without entries, DistRDF raises an error.
         """
 
         connection, backend = payload
+        datasetname = "empty"
+        filename = f"../data/{datasource}/empty.root"
         # Create an RDataFrame from a file with an empty tree
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-            rdf = RDataFrame(
-                "empty", "../data/ttree/empty.root", daskclient=connection)
+            rdf = RDataFrame(datasetname, filename, daskclient=connection)
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame("empty", "../data/ttree/empty.root",
-                             sparkcontext=connection)
+            rdf = RDataFrame(datasetname, filename, sparkcontext=connection)
         histo = rdf.Histo1D(("empty", "empty", 10, 0, 10), "mybranch")
 
         # Get entries in the histogram, raises error
@@ -161,7 +162,6 @@ class TestEmptyTreeError:
         not contribute to how many entries are processed in the distributed
         execution.
         """
-
         connection, backend = payload
         treenames = [f"tree_{i}" for i in range(3)]
         filenames = [
@@ -200,21 +200,22 @@ class TestWithRepeatedTree:
     is used multiple times.
     """
 
-    def test_count_with_same_tree_repeated(self, payload):
+    @pytest.mark.parametrize("datasource", ["ttree","rntuple"])
+    def test_count_with_same_tree_repeated(self, payload, datasource):
         """
         Count entries of a dataset with three times the same tree.
         """
         connection, backend = payload
-        treename = "tree_0"
-        filename = "../data/ttree/distrdf_roottest_check_backend_0.root"
+        datasetname = "tree_0"
+        filename = f"../data/{datasource}/distrdf_roottest_check_backend_0.root"
         filenames = [filename] * 3
 
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-            rdf = RDataFrame(treename, filenames, daskclient=connection)
+            rdf = RDataFrame(datasetname, filenames, daskclient=connection)
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame(treename, filenames, sparkcontext=connection)
+            rdf = RDataFrame(datasetname, filenames, sparkcontext=connection)
         assert rdf.Count().GetValue() == 300
 
 
