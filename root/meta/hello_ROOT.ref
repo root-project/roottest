@@ -1,3 +1,6 @@
 
 Info in <TUnixSystem::ACLiC>: creating shared library ./hello_root_C.so
 Hello ROOT!
+
+Processing hello_root_C.so...
+Hello ROOT!
