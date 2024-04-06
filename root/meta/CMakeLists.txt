@@ -75,9 +75,15 @@ ROOTTEST_ADD_TEST(runautoload
 
 ROOTTEST_COMPILE_MACRO(hello_ROOT.C)
 
+if(MSVC)
+    set(libsuffix .dll)
+else()
+    set(libsuffix .so)
+endif()
+
 ROOTTEST_ADD_TEST(hello_ROOT_C
-                  MACRO ${CMAKE_CURRENT_BINARY_DIR}/hello_ROOT_C.so
-                  OUTREF hello_ROOT_C_so.ref
+                  MACRO ${CMAKE_CURRENT_BINARY_DIR}/hello_ROOT_C.${libsuffix}
+                  OUTREF hello_ROOT_C_${libsuffix}.ref
                   DEPENDS ${COMPILE_MACRO_TEST})
 
 ROOTTEST_ADD_TESTDIRS()
