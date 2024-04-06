@@ -73,9 +73,11 @@ ROOTTEST_ADD_TEST(runautoload
                   DEPENDS ${COMPILE_MACRO_TEST}
                   OUTREF autoload${ref_suffix})
 
-ROOTTEST_ADD_TEST(hello_ROOT
-                  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/hello_ROOT.sh
-                  OUTREF hello_ROOT.ref
-                  WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+ROOTTEST_COMPILE_MACRO(hello_ROOT.C)
+
+ROOTTEST_ADD_TEST(hello_ROOT_C
+                  MACRO hello_ROOT_C.so
+                  OUTREF hello_ROOT_C_so.ref
+                  DEPENDS ${COMPILE_MACRO_TEST})
 
 ROOTTEST_ADD_TESTDIRS()
