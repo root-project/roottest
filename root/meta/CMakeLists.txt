@@ -76,9 +76,9 @@ ROOTTEST_ADD_TEST(runautoload
 ROOTTEST_COMPILE_MACRO(hello_ROOT.C)
 
 if(MSVC)
-    set(libsuffix .dll)
+    set(libsuffix dll)
 else()
-    set(libsuffix .so)
+    set(libsuffix so)
 endif()
 
 ROOTTEST_ADD_TEST(hello_ROOT_C
