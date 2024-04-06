@@ -76,7 +76,7 @@ ROOTTEST_ADD_TEST(runautoload
 ROOTTEST_COMPILE_MACRO(hello_ROOT.C)
 
 ROOTTEST_ADD_TEST(hello_ROOT_C
-                  MACRO hello_ROOT_C.so
+                  MACRO ${CMAKE_CURRENT_BINARY_DIR}/hello_ROOT_C.so
                   OUTREF hello_ROOT_C_so.ref
                   DEPENDS ${COMPILE_MACRO_TEST})
 
