@@ -1,36 +1,6 @@
 
 Processing runindex64.C...
-******************************************************************************
-*    Row   *                            run *                          event *
-******************************************************************************
-*        0 *                              8 *                              0 *
-*        1 *                              5 *                              1 *
-*        2 *                              5 *                              3 *
-*        3 *                              5 *                              2 *
-*        4 *                              5 *        1.15292150460684698e+18 *
-*        5 *                              5 *        1.84467440737095516e+19 *
-*        6 *                              0 *                              5 *
-*        7 *                              4 *        1.15292150460684698e+18 *
-*        8 *                              6 *                              3 *
-*        9 *        1.84467440737095516e+19 *        1.15292150460684698e+18 *
-*       10 *        1.15292150460684698e+18 *        1.84467440737095516e+19 *
-*       11 *        1.15292150460684698e+18 *        1.15292150460684698e+18 *
-*       12 *        1.84467440737095516e+19 *        1.84467440737095516e+19 *
-******************************************************************************
 Tree BuildIndex returns 13
-0: Run 8, Event 0 found at entry number: 0
-1: Run 5, Event 1 found at entry number: 1
-2: Run 5, Event 3 found at entry number: 2
-3: Run 5, Event 2 found at entry number: 3
-4: Run 5, Event 1152921504606846975 found at entry number: 4
-5: Run 5, Event 18446744073709551600 found at entry number: -1
-6: Run 0, Event 5 found at entry number: 6
-7: Run 4, Event 1152921504606846975 found at entry number: 7
-8: Run 6, Event 3 found at entry number: 8
-9: Run 18446744073709551600, Event 1152921504606846975 found at entry number: -1
-10: Run 1152921504606846975, Event 18446744073709551600 found at entry number: -1
-11: Run 1152921504606846975, Event 1152921504606846975 found at entry number: 11
-12: Run 18446744073709551600, Event 18446744073709551600 found at entry number: -1
 Entries in chain: 13
 BuildIndex returns 13
 Try to find the position of run=0, event=500 in the chain, as it does not exist, this should return a -1:

@@ -10,7 +10,7 @@ const char* fname = "index64.root";
 // There would be a warning if you'd try.
 // More info: https://github.com/root-project/roottest/commit/f3c97809c9064feccaed3844007de9e7c6a5980d and https://github.com/root-project/roottest/commit/9e3843d4bf50bc34e6e15dfe7c027f029417d6c0
 static constexpr bool shortlongdouble = sizeof(long double) < 16; // was true for __APPLE__ and __arm64__
-const Long64_t bigval   = shortlongdouble ?  0xFFFFFFFFFFFF :  0xFFFFFFFFFFFFFFF; // still positive number
+const Long64_t bigval   = shortlongdouble ?  0x0FFFFFFFFFFFF : 0x0FFFFFFFFFFFFFFF; // still positive number
 const ULong64_t biguval = shortlongdouble ?  0xFFFFFFFFFFFF0 : 0xFFFFFFFFFFFFFFF0; // "negative" number
 
 int runindex64(){
@@ -34,13 +34,21 @@ int runindex64(){
     tree->Fill();
   }
   tree->Write();
-  tree->Scan("run:event","","colsize=30");
-
+  
+  bool pass = true;
   cout<<"Tree BuildIndex returns "<<tree->BuildIndex("run", "event")<<endl;
   for (size_t i=0; i<sizeof(events)/sizeof(*events); i++) {
     run = runs[i];
     event = events[i];
-    cout << i << ": Run " << run << ", Event " << event << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
+    pass &= (tree->GetEntryNumberWithIndex(run, event) == i);
+  }
+  if (!pass) {
+    tree->Scan("run:event","","colsize=30");
+    for (size_t i=0; i<sizeof(events)/sizeof(*events); i++) {
+      run = runs[i];
+      event = events[i];
+      cout << i << ": Run " << run << ", Event " << event << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
+    }
   }
 
   test(tree);
