@@ -34,14 +34,16 @@ int runindex64(){
     tree->Fill();
   }
   tree->Write();
-  tree->Scan("run:event","","colsize=30");
-
+  
+  bool pass = true;
   cout<<"Tree BuildIndex returns "<<tree->BuildIndex("run", "event")<<endl;
   for (size_t i=0; i<sizeof(events)/sizeof(*events); i++) {
     run = runs[i];
     event = events[i];
     cout << i << ": Run " << run << ", Event " << event << " found at entry number: " << tree->GetEntryNumberWithIndex(run, event) << endl;
+    pass &= (tree->GetEntryNumberWithIndex(run, event) == i);
   }
+  if (!pass) tree->Scan("run:event","","colsize=30");
 
   test(tree);
   file.Close();
