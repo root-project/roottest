@@ -10,7 +10,7 @@ const char* fname = "index64.root";
 // There would be a warning if you'd try.
 // More info: https://github.com/root-project/roottest/commit/f3c97809c9064feccaed3844007de9e7c6a5980d and https://github.com/root-project/roottest/commit/9e3843d4bf50bc34e6e15dfe7c027f029417d6c0
 static constexpr bool shortlongdouble = sizeof(long double) < 16; // was true for __APPLE__ and __arm64__
-const Long64_t bigval   = shortlongdouble ?  0xFFFFFFFFFFFF :  0xFFFFFFFFFFFFFFF; // still positive number
+const Long64_t bigval   = shortlongdouble ?  0x0FFFFFFFFFFFF : 0x0FFFFFFFFFFFFFFF; // still positive number
 const ULong64_t biguval = shortlongdouble ?  0xFFFFFFFFFFFF0 : 0xFFFFFFFFFFFFFFF0; // "negative" number
 
 int runindex64(){
