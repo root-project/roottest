@@ -141,14 +141,14 @@ class Basic3PythonLanguageTestCase( MyTestCase ):
       gInterpreter.Declare( """namespace PyABC {
          struct SomeStruct {};
          struct SomeOtherStruct {
-            typedef std::vector<const PyABC::SomeStruct*> StructContainer;
+            typedef SomeStruct SomeStructAlias;
          };
       }""" )
 
-      import cppyy
-      PyABC = cppyy.gbl.PyABC
+      A = ROOT.PyABC.SomeStruct
+      B = ROOT.PyABC.SomeOtherStruct.SomeStructAlias
 
-      self.assertTrue( PyABC.SomeOtherStruct.StructContainer is cppyy.gbl.std.vector('const PyABC::SomeStruct*') )
+      self.assertTrue(B is A)
 
 
 ### basic C++ argument basic (value/ref and compiled/interpreted) ============
