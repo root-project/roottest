@@ -5,6 +5,7 @@ R__LOAD_LIBRARY(libROOTDataFrame);
 const auto treeName = "TotemNtuple";
 const auto fileName = "bigFile.root";
 const auto branchName = "track_rp_3.y";
+const auto branchName2 = "track_rp_3.z";
 const auto firstEvt = 10;
 const auto lastEvt = 20;
 const auto sumRef = 27.6706;
@@ -81,7 +82,6 @@ int WithTTreeReader()
    TTreeReader reader(&chain);
    reader.SetEntriesRange(firstEvt, lastEvt);
    TTreeReaderValue<double> vd(reader, branchName);
-
    RBytesReadRAII rbRAII(chain);
 
    double sum(0.);
@@ -102,7 +102,57 @@ int WithTTreeReader()
    chain.GetTree()->PrintCacheStats();
 
    if (refNBytes != rbRAII.GetBytesRead()) {
-      std::cout << "With TChain: the bytes read (" << rbRAII.GetBytesRead()
+      std::cout << "With WithTTreeReader: the bytes read (" << rbRAII.GetBytesRead()
+                << ") are different from the reference (" << refNBytes << ")\n";
+      ret +=1;
+   }
+
+   return ret;
+}
+
+int WithTTreeReaderAndTwoBranches()
+{
+   std::cout << "\n----------- With TTreeReaderAndTwoBranches" << std::endl;
+
+   TChain chain(treeName);
+   chain.Add(fileName);
+
+   TTreeReader reader(&chain);
+
+   // We read branch 2 to try to confuse the cache
+   reader.SetEntriesRange(firstEvt, lastEvt);
+   TTreeReaderValue<double> vd2(reader, branchName2);
+
+   while(reader.Next()){
+      *vd2;
+   }
+
+   // Now we restart, attach a new reader and read the branch
+   reader.Restart();
+   TTreeReaderValue<double> vd(reader, branchName);
+   reader.SetEntriesRange(firstEvt, lastEvt);
+
+   RBytesReadRAII rbRAII(chain);
+
+   double sum(0.);
+   int index = 0;
+   while(reader.Next()){
+      sum += *vd;
+   }
+
+   std::cout << "Sum is " << sum << std::endl;
+
+   int ret = 0;
+   if (std::abs(sum - sumRef) > epsilon) {
+      std::cout << "With TTreeReaderAndTwoBranches: the sum (" << sum
+                << ") is too different from the reference (" << sumRef << ")\n";
+      ret +=1;
+   }
+
+   chain.GetTree()->PrintCacheStats();
+
+   if (refNBytes != rbRAII.GetBytesRead()) {
+      std::cout << "With TTreeReaderAndTwoBranches: the bytes read (" << rbRAII.GetBytesRead()
                 << ") are different from the reference (" << refNBytes << ")\n";
       ret +=1;
    }
@@ -148,6 +198,7 @@ int test_trainCache() {
    int ret(0);
    ret += WithTChain();
    ret += WithTTreeReader();
+   ret += WithTTreeReaderAndTwoBranches();
    ret += WithRDF();
    return ret;
 
