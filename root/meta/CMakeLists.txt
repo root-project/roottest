@@ -31,12 +31,14 @@ ROOTTEST_ADD_TEST(execpragmasTest
                   MACRO execpragmasTest.C+
                   OUTREF execpragmasTest.ref)
 
-ROOTTEST_GENERATE_EXECUTABLE(loadernotapp loadernotapp.cxx LIBRARIES ROOT::Core ROOT::Hist)
+if(NOT MSVC OR win_broken_tests)
+    ROOTTEST_GENERATE_EXECUTABLE(loadernotapp loadernotapp.cxx LIBRARIES ROOT::Core ROOT::Hist)
 
-ROOTTEST_ADD_TEST(loadernotapp
-                  EXEC ${CMAKE_CURRENT_BINARY_DIR}/loadernotapp
-                  OUTREF loadernotapp.ref
-                  DEPENDS ${GENERATE_EXECUTABLE_TEST})
+    ROOTTEST_ADD_TEST(loadernotapp
+                      EXEC ${CMAKE_CURRENT_BINARY_DIR}/loadernotapp
+                      OUTREF loadernotapp.ref
+                      DEPENDS ${GENERATE_EXECUTABLE_TEST})
+endif()
 
 ROOTTEST_COMPILE_MACRO(fornamespace.C)
 

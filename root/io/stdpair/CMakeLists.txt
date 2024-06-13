@@ -13,9 +13,11 @@ ROOT_ADD_TEST(roottest-root-io-stdpair-collection-build
               COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} ${build_config} --target G__CmsPairCollection${fast}  CmsPairCollection${fast} -- ${always-make}
               FIXTURES_SETUP InputFiles)
 
-ROOT_ADD_TEST(roottest-root-io-stdpair-pair-build 
-              COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} ${build_config} --target G__CmsPair${fast}  CmsPair${fast} -- ${always-make}
-              FIXTURES_SETUP InputFiles)
+if(NOT MSVC OR win_broken_tests)
+    ROOT_ADD_TEST(roottest-root-io-stdpair-pair-build
+                  COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} ${build_config} --target G__CmsPair${fast}  CmsPair${fast} -- ${always-make}
+                  FIXTURES_SETUP InputFiles)
+endif()
 
 ROOTTEST_ADD_TEST(CopyRootFiles
                   COMMAND ${CMAKE_COMMAND} -E echo "Copying root files"
