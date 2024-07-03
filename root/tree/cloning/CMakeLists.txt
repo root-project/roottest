@@ -68,38 +68,19 @@ else()
       set(ROOT_DIR ${ROOT_SOURCE_DIR})
 endif()
 
-if(NOT TARGET hsimple)
-      add_custom_target(hsimple-file ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/hsimple.root)
-      add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/hsimple.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b ${ROOT_TUTORIALS_DIR}/hsimple.C -e "{ TFile f(\"hsimple.root\"); TTree *ntuple; f.GetObject(\"ntuple\",ntuple); return ntuple ? 0 : 1; }" > hsimple.log
-                  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                  DEPENDS ${HSimpleDependencies}
-                  VERBATIM)
-      add_custom_command(
-        TARGET  hsimple-file
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_BINARY_DIR}/hsimple.root
-                hsimple1.root
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_BINARY_DIR}/hsimple.root
-                hsimple2.root)
-else()
-      add_custom_target(hsimple-file ALL DEPENDS
-        ${CMAKE_CURRENT_BINARY_DIR}/hsimple1.root
-        ${CMAKE_CURRENT_BINARY_DIR}/hsimple2.root
-      )
-      set(HSimpleDependencies "hsimple")
-      add_dependencies(hsimple-file ${HSimpleDependencies})
-      add_custom_command(OUTPUT
-        ${CMAKE_CURRENT_BINARY_DIR}/hsimple1.root
-        ${CMAKE_CURRENT_BINARY_DIR}/hsimple2.root
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_BINARY_DIR}/tutorials/hsimple.root
-                hsimple1.root
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_BINARY_DIR}/tutorials/hsimple.root
-                hsimple2.root)
-endif()
+add_custom_target(hsimple-file ALL DEPENDS
+      ${CMAKE_CURRENT_BINARY_DIR}/hsimple1.root
+      ${CMAKE_CURRENT_BINARY_DIR}/hsimple2.root
+)
+add_custom_command(OUTPUT
+      ${CMAKE_CURRENT_BINARY_DIR}/hsimple1.root
+      ${CMAKE_CURRENT_BINARY_DIR}/hsimple2.root
+      COMMAND ${CMAKE_COMMAND} -E copy
+            ${ROOT_TUTORIALS_DIR}/hsimple.root
+            ${CMAKE_CURRENT_BINARY_DIR}/hsimple1.root
+      COMMAND ${CMAKE_COMMAND} -E copy
+            ${ROOT_TUTORIALS_DIR}/hsimple.root
+            ${CMAKE_CURRENT_BINARY_DIR}/hsimple2.root)
 
 ROOTTEST_ADD_TEST(runtreeCloneTest2
                   MACRO  runtreeCloneTest2.C
