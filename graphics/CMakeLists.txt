@@ -1,5 +1,4 @@
-# TODO: massive failures hit on Linux, untested on Windows
-if (CMAKE_SYSTEM_NAME MATCHES Darwin)
+if (NOT MSVC)
 
 # Folders for generated files
 set(BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -179,10 +178,7 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
         #     EXEC node Test_JsRoot.js ${macro} ${BUILD_DIR})
 
     elseif(${test_type} STREQUAL "a")
-        # TODO The JSON comparison has an extremely high failure rate. It is disabled for now
-        # but has to be re-enabled
-        #foreach (X "j" "o" "p")
-        foreach (X "o" "p")
+        foreach (X "j" "o" "p")
             ROOTTEST_ADD_TEST(${macro}_${X}
                 MACRO testGraphics.C
                 MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
