@@ -132,14 +132,29 @@ int test_json(TCanvas* c1, const std::string& macroName, const std::string& buil
     std::string ref_filename = "./json_ref/" + macroName + ".json";
     std::string jsonFilePath = builddir + "/json_pro/" + macroName + "_pro.json";
 
-    // Save generated Json file
-    std::ofstream jsonFile(jsonFilePath);
-    if (jsonFile.is_open()) {
-        jsonFile << jsonOutput.Data();
-        jsonFile.close();
+    FileStat_t fstat;
+    if (1 == gSystem->GetPathInfo(ref_filename.c_str(), fstat)) {
+        std::cout << "Reference JSON file not found. Saving generated JSON file as reference." << std::endl;
+        // Save the generated JSON file as reference
+        std::ofstream jsonFile(ref_filename);
+        if (jsonFile.is_open()) {
+            jsonFile << jsonOutput.Data();
+            jsonFile.close();
+            return 1;
+        } else {
+            std::cerr << "Error: Unable to open file for writing: " << ref_filename << std::endl;
+            return 1;
+        }
     } else {
-        std::cerr << "Error: Unable to open file for writing" << std::endl;
-        return 1;
+        // Save the generated JSON file
+        std::ofstream jsonFile(jsonFilePath);
+        if (jsonFile.is_open()) {
+            jsonFile << jsonOutput.Data();
+            jsonFile.close();
+        } else {
+            std::cerr << "Error: Unable to open file for writing: " << jsonFilePath << std::endl;
+            return 1;
+        }
     }
 
     // Compare the created JSON to the reference JSON
