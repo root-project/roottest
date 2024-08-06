@@ -20,6 +20,7 @@
 #include "TWebCanvas.h"
 #include "TLatex.h"
 #include <TSystem.h>
+#include<TBufferText.h>
 
 #include <algorithm>
 #include <cstdio>
@@ -165,7 +166,7 @@ int test_json(TCanvas* c1, const std::string& macroName, const std::string& buil
     return 0;
 }
 
-//---------------------SVG-----------------------------------------------------------------
+//---------------------old SVG-------------------------------------------------------------
 // Function to remove or normalize specific parts of the SVG content
 std::string preprocessSVGContent(const std::string& svgContent) {
     std::string result = svgContent;
@@ -181,7 +182,7 @@ std::string preprocessSVGContent(const std::string& svgContent) {
     return result;
 }
 
-// Function to compare two SVG files (old graphics)
+// Function to compare two old SVG files (old graphics)
 bool compareSVGFiles(const std::string& filePath1, const std::string& filePath2) {
     try {
         std::string content1 = readFileToString(filePath1);
@@ -205,7 +206,7 @@ bool compareSVGFiles(const std::string& filePath1, const std::string& filePath2)
     }
 }
 
-int test_svg(TCanvas* c1, const std::string& macroName, const std::string& builddir) {
+int test_old_svg(TCanvas* c1, const std::string& macroName, const std::string& builddir) {
     // Paths to the reference and generated SVG files
     std::string refFilePath = "./old_svg_ref/" + macroName + ".svg";
     std::string genFilePath = builddir + "/old_svg_pro/" + macroName + "_pro.svg";
@@ -223,9 +224,9 @@ int test_svg(TCanvas* c1, const std::string& macroName, const std::string& build
 
     // Compare the generated SVG file with the reference SVG file
     if (compareSVGFiles(refFilePath, genFilePath)) {
-        std::cout << "SVG test passed for " << macroName << std::endl;
+        std::cout << "Old SVG test passed for " << macroName << std::endl;
     } else {
-        std::cout << "SVG test failed for " << macroName << std::endl;
+        std::cout << "Old SVG test failed for " << macroName << std::endl;
         return 1;
     }
     return 0;
@@ -273,10 +274,10 @@ bool comparePDFFiles(const std::string& filePath1, const std::string& filePath2)
     }
 }
 
-int test_pdf(TCanvas* c1, const std::string& macroName, const std::string& buildir) {
-    // Paths to the reference and generated SVG files
+int test_pdf(TCanvas* c1, const std::string& macroName, const std::string& builddir) {
+    // Paths to the reference and generated PDF files
     std::string refFilePath = "./pdf_ref/" + macroName + ".pdf";
-    std::string genFilePath = buildir + "/pdf_pro/" + macroName + "_pro.pdf";
+    std::string genFilePath = builddir + "/pdf_pro/" + macroName + "_pro.pdf";
 
     // Check if the reference file exists
     FileStat_t fstat;
@@ -294,6 +295,44 @@ int test_pdf(TCanvas* c1, const std::string& macroName, const std::string& build
         std::cout << "PDF test passed for " << macroName << std::endl;
     } else {
         std::cout << "PDF test failed for " << macroName << std::endl;
+        return 1;
+    }
+    return 0;
+}
+//---------------------new SVG-------------------------------------------------------------
+int test_new_svg(const std::string& macroName, const std::string& builddir){
+     // Paths to the reference and generated new SVG files
+    std::string refFilePath = "./new_svg_ref/" + macroName + ".svg";
+    std::string genFilePath = builddir + "/new_svg_pro/" + macroName + "_pro.svg";
+
+    // path to refernces json to generated new svg
+    std::string refJsonFilePath = "./json_ref/" + macroName + ".json";
+
+    // Read the JSON file
+    std::ifstream refJsonFile(refJsonFilePath);
+    if (!refJsonFile.is_open()) {
+        std::cerr << "Could not open the JSON file: " << refJsonFilePath << std::endl;
+        return 1;
+    }
+    std::string ref_json((std::istreambuf_iterator<char>(refJsonFile)), std::istreambuf_iterator<char>());
+    refJsonFile.close();
+
+    // Check if the reference file exists
+    FileStat_t fstat;
+    if (1 == gSystem->GetPathInfo(refFilePath.c_str(), fstat)) {
+        std::cout << "Reference file not found. Saving generated file as reference: " << macroName << std::endl;
+        ROOT::RWebDisplayHandle::ProduceImage(refFilePath, ref_json, 1200, 800);
+        return 1;
+    } else {
+        // Save the generated SVG file
+        ROOT::RWebDisplayHandle::ProduceImage(genFilePath, ref_json, 1200, 800);
+    }
+
+    // Compare the generated PDF file with the reference PDF file
+    if (compareSVGFiles(refFilePath, genFilePath)) {
+        std::cout << "New SVG test passed for " << macroName << std::endl;
+    } else {
+        std::cout << "New SVG failed for " << macroName << std::endl;
         return 1;
     }
     return 0;
@@ -318,6 +357,9 @@ int testGraphics(const std::string& macroName, const std::string& test_type, con
     gStyle->SetStatTextColor(1);        // Text color of stat box
     gStyle->SetStatBorderSize(1);       // Border size of stat box
 
+    // Here one could set the precison
+    // TBufferText::SetFloatFormat("%.2f");
+    // TBufferText::SetDoubleFormat("%.2f");
 
     // Call the macro to generate the canvas
     std::string command = ".x " + macroPath;
@@ -335,17 +377,22 @@ int testGraphics(const std::string& macroName, const std::string& test_type, con
     // j === test the JSON creation
     // o === test the SVG creation in ROOT (old graphics with --web=off)
     // p == test the PDF creation in ROOT (old graphics with --web=off)
+    // s == test the SVG creation in ROOT (new graphics with web=chrome)
 
     if (test_type == "j") {
         return test_json(c1, macroName, builddir);
     }
     if (test_type == "o") {
         gROOT->SetWebDisplay("off");
-        return test_svg(c1, macroName, builddir);
+        return test_old_svg(c1, macroName, builddir);
     }
     if (test_type == "p") {
         gROOT->SetWebDisplay("off");
         return test_pdf(c1, macroName, builddir);
+    }
+    if (test_type == 's'){
+        gROOT->SetWebDisplay("chrome");
+        return test_new_svg(macroName, builddir);
     }
     std::cerr << "Unrecognised test type '" << test_type << "'" << std::endl;
     return 1;

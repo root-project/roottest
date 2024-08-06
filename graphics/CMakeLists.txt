@@ -4,18 +4,18 @@ if (CMAKE_SYSTEM_NAME MATCHES Darwin)
 # Folders for generated files
 set(BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR})
 set(JSON_PRO_DIR ${BUILD_DIR}/json_pro)
-set(SVG_PRO_DIR ${BUILD_DIR}/svg_pro)
+set(NEW_SVG_PRO_DIR ${BUILD_DIR}/new_svg_pro)
 set(OLD_SVG_PRO_DIR ${BUILD_DIR}/old_svg_pro)
 set(PDF_PRO_DIR ${BUILD_DIR}/pdf_pro)
 
 # Create the generated directory
 file(MAKE_DIRECTORY ${JSON_PRO_DIR})
-file(MAKE_DIRECTORY ${SVG_PRO_DIR})
+file(MAKE_DIRECTORY ${NEW_SVG_PRO_DIR})
 file(MAKE_DIRECTORY ${OLD_SVG_PRO_DIR})
 file(MAKE_DIRECTORY ${PDF_PRO_DIR})
 
 # Decompress and copy over all references
-foreach(FOLDER json_ref old_svg_ref pdf_ref svg_ref)
+foreach(FOLDER json_ref old_svg_ref pdf_ref new_svg_ref)
     file(GLOB ARCHIVES ${FOLDER}/*zip )
     foreach(ARCHIVE ${ARCHIVES} )
         file(ARCHIVE_EXTRACT INPUT ${ARCHIVE} DESTINATION ${FOLDER})
@@ -179,7 +179,7 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
         #     EXEC node Test_JsRoot.js ${macro} ${BUILD_DIR})
 
     elseif(${test_type} STREQUAL "a")
-        foreach (X "j" "o" "p")
+        foreach (X "j" "o" "p" "s")
             ROOTTEST_ADD_TEST(${macro}_${X}
                 MACRO testGraphics.C
                 MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
