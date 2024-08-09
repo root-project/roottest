@@ -24,4 +24,5 @@ void runPyClassTest() {
    TPython::Import( "MyModule" );
    gROOT->ProcessLine( ".L PyClassTest3.C" );
    gROOT->ProcessLine( ".x PyClassTest4.C" );
+
 }
