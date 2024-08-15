@@ -5,3 +5,6 @@
 #
 #-------------------------------------------------------------------------------
 ROOTTEST_ADD_OLDTEST()
+
+ROOTTEST_ADD_TEST(trefTest
+                  MACRO trefTest.C+)
