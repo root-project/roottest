@@ -21,12 +21,13 @@ class TestIncludesDask:
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
             rdf = RDataFrame(10, daskclient=connection)
+            
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
             rdf = RDataFrame(10, sparkcontext=connection)
-
-        rdf._headnode.backend.distribute_headers("../test_headers/header1.hxx")
-
+    
+        ROOT.RDF.Experimental.Distributed.DistributeHeaders("../test_headers/header1.hxx")
+        
         # This filters out all numbers less than 5
         rdf_filtered = rdf.Filter("check_number_less_than_5(rdfentry_)")
         histo = rdf_filtered.Histo1D(("name", "title", 10, 0, 10), "rdfentry_")
@@ -49,8 +50,8 @@ class TestIncludesDask:
         
         # Reset headers for future tests
         # TODO: this underlines either a misusage of the class or a bug
-        from DistRDF.Backends.Base import BaseBackend
-        BaseBackend.headers = set()
+        # from DistRDF.Backends.Base import BaseBackend
+        # BaseBackend.headers = set()
 
     def _extend_ROOT_include_path(self, connection, backend):
         """
@@ -59,6 +60,8 @@ class TestIncludesDask:
         are correctly solved.
         """
 
+        header_folder = "../test_headers/headers_folder"
+        
         # Create an RDataFrame with 100 integers from 0 to 99
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
@@ -66,11 +69,10 @@ class TestIncludesDask:
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
             rdf = RDataFrame(100, sparkcontext=connection)
-
+        
         # Distribute headers to the workers
-        header_folder = "../test_headers/headers_folder"
-        rdf._headnode.backend.distribute_headers(header_folder)
-
+        ROOT.RDF.Experimental.Distributed.DistributeHeaders(header_folder)
+        
         # Get list of include paths seen by ROOT
         ROOT_include_path = ROOT.gInterpreter.GetIncludePath().split(" ")
 
