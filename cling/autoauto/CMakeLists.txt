@@ -1,6 +1,6 @@
-ROOTTEST_ADD_AUTOMACROS()
-
 if(html)
+  ROOTTEST_ADD_AUTOMACROS()
+
   ROOTTEST_ADD_TEST(ROOT8442
                     MACRO ROOT8442.C
                     ERRREF ROOT8442.errref
