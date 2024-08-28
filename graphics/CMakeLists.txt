@@ -1,5 +1,6 @@
-# TODO: massive failures hit on Linux, untested on Windows
-if (CMAKE_SYSTEM_NAME MATCHES Darwin)
+# TODO: untested on Windows
+# if (CMAKE_SYSTEM_NAME MATCHES Darwin)
+if (NOT MSVC)
 
 # Folders for generated files
 set(BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -26,8 +27,6 @@ endforeach()
 file(COPY macros DESTINATION ${BUILD_DIR})
 file(COPY testGraphics.C DESTINATION ${BUILD_DIR})
 
-# Quite a few failures, especially for category "j" tests need to be debugged
-# before using the compiled version of the testing macro.
 # ROOTTEST_GENERATE_EXECUTABLE(testGraphics testGraphics.C LIBRARIES Core Hist Graf Gpad WebGui6)
 
 # High level description of the tests
@@ -115,7 +114,6 @@ set(TEST_DESCRIPTIONS
     "hksimple a hist"
     "hlHisto1 a hist"
     "hlHisto2 a hist"
-    #"hlHisto4 a hist" TODO: Fails on all platforms!
     "hlabels1 a hist"
     "hstack a hist"
     "legendautoplaced a hist"
@@ -131,19 +129,16 @@ set(TEST_DESCRIPTIONS
     "ratioplotOld a hist"
     "rebin a hist"
     "reverseaxis a hist"
-    #"statsEditing a hist" TODO: This crashes the interpreter!
     "testSmooth a hist"
     "th2polyBoxes a hist"
     "th2polyEurope a hist"
     "th2polyHoneycomb a hist"
     "th2polyUSA a hist"
-    #"transpad a hist" TODO: This crashes the interpreter!
     "twoscales a hist"
     "xyplot a hist"
     "CrystalBall a math"
     "BreitWigner a math"
     "GammaFun a math"
-    #"TSVDUnfoldExample a math" TODO: Fails on all platforms!
     "chi2test a math"
     "hlquantiles a math"
     "mathBeta a math"
@@ -165,18 +160,25 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
     set(test_type ${CMAKE_MATCH_2})
     set(macro_folder ${CMAKE_MATCH_3})
 
-    if(${test_type} STREQUAL "s")
-        # TODO: UNDERSTAND HOW WE RUN THIS KIND OF TESTS IN ROOTTEST, ALSO GIVEN THEIR DEPENDENCIES
-        # Original Test
-        # add_test(
-        #     NAME ${macro}_JsRootTest_${test_type}
-        #     COMMAND node Test_JsRoot.js ${macro} ${BUILD_DIR}
-        #     )
-        # set_tests_properties(${macro}_JsRootTest_${test_type} PROPERTIES WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-        # New in ROOTTEST
-        # ROOTTEST_ADD_TEST(node_${macro}__JsRootTest_s
-        #     WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR}
-        #     EXEC node Test_JsRoot.js ${macro} ${BUILD_DIR})
+    if(${test_type} STREQUAL "j")
+        ROOTTEST_ADD_TEST(${macro}_j
+        MACRO testGraphics.C
+        MACROARG \"${macro}\",\"j\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    
+    elseif(${test_type} STREQUAL "o")
+        ROOTTEST_ADD_TEST(${macro}_o
+        MACRO testGraphics.C
+        MACROARG \"${macro}\",\"o\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    
+    elseif(${test_type} STREQUAL "p")
+        ROOTTEST_ADD_TEST(${macro}_p
+        MACRO testGraphics.C
+        MACROARG \"${macro}\",\"p\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    
+    elseif(${test_type} STREQUAL "s")
+        ROOTTEST_ADD_TEST(${macro}_s
+        MACRO testGraphics.C
+        MACROARG \"${macro}\",\"s\",\"${macro_folder}\",\"${BUILD_DIR}\")
 
     elseif(${test_type} STREQUAL "a")
         foreach (X "j" "o" "p" "s")
@@ -190,15 +192,6 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
             #     WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR}
             #     EXEC testGraphics ${macro} ${X} ${macro_folder} ${BUILD_DIR})
         endforeach()
-
-        # TODO: UNDERSTAND HOW WE RUN THIS KIND OF TESTS IN ROOTTEST, ALSO GIVEN THEIR DEPENDENCIES
-        # Original Test
-        # add_test(NAME node_${macro}_ALL_newSVG
-        #     COMMAND node Test_JsRoot.js ${macro} ${BUILD_DIR}
-        # New in ROOTTEST
-        # ROOTTEST_ADD_TEST(node_${macro}_ALL_newSVG
-        #     WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR}
-        #     EXEC node Test_JsRoot.js ${macro} ${BUILD_DIR})
 
     else()
     ROOTTEST_ADD_TEST(${macro}_${test_type}

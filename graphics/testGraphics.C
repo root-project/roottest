@@ -20,7 +20,7 @@
 #include "TWebCanvas.h"
 #include "TLatex.h"
 #include <TSystem.h>
-#include<TBufferText.h>
+#include <TBufferText.h>
 
 #include <algorithm>
 #include <cstdio>
@@ -318,15 +318,16 @@ int test_new_svg(const std::string& macroName, const std::string& builddir){
     refJsonFile.close();
 
     // Check if the reference file exists
-    FileStat_t fstat;
-    if (1 == gSystem->GetPathInfo(refFilePath.c_str(), fstat)) {
-        std::cout << "Reference file not found. Saving generated file as reference: " << macroName << std::endl;
-        ROOT::RWebDisplayHandle::ProduceImage(refFilePath, ref_json, 1200, 800);
-        return 1;
-    } else {
-        // Save the generated SVG file
-        ROOT::RWebDisplayHandle::ProduceImage(genFilePath, ref_json, 1200, 800);
-    }
+    // FileStat_t fstat;
+    // if (1 == gSystem->GetPathInfo(refFilePath.c_str(), fstat)) {
+    //     std::cout << "Reference file not found. Saving generated file as reference: " << macroName << std::endl;
+    //     ROOT::RWebDisplayHandle::ProduceImage(refFilePath, ref_json, 1200, 800);
+    //     return 1;
+    // } else {
+    //     // Save the generated SVG file
+    //     ROOT::RWebDisplayHandle::ProduceImage(genFilePath, ref_json, 1200, 800);
+    // }
+     ROOT::RWebDisplayHandle::ProduceImage(genFilePath, ref_json, 1200, 800);
 
     // Compare the generated PDF file with the reference PDF file
     if (compareSVGFiles(refFilePath, genFilePath)) {
@@ -357,9 +358,9 @@ int testGraphics(const std::string& macroName, const std::string& test_type, con
     gStyle->SetStatTextColor(1);        // Text color of stat box
     gStyle->SetStatBorderSize(1);       // Border size of stat box
 
-    // Here one could set the precison
-    // TBufferText::SetFloatFormat("%.2f");
-    // TBufferText::SetDoubleFormat("%.2f");
+    // Here one can set the precison
+    TBufferText::SetFloatFormat("%.2f");
+    TBufferText::SetDoubleFormat("%.2f");
 
     // Call the macro to generate the canvas
     std::string command = ".x " + macroPath;
@@ -391,7 +392,7 @@ int testGraphics(const std::string& macroName, const std::string& test_type, con
         return test_pdf(c1, macroName, builddir);
     }
     if (test_type == 's'){
-        gROOT->SetWebDisplay("chrome");
+        gROOT->SetWebDisplay("firefox");
         return test_new_svg(macroName, builddir);
     }
     std::cerr << "Unrecognised test type '" << test_type << "'" << std::endl;
