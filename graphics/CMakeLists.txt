@@ -179,20 +179,24 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
         ROOTTEST_ADD_TEST(${macro}_s
         MACRO testGraphics.C
         MACROARG \"${macro}\",\"s\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    
+    # TODO: Headless chrome browser in ROOT CI and swbug hanging browser, 
+    # maybe also some new references
 
+    # elseif(${test_type} STREQUAL "a")
+    #     foreach (X "j" "o" "p" "s")
+    #         ROOTTEST_ADD_TEST(${macro}_${X}
+    #             MACRO testGraphics.C
+    #             MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    #     endforeach()
+    
+    # New SVG disabled
     elseif(${test_type} STREQUAL "a")
-        foreach (X "j" "o" "p" "s")
+        foreach (X "j" "o" "p")
             ROOTTEST_ADD_TEST(${macro}_${X}
                 MACRO testGraphics.C
                 MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
-
-            # See comment above for the creation of the executable...
-            # ROOTTEST_ADD_TEST(${macro}_${X}_exe
-            #     DEPENDS ${GENERATE_EXECUTABLE_TEST}
-            #     WORKING_DIR ${CMAKE_CURRENT_SOURCE_DIR}
-            #     EXEC testGraphics ${macro} ${X} ${macro_folder} ${BUILD_DIR})
         endforeach()
-
     else()
     ROOTTEST_ADD_TEST(${macro}_${test_type}
         MACRO testGraphics.C

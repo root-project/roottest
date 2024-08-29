@@ -392,7 +392,7 @@ int testGraphics(const std::string& macroName, const std::string& test_type, con
         return test_pdf(c1, macroName, builddir);
     }
     if (test_type == 's'){
-        gROOT->SetWebDisplay("firefox");
+        gROOT->SetWebDisplay("chrome");
         return test_new_svg(macroName, builddir);
     }
     std::cerr << "Unrecognised test type '" << test_type << "'" << std::endl;
