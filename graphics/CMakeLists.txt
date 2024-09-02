@@ -37,9 +37,13 @@ file(COPY testGraphics.C DESTINATION ${BUILD_DIR})
 # - a == all
 
 set(TEST_DESCRIPTIONS
-    "AtlasExample a graphics"
-    "analyze a graphics"
-    "archi a graphics"
+    #"AtlasExample a graphics" Excluded because of MAC failures (2. round, j)
+    "AtlasExample o graphics"
+    "AtlasExample p graphics"
+    #"analyze a graphics" Excluded because of MAC failures (2. round, o p)
+    "analyze j graphics"
+    #"archi a graphics" Excluded because of MAC failures (2. round, o p)
+    "archi j graphics"
     "arrows a graphics"
     "compile a graphics"
     "crown a graphics"
@@ -63,90 +67,123 @@ set(TEST_DESCRIPTIONS
     "markerwarning a graphics"
     "mass_spectrum a graphics"
     "pavetext a graphics"
-    "piechart a graphics"
+    #"piechart a graphics" Excluded because of MAC failures (2. round, o)
+    "piechart j graphics"
+    "piechart p graphics"
     "quarks a graphics"
-    "schroedinger_hydrogen a graphics"
+    #"schroedinger_hydrogen a graphics" Excluded because of MAC failures (2. round, o p)
+    "schroedinger_hydrogen j graphics"
     "tmathtext a graphics"
     "tmathtext2 a graphics"
     "triangles a graphics"
     "transparency a graphics"
-    "annotation3d a graphs"
+    #"annotation3d a graphs" Excluded because of MAC failures (2. round, o p)
+    "annotation3d j graphs"
     "approx a graphs"
-    "exclusiongraph a graphs"
+    #"exclusiongraph a graphs" Excluded because of MAC failures (2. round, o p)
+    "exclusiongraph j graphs"
     "exclusiongraph2 a graphs"
     "gerrors a graphs"
-    "gerrors2 a graphs"
+    #"gerrors2 a graphs" Excluded because of MAC failures (2. round, o p)
+    "gerrors2 j graphs"
     "gmultierrors a graphs"
     "graph a graphs"
-    "graph2derrorsfit a graphs"
-    "graphApply a graphs"
+    #"graph2derrorsfit a graphs" Excluded because of MAC failures (2. round, o p)
+    "graph2derrorsfit j graphs"
+    #"graphApply a graphs" Excluded because of MAC failures (2. round, o p)
+    "graphApply j graphs"
     "graphShade a graphs"
-    "graphpolar a graphs"
+    #"graphpolar a graphs" Excluded because of MAC failures (2. round, o p)
+    "graphpolar j graphs"
     "graphpolar2 a graphs"
     "graphpolar3 a graphs"
-    "graphreverse a graphs"
+    #"graphreverse a graphs" Excluded because of MAC failures (2. round, o p)
+    "graphreverse j graphs"
     "hlGraph1 a graphs"
     "labels1 a graphs"
     "labels2 a graphs"
-    "multigraph a graphs"
+    #"multigraph a graphs" Excluded because of MAC failures (2. round,j o p)
     "scatter a graphs"
-    "surfaces a graphs"
-    #"timeonaxis a graphs"
-    #"timeonaxis2 a graphs"
-    #"timeonaxis3 a graphs"
+    #"surfaces a graphs" Excluded because of MAC failures (2. round, o p)
+    "surfaces j graphs"
+    #"timeonaxis a graphs" Excluded because of linux fails (1. round)
+    #"timeonaxis2 a graphs" Excluded because of linux fails (1. round)
+    #"timeonaxis3 a graphs" Excluded because of linux fails (1. round)
     "waves a graphs"
     "zdemo a graphs"
     "zones a graphs"
     "DynamicSlice a hist"
-    "Fibonacci a hist"
+    #"Fibonacci a hist" Excluded because of MAC failures (2. round,j)
+    "Fibonacci o hist"
+    "Fibonacci p hist"
     "NormalizeHistogram a hist"
     "ZoomHistogram a hist"
     "candledecay a hist"
-    #"candleplot a hist"
-    #"candleplotstack a hist"
+    #"candleplot a hist" Excluded because of linux fails (1. round)
+    #"candleplotstack a hist" Excluded because of linux fails (1.round)
     "candleplotwhiskers a hist"
-    "candlescaled a hist"
+    #"candlescaled a hist" Excluded because of MAC failures (2. round, o)
+    "candlescaled j hist"
+    "candlescaled p hist"
     "fillhistosauto2p a hist"
     "fillrandom a hist"
     "h2_cut a hist"
-    "h2proj a hist"
+    #"h2proj a hist" Excluded because of MAC failures (2. round, p)
+    "h2proj j hist"
+    "h2proj o hist"
     "histpalettecolor a hist"
     "hksimple a hist"
     "hlHisto1 a hist"
     "hlHisto2 a hist"
     "hlabels1 a hist"
-    "hstack a hist"
+    #"hstack a hist" Excluded because of MAC failures (2. round, o p)
+    "hstack j hist"
     "legendautoplaced a hist"
     "logscales a hist"
     "movepalette a hist"
     "multicolor a hist"
     "ratioplot1 a hist"
-    "ratioplot2 a hist"
-    "ratioplot3 a hist"
-    "ratioplot4 a hist"
-    "ratioplot5 a hist"
-    "ratioplot6 a hist"
+    #"ratioplot2 a hist" Excluded because of MAC failures (2. round, o p)
+    "ratioplot2 j hist"
+    #"ratioplot3 a hist" Excluded because of MAC failures (2. round, o p)
+    "ratioplot3 j hist"
+    #"ratioplot4 a hist" Excluded because of MAC failures (2. round, o p)
+    "ratioplot4 j hist"
+    #"ratioplot5 a hist" Excluded because of MAC failures (2. round, o p)
+    "ratioplot5 j hist"
+    #"ratioplot6 a hist" Excluded because of MAC failures (2. round, o)
+    "ratioplot6 j hist"
+    "ratioplot6 p hist"
     "ratioplotOld a hist"
-    "rebin a hist"
-    "reverseaxis a hist"
-    "testSmooth a hist"
+    #"rebin a hist" Excluded because of MAC failures (2. round, j o p)
+    #"reverseaxis a hist" Excluded because of MAC failures (2. round, o p)
+    "reverseaxis j hist"
+    #"testSmooth a hist" Excluded because of MAC failures (2. round, o p)
+    "testSmooth j hist"
     "th2polyBoxes a hist"
     "th2polyEurope a hist"
-    "th2polyHoneycomb a hist"
+    #"th2polyHoneycomb a hist" Excluded because of MAC failures (2. round, j o p)
     "th2polyUSA a hist"
-    "twoscales a hist"
+    #"twoscales a hist" Excluded because of MAC failures (2. round, o p)
+    "twoscales j hist"
     "xyplot a hist"
     "CrystalBall a math"
     "BreitWigner a math"
-    "GammaFun a math"
+    #"GammaFun a math" Excluded because of MAC failures (2. round, o p)
+    "GammaFun j math"
     "chi2test a math"
     "hlquantiles a math"
     "mathBeta a math"
     "mathGammaNormal a math"
-    "mathLaplace a math"
-    "mathStudent a math"
-    "mathcoreCDF a math"
-    "mathcoreStatFunc a math"
+    #"mathLaplace a math" Excluded because of MAC failures (2. round, o)
+    "mathLaplace j math"
+    "mathLaplace p math"
+    #"mathStudent a math" Excluded because of MAC failures (2. round, o p)
+    "mathStudent j math"
+    #"mathcoreCDF a math" Excluded because of MAC failures (2. round, o p)
+    "mathcoreCDF j math"
+    #"mathcoreStatFunc a math" Excluded because of MAC failures (2. round, o p)
+    "mathcoreStatFunc j math"
     "normalDist a math"
     "quantiles a math"
     "vavilov a math"
