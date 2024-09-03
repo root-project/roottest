@@ -191,6 +191,60 @@ set(TEST_DESCRIPTIONS
     "vavilov a math"
     "gaussian_ratio_plot a proposal"
 )
+
+foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
+
+    string(REGEX MATCH "([^ ]+) ([^ ]+) ([^ ]+)" _ ${TEST_DESCRIPTION})
+    set(macro ${CMAKE_MATCH_1})
+    set(test_type ${CMAKE_MATCH_2})
+    set(macro_folder ${CMAKE_MATCH_3})
+
+    if(${test_type} STREQUAL "j")
+        ROOTTEST_ADD_TEST(${macro}_j
+        MACRO testGraphics.C
+        MACROARG \"${macro}\",\"j\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    
+    elseif(${test_type} STREQUAL "o")
+        ROOTTEST_ADD_TEST(${macro}_o
+        MACRO testGraphics.C
+        MACROARG \"${macro}\",\"o\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    
+    elseif(${test_type} STREQUAL "p")
+        ROOTTEST_ADD_TEST(${macro}_p
+        MACRO testGraphics.C
+        MACROARG \"${macro}\",\"p\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    
+    # elseif(${test_type} STREQUAL "s")
+    #     ROOTTEST_ADD_TEST(${macro}_s
+    #     MACRO testGraphics.C
+    #     MACROARG \"${macro}\",\"s\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    
+    # TODO: Headless chrome browser in ROOT CI and debug hanging browser, 
+    # maybe also some new references for MAC OS
+
+    # elseif(${test_type} STREQUAL "a")
+    #     foreach (X "j" "o" "p" "s")
+    #         ROOTTEST_ADD_TEST(${macro}_${X}
+    #             MACRO testGraphics.C
+    #             MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
+    #     endforeach()
+    
+    # New SVG disabled
+    elseif(${test_type} STREQUAL "a")
+        foreach (X "j" "o" "p")
+            ROOTTEST_ADD_TEST(${macro}_${X}
+                MACRO testGraphics.C
+                MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
+        endforeach()
+    else()
+    ROOTTEST_ADD_TEST(${macro}_${test_type}
+        MACRO testGraphics.C
+        MACROARG \"${macro}\",\"${test_type}\",\"${macro_folder}\",\"${BUILD_DIR}\")
+
+    endif()
+    
+endforeach()
+
 # Linux platforms
 else()
 set(TEST_DESCRIPTIONS
@@ -345,10 +399,8 @@ set(TEST_DESCRIPTIONS
     "quantiles a math"
     "vavilov a math"
     "gaussian_ratio_plot a proposal"
-    # Adding manually new svg tests
-    "analyze s graphics"
 )
-endif()
+
 foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
 
     string(REGEX MATCH "([^ ]+) ([^ ]+) ([^ ]+)" _ ${TEST_DESCRIPTION})
@@ -376,23 +428,15 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
         MACRO testGraphics.C
         MACROARG \"${macro}\",\"s\",\"${macro_folder}\",\"${BUILD_DIR}\")
     
-    # TODO: Headless chrome browser in ROOT CI and debug hanging browser, 
-    # maybe also some new references
+    # TODO: Debug hanging browser, maybe also some new references
 
-    # elseif(${test_type} STREQUAL "a")
-    #     foreach (X "j" "o" "p" "s")
-    #         ROOTTEST_ADD_TEST(${macro}_${X}
-    #             MACRO testGraphics.C
-    #             MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
-    #     endforeach()
-    
-    # New SVG disabled
     elseif(${test_type} STREQUAL "a")
-        foreach (X "j" "o" "p")
+        foreach (X "j" "o" "p" "s")
             ROOTTEST_ADD_TEST(${macro}_${X}
                 MACRO testGraphics.C
                 MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
         endforeach()
+
     else()
     ROOTTEST_ADD_TEST(${macro}_${test_type}
         MACRO testGraphics.C
@@ -401,5 +445,7 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
     endif()
     
 endforeach()
+
+endif() # MAC OS or Linux
 
 endif() # MSVC
