@@ -42,6 +42,7 @@ set(TEST_DESCRIPTIONS
     "AtlasExample p graphics"
     #"analyze a graphics" Excluded because of MAC failures (2. round, o p)
     "analyze j graphics"
+    "analyze s graphics"
     #"archi a graphics" Excluded because of MAC failures (2. round, o p)
     "archi j graphics"
     "arrows a graphics"
@@ -217,7 +218,7 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
         MACRO testGraphics.C
         MACROARG \"${macro}\",\"s\",\"${macro_folder}\",\"${BUILD_DIR}\")
     
-    # TODO: Headless chrome browser in ROOT CI and swbug hanging browser, 
+    # TODO: Headless chrome browser in ROOT CI and debug hanging browser, 
     # maybe also some new references
 
     # elseif(${test_type} STREQUAL "a")
