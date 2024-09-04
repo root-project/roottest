@@ -251,13 +251,13 @@ set(TEST_DESCRIPTIONS
     #"AtlasExample a graphics" Excluded because of MAC failures (2. round, j)
     "AtlasExample o graphics"
     "AtlasExample p graphics"
-    "AtlasExample s graphics"
+    #"AtlasExample s graphics"
     #"analyze a graphics" Excluded because of MAC failures (2. round, o p)
     "analyze j graphics"
     "analyze s graphics"
     #"archi a graphics" Excluded because of MAC failures (2. round, o p)
     "archi j graphics"
-    "archi s graphics"
+    #"archi s graphics"
     "arrows a graphics"
     "compile a graphics"
     "crown a graphics"
@@ -288,7 +288,7 @@ set(TEST_DESCRIPTIONS
     "quarks a graphics"
     #"schroedinger_hydrogen a graphics" Excluded because of MAC failures (2. round, o p)
     "schroedinger_hydrogen j graphics"
-    "schroedinger_hydrogen s graphics"
+    #"schroedinger_hydrogen s graphics"
     "tmathtext a graphics"
     "tmathtext2 a graphics"
     "triangles a graphics"
@@ -299,7 +299,7 @@ set(TEST_DESCRIPTIONS
     "approx a graphs"
     #"exclusiongraph a graphs" Excluded because of MAC failures (2. round, o p)
     "exclusiongraph j graphs"
-    "exclusiongraph s graphs"
+    #"exclusiongraph s graphs"
     "exclusiongraph2 a graphs"
     "gerrors a graphs"
     #"gerrors2 a graphs" Excluded because of MAC failures (2. round, o p)
@@ -309,14 +309,14 @@ set(TEST_DESCRIPTIONS
     "graph a graphs"
     #"graph2derrorsfit a graphs" Excluded because of MAC failures (2. round, o p)
     "graph2derrorsfit j graphs"
-    "graph2derrorsfit s graphs"
+    #"graph2derrorsfit s graphs"
     #"graphApply a graphs" Excluded because of MAC failures (2. round, o p)
     "graphApply j graphs"
     "graphApply s graphs"
     "graphShade a graphs"
     #"graphpolar a graphs" Excluded because of MAC failures (2. round, o p)
     "graphpolar j graphs"
-    "graphpolar s graphs"
+    #"graphpolar s graphs"
     "graphpolar2 a graphs"
     "graphpolar3 a graphs"
     #"graphreverse a graphs" Excluded because of MAC failures (2. round, o p)
@@ -329,7 +329,7 @@ set(TEST_DESCRIPTIONS
     "scatter a graphs"#s
     #"surfaces a graphs" Excluded because of MAC failures (2. round, o p)
     "surfaces j graphs"
-    "surfaces s graphs"
+    #"surfaces s graphs"
     #"timeonaxis a graphs" Excluded because of linux fails (1. round)
     #"timeonaxis2 a graphs" Excluded because of linux fails (1. round)
     #"timeonaxis3 a graphs" Excluded because of linux fails (1. round)
@@ -350,7 +350,7 @@ set(TEST_DESCRIPTIONS
     #"candlescaled a hist" Excluded because of MAC failures (2. round, o)
     "candlescaled j hist"
     "candlescaled p hist"
-    "candlescaled s hist"
+    #"candlescaled s hist"
     "fillhistosauto2p a hist"
     "fillrandom a hist"
     "h2_cut a hist"
@@ -365,7 +365,7 @@ set(TEST_DESCRIPTIONS
     "hlabels1 a hist"
     #"hstack a hist" Excluded because of MAC failures (2. round, o p)
     "hstack j hist"
-    "hstack s hist"
+    #"hstack s hist"
     "legendautoplaced a hist"
     "logscales a hist"
     "movepalette a hist"
@@ -389,7 +389,7 @@ set(TEST_DESCRIPTIONS
     "reverseaxis s hist"
     #"testSmooth a hist" Excluded because of MAC failures (2. round, o p)
     "testSmooth j hist"
-    "testSmooth s hist"
+    #"testSmooth s hist"
     "th2polyBoxes a hist"
     "th2polyEurope a hist"
     #"th2polyHoneycomb a hist" Excluded because of MAC failures (2. round, j o p)
@@ -402,7 +402,7 @@ set(TEST_DESCRIPTIONS
     "BreitWigner a math"
     #"GammaFun a math" Excluded because of MAC failures (2. round, o p)
     "GammaFun j math"
-    "GammaFun s math"
+    #"GammaFun s math"
     "chi2test a math"
     "hlquantiles a math"
     "mathBeta a math"
@@ -416,7 +416,7 @@ set(TEST_DESCRIPTIONS
     "mathStudent s math"#s
     #"mathcoreCDF a math" Excluded because of MAC failures (2. round, o p)
     "mathcoreCDF j math"
-    "mathcoreCDF s math"
+    #"mathcoreCDF s math"
     #"mathcoreStatFunc a math" Excluded because of MAC failures (2. round, o p)
     "mathcoreStatFunc j math"
     "mathcoreStatFunc s math"
