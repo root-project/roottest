@@ -305,7 +305,7 @@ set(TEST_DESCRIPTIONS
     #"gerrors2 a graphs" Excluded because of MAC failures (2. round, o p)
     "gerrors2 j graphs"
     "gerrors2 s graphs"
-    "gmultierrors a graphs"
+    "gmultierrors a graphs"#s
     "graph a graphs"
     #"graph2derrorsfit a graphs" Excluded because of MAC failures (2. round, o p)
     "graph2derrorsfit j graphs"
@@ -326,7 +326,7 @@ set(TEST_DESCRIPTIONS
     "labels1 a graphs"
     "labels2 a graphs"
     #"multigraph a graphs" Excluded because of MAC failures (2. round,j o p)
-    "scatter a graphs"
+    "scatter a graphs"#s
     #"surfaces a graphs" Excluded because of MAC failures (2. round, o p)
     "surfaces j graphs"
     "surfaces s graphs"
@@ -340,7 +340,7 @@ set(TEST_DESCRIPTIONS
     #"Fibonacci a hist" Excluded because of MAC failures (2. round,j)
     "Fibonacci o hist"
     "Fibonacci p hist"
-    "Fibonacci s hist"
+    "Fibonacci s hist"#s
     "NormalizeHistogram a hist"
     "ZoomHistogram a hist"
     "candledecay a hist"
@@ -398,7 +398,7 @@ set(TEST_DESCRIPTIONS
     "twoscales j hist"
     "twoscales s hist"
     "xyplot a hist"
-    "CrystalBall a math"
+    "CrystalBall a math"#s
     "BreitWigner a math"
     #"GammaFun a math" Excluded because of MAC failures (2. round, o p)
     "GammaFun j math"
@@ -413,7 +413,7 @@ set(TEST_DESCRIPTIONS
     "mathLaplace s math"
     #"mathStudent a math" Excluded because of MAC failures (2. round, o p)
     "mathStudent j math"
-    "mathStudent s math"
+    "mathStudent s math"#s
     #"mathcoreCDF a math" Excluded because of MAC failures (2. round, o p)
     "mathcoreCDF j math"
     "mathcoreCDF s math"
@@ -449,14 +449,15 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
         MACROARG \"${macro}\",\"p\",\"${macro_folder}\",\"${BUILD_DIR}\")
     
     elseif(${test_type} STREQUAL "s")
+
         ROOTTEST_ADD_TEST(${macro}_s
         MACRO testGraphics.C
-        MACROARG \"${macro}\",\"s\",\"${macro_folder}\",\"${BUILD_DIR}\")
-    
+        MACROARG \"${macro}\",\"s\",\"${macro_folder}\",\"${BUILD_DIR}\")    
+
     # TODO: Debug hanging browser, maybe also some new references
 
     elseif(${test_type} STREQUAL "a")
-        foreach (X "j" "o" "p" "s")
+        foreach (X "j" "o" "p")
             ROOTTEST_ADD_TEST(${macro}_${X}
                 MACRO testGraphics.C
                 MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")

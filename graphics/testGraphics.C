@@ -393,7 +393,9 @@ int testGraphics(const std::string& macroName, const std::string& test_type, con
     }
     if (test_type == 's'){
         gROOT->SetWebDisplay("chrome");
-        return test_new_svg(macroName, builddir);
+        int result = test_new_svg(macroName, builddir);
+        //gSystem->Exec("pkill chrome");
+        return result;
     }
     std::cerr << "Unrecognised test type '" << test_type << "'" << std::endl;
     return 1;
