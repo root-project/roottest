@@ -36,6 +36,11 @@ file(COPY testGraphics.C DESTINATION ${BUILD_DIR})
 # - s == new SVG
 # - a == all
 
+# Currently MAC and linux are seperated. NEW SVGs with headless chrome browser are not tested on MAC.
+# That's why there are two completely seperate parts and thats why ,a == all, excludes s == new svgs on MAC
+# and Linux. On Linux new SVG tests can be enabled individually using s. This is not enabled on MAC.
+# After the problem with hanging chrome browser is solved, one can combine these two parts again and 
+# also test new SVGs on MAC and also change a == all.
 # MAC OS platforms
 if (CMAKE_SYSTEM_NAME MATCHES Darwin)
 set(TEST_DESCRIPTIONS
@@ -284,7 +289,7 @@ set(TEST_DESCRIPTIONS
     #"piechart a graphics" Excluded because of MAC failures (2. round, o)
     "piechart j graphics"
     "piechart p graphics"
-    "piechart s graphics"
+    #"piechart s graphics"
     "quarks a graphics"
     #"schroedinger_hydrogen a graphics" Excluded because of MAC failures (2. round, o p)
     "schroedinger_hydrogen j graphics"
@@ -304,7 +309,7 @@ set(TEST_DESCRIPTIONS
     "gerrors a graphs"
     #"gerrors2 a graphs" Excluded because of MAC failures (2. round, o p)
     "gerrors2 j graphs"
-    "gerrors2 s graphs"
+    #"gerrors2 s graphs"
     "gmultierrors a graphs"#s
     "graph a graphs"
     #"graph2derrorsfit a graphs" Excluded because of MAC failures (2. round, o p)
@@ -413,7 +418,7 @@ set(TEST_DESCRIPTIONS
     "mathLaplace s math"
     #"mathStudent a math" Excluded because of MAC failures (2. round, o p)
     "mathStudent j math"
-    "mathStudent s math"#s
+    #"mathStudent s math"#s
     #"mathcoreCDF a math" Excluded because of MAC failures (2. round, o p)
     "mathcoreCDF j math"
     #"mathcoreCDF s math"
