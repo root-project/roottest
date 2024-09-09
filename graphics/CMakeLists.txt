@@ -39,7 +39,7 @@ file(COPY testGraphics.C DESTINATION ${BUILD_DIR})
 # Currently MAC and linux are seperated. NEW SVGs with headless chrome browser are not tested on MAC.
 # That's why there are two completely seperate parts and thats why ,a == all, excludes s == new svgs on MAC
 # and Linux. On Linux new SVG tests can be enabled individually using s. This is not enabled on MAC.
-# After the problem with hanging chrome browser is solved, one can combine these two parts again and 
+# After the problem with hanging chrome browser is solved and the chroe, one can combine these two parts again and 
 # also test new SVGs on MAC and also change a == all.
 # MAC OS platforms
 if (CMAKE_SYSTEM_NAME MATCHES Darwin)
@@ -256,13 +256,13 @@ set(TEST_DESCRIPTIONS
     #"AtlasExample a graphics" Excluded because of MAC failures (2. round, j)
     "AtlasExample o graphics"
     "AtlasExample p graphics"
-    #"AtlasExample s graphics"
+    "AtlasExample s graphics"
     #"analyze a graphics" Excluded because of MAC failures (2. round, o p)
     "analyze j graphics"
     "analyze s graphics"
     #"archi a graphics" Excluded because of MAC failures (2. round, o p)
     "archi j graphics"
-    #"archi s graphics"
+    "archi s graphics"
     "arrows a graphics"
     "compile a graphics"
     "crown a graphics"
@@ -314,7 +314,7 @@ set(TEST_DESCRIPTIONS
     "graph a graphs"
     #"graph2derrorsfit a graphs" Excluded because of MAC failures (2. round, o p)
     "graph2derrorsfit j graphs"
-    #"graph2derrorsfit s graphs"
+    "graph2derrorsfit s graphs"
     #"graphApply a graphs" Excluded because of MAC failures (2. round, o p)
     "graphApply j graphs"
     "graphApply s graphs"
@@ -334,7 +334,7 @@ set(TEST_DESCRIPTIONS
     "scatter a graphs"#s
     #"surfaces a graphs" Excluded because of MAC failures (2. round, o p)
     "surfaces j graphs"
-    #"surfaces s graphs"
+    "surfaces s graphs"
     #"timeonaxis a graphs" Excluded because of linux fails (1. round)
     #"timeonaxis2 a graphs" Excluded because of linux fails (1. round)
     #"timeonaxis3 a graphs" Excluded because of linux fails (1. round)
@@ -355,7 +355,7 @@ set(TEST_DESCRIPTIONS
     #"candlescaled a hist" Excluded because of MAC failures (2. round, o)
     "candlescaled j hist"
     "candlescaled p hist"
-    #"candlescaled s hist"
+    "candlescaled s hist"
     "fillhistosauto2p a hist"
     "fillrandom a hist"
     "h2_cut a hist"
@@ -370,7 +370,7 @@ set(TEST_DESCRIPTIONS
     "hlabels1 a hist"
     #"hstack a hist" Excluded because of MAC failures (2. round, o p)
     "hstack j hist"
-    #"hstack s hist"
+    "hstack s hist"
     "legendautoplaced a hist"
     "logscales a hist"
     "movepalette a hist"
@@ -394,7 +394,7 @@ set(TEST_DESCRIPTIONS
     "reverseaxis s hist"
     #"testSmooth a hist" Excluded because of MAC failures (2. round, o p)
     "testSmooth j hist"
-    #"testSmooth s hist"
+    "testSmooth s hist"
     "th2polyBoxes a hist"
     "th2polyEurope a hist"
     #"th2polyHoneycomb a hist" Excluded because of MAC failures (2. round, j o p)
@@ -407,7 +407,7 @@ set(TEST_DESCRIPTIONS
     "BreitWigner a math"
     #"GammaFun a math" Excluded because of MAC failures (2. round, o p)
     "GammaFun j math"
-    #"GammaFun s math"
+    "GammaFun s math"
     "chi2test a math"
     "hlquantiles a math"
     "mathBeta a math"
@@ -418,10 +418,10 @@ set(TEST_DESCRIPTIONS
     "mathLaplace s math"
     #"mathStudent a math" Excluded because of MAC failures (2. round, o p)
     "mathStudent j math"
-    #"mathStudent s math"#s
+    "mathStudent s math"#s
     #"mathcoreCDF a math" Excluded because of MAC failures (2. round, o p)
     "mathcoreCDF j math"
-    #"mathcoreCDF s math"
+    "mathcoreCDF s math"
     #"mathcoreStatFunc a math" Excluded because of MAC failures (2. round, o p)
     "mathcoreStatFunc j math"
     "mathcoreStatFunc s math"
@@ -454,8 +454,8 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
         MACROARG \"${macro}\",\"p\",\"${macro_folder}\",\"${BUILD_DIR}\")
     
     elseif(${test_type} STREQUAL "s")
-
         ROOTTEST_ADD_TEST(${macro}_s
+        RUN_SERIAL
         MACRO testGraphics.C
         MACROARG \"${macro}\",\"s\",\"${macro_folder}\",\"${BUILD_DIR}\")    
 
