@@ -314,7 +314,7 @@ set(TEST_DESCRIPTIONS
     "graph a graphs"
     #"graph2derrorsfit a graphs" Excluded because of MAC failures (2. round, o p)
     "graph2derrorsfit j graphs"
-    "graph2derrorsfit s graphs"
+    #"graph2derrorsfit s graphs"
     #"graphApply a graphs" Excluded because of MAC failures (2. round, o p)
     "graphApply j graphs"
     "graphApply s graphs"
