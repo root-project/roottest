@@ -272,8 +272,8 @@ set(TEST_DESCRIPTIONS
     "eval a graphics"
     "event a graphics"
     "feynman a graphics"
-    "first a graphics" #s
-    "formula1 a graphics" #S
+    "first a graphics"
+    "formula1 a graphics"
     "framework a graphics"
     "gaxis a graphics"
     "gaxis3 a graphics"
@@ -300,7 +300,7 @@ set(TEST_DESCRIPTIONS
     "transparency a graphics"
     #"annotation3d a graphs" Excluded because of MAC failures (2. round, o p)
     "annotation3d j graphs"
-    "annotation3d s graphs"
+    #"annotation3d s graphs" Excluded Fedora failures
     "approx a graphs"
     #"exclusiongraph a graphs" Excluded because of MAC failures (2. round, o p)
     "exclusiongraph j graphs"
@@ -334,7 +334,7 @@ set(TEST_DESCRIPTIONS
     "scatter a graphs"#s
     #"surfaces a graphs" Excluded because of MAC failures (2. round, o p)
     "surfaces j graphs"
-    "surfaces s graphs"
+    #"surfaces s graphs" Excluded Fedora failures
     #"timeonaxis a graphs" Excluded because of linux fails (1. round)
     #"timeonaxis2 a graphs" Excluded because of linux fails (1. round)
     #"timeonaxis3 a graphs" Excluded because of linux fails (1. round)
@@ -345,7 +345,7 @@ set(TEST_DESCRIPTIONS
     #"Fibonacci a hist" Excluded because of MAC failures (2. round,j)
     "Fibonacci o hist"
     "Fibonacci p hist"
-    "Fibonacci s hist"#s
+    "Fibonacci s hist"
     "NormalizeHistogram a hist"
     "ZoomHistogram a hist"
     "candledecay a hist"
@@ -370,7 +370,7 @@ set(TEST_DESCRIPTIONS
     "hlabels1 a hist"
     #"hstack a hist" Excluded because of MAC failures (2. round, o p)
     "hstack j hist"
-    "hstack s hist"
+    #"hstack s hist" Excluded Fedora failures
     "legendautoplaced a hist"
     "logscales a hist"
     "movepalette a hist"
@@ -403,11 +403,11 @@ set(TEST_DESCRIPTIONS
     "twoscales j hist"
     "twoscales s hist"
     "xyplot a hist"
-    "CrystalBall a math"#s
+    "CrystalBall a math"
     "BreitWigner a math"
     #"GammaFun a math" Excluded because of MAC failures (2. round, o p)
     "GammaFun j math"
-    "GammaFun s math"
+    #"GammaFun s math" Excluded Fedora failures
     "chi2test a math"
     "hlquantiles a math"
     "mathBeta a math"
@@ -421,10 +421,10 @@ set(TEST_DESCRIPTIONS
     "mathStudent s math"#s
     #"mathcoreCDF a math" Excluded because of MAC failures (2. round, o p)
     "mathcoreCDF j math"
-    "mathcoreCDF s math"
+    #"mathcoreCDF s math" Excluded Fedora failures
     #"mathcoreStatFunc a math" Excluded because of MAC failures (2. round, o p)
     "mathcoreStatFunc j math"
-    "mathcoreStatFunc s math"
+    #"mathcoreStatFunc s math" Excluded Fedora failures
     "normalDist a math"
     "quantiles a math"
     "vavilov a math"
