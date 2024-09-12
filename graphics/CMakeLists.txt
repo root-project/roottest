@@ -289,11 +289,11 @@ set(TEST_DESCRIPTIONS
     #"piechart a graphics" Excluded because of MAC failures (2. round, o)
     "piechart j graphics"
     "piechart p graphics"
-    #"piechart s graphics"
+    "piechart s graphics"
     "quarks a graphics"
     #"schroedinger_hydrogen a graphics" Excluded because of MAC failures (2. round, o p)
     "schroedinger_hydrogen j graphics"
-    #"schroedinger_hydrogen s graphics"
+    "schroedinger_hydrogen s graphics"
     "tmathtext a graphics"
     "tmathtext2 a graphics"
     "triangles a graphics"
@@ -304,24 +304,24 @@ set(TEST_DESCRIPTIONS
     "approx a graphs"
     #"exclusiongraph a graphs" Excluded because of MAC failures (2. round, o p)
     "exclusiongraph j graphs"
-    #"exclusiongraph s graphs"
+    "exclusiongraph s graphs"
     "exclusiongraph2 a graphs"
     "gerrors a graphs"
     #"gerrors2 a graphs" Excluded because of MAC failures (2. round, o p)
     "gerrors2 j graphs"
-    #"gerrors2 s graphs"
+    "gerrors2 s graphs"
     "gmultierrors a graphs"#s
     "graph a graphs"
     #"graph2derrorsfit a graphs" Excluded because of MAC failures (2. round, o p)
     "graph2derrorsfit j graphs"
-    #"graph2derrorsfit s graphs"
+    "graph2derrorsfit s graphs"
     #"graphApply a graphs" Excluded because of MAC failures (2. round, o p)
     "graphApply j graphs"
     "graphApply s graphs"
     "graphShade a graphs"
     #"graphpolar a graphs" Excluded because of MAC failures (2. round, o p)
     "graphpolar j graphs"
-    #"graphpolar s graphs"
+    "graphpolar s graphs"
     "graphpolar2 a graphs"
     "graphpolar3 a graphs"
     #"graphreverse a graphs" Excluded because of MAC failures (2. round, o p)
@@ -331,7 +331,7 @@ set(TEST_DESCRIPTIONS
     "labels1 a graphs"
     "labels2 a graphs"
     #"multigraph a graphs" Excluded because of MAC failures (2. round,j o p)
-    "scatter a graphs"#s
+    "scatter a graphs"
     #"surfaces a graphs" Excluded because of MAC failures (2. round, o p)
     "surfaces j graphs"
     #"surfaces s graphs" Excluded Fedora failures
@@ -462,7 +462,7 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
     # TODO: Debug hanging browser, maybe also some new references
 
     elseif(${test_type} STREQUAL "a")
-        foreach (X "j" "o" "p")
+        foreach (X "j" "o" "p" "s")
             ROOTTEST_ADD_TEST(${macro}_${X}
                 MACRO testGraphics.C
                 MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
