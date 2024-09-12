@@ -1,0 +1,118 @@
+import math
+
+import pytest
+import os 
+
+import ROOT
+
+from DistRDF.Backends import Dask
+
+from pathlib import Path
+from distributed import get_worker
+
+
+class TestDeclare:
+    """
+    """
+    
+    def _check_rdf_histos(self, rdf):
+        # This filters out all numbers less than 5
+        rdf_filtered = rdf.Filter("check_number_less_than_five(rdfentry_)")
+        histo = rdf_filtered.Histo1D(("name", "title", 10, 0, 10), "rdfentry_")
+
+        # The expected results after filtering
+        # The actual set of numbers required after filtering
+        required_numbers = range(5)
+        required_size = len(required_numbers)
+        required_mean = sum(required_numbers) / float(required_size)
+        required_stdDev = math.sqrt(
+            sum((x - required_mean)**2 for x in required_numbers) /
+            required_size)
+
+        # Compare the sizes of equivalent set of numbers
+        assert histo.GetEntries() == required_size
+        # Compare the means of equivalent set of numbers
+        assert histo.GetMean() == required_mean
+        # Compare the standard deviations of equivalent set of numbers
+        assert histo.GetStdDev() == required_stdDev
+        
+    def _check_rdf_histos_second(self, rdf):
+        # This filters out all numbers less than 5
+        rdf_filtered = rdf.Filter("check_number_less_than_four(rdfentry_)")
+        histo = rdf_filtered.Histo1D(("name", "title", 10, 0, 10), "rdfentry_")
+
+        # The expected results after filtering
+        # The actual set of numbers required after filtering
+        required_numbers = range(4)
+        required_size = len(required_numbers)
+        required_mean = sum(required_numbers) / float(required_size)
+        required_stdDev = math.sqrt(
+            sum((x - required_mean)**2 for x in required_numbers) /
+            required_size)
+
+        # Compare the sizes of equivalent set of numbers
+        assert histo.GetEntries() == required_size
+        # Compare the means of equivalent set of numbers
+        assert histo.GetMean() == required_mean
+        # Compare the standard deviations of equivalent set of numbers
+        assert histo.GetStdDev() == required_stdDev
+    
+    def _mydeclare_1(self, rdf):     
+        ROOT.RDF.Experimental.Distributed.DeclareCppCode("""
+            #ifndef CODE_1
+            #define CODE_1                                                                                         
+            bool check_number_less_than_five(int num){
+                return num < 5;
+            }  
+            #endif
+            """)
+    
+    def _mydeclare_2(self, rdf):     
+        ROOT.RDF.Experimental.Distributed.DeclareCppCode("""
+            #ifndef CODE_2
+            #define CODE_2
+            bool check_number_less_than_four(int num){
+                return num < 4;
+            }  
+            #endif
+            """)
+        
+    def _distribute_single_declare_check_filter_and_histo(self, connection, backend):
+    
+        if backend == "dask":
+            RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
+            rdf = RDataFrame(10, daskclient=connection)
+        elif backend == "spark":
+            RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
+            rdf = RDataFrame(10, sparkcontext=connection)
+        
+        self._mydeclare_1(rdf)
+        self._check_rdf_histos(rdf)
+
+    def _distribute_multiple_declares_check_filter_and_histo(self, connection, backend):
+        
+        if backend == "spark":
+            RDataFrame1 = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
+            rdf = RDataFrame1(10, sparkcontext=connection)
+        elif backend == "dask":
+            RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
+            rdf = RDataFrame(10, daskclient=connection)
+        
+        self._mydeclare_1(rdf)
+        self._mydeclare_2(rdf)
+        self._check_rdf_histos(rdf)
+        self._check_rdf_histos_second(rdf)
+
+    
+    def test_declares(self, payload):
+        """
+        Tests for the distribution of headers to the workers and their
+        corresponding inclusion.
+        """
+        connection, backend = payload
+        self._distribute_single_declare_check_filter_and_histo(connection, backend)
+        self._distribute_multiple_declares_check_filter_and_histo(connection, backend)
+        
+
+if __name__ == "__main__":
+    pytest.main(args=[__file__])

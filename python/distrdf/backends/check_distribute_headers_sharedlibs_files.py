@@ -1,16 +1,15 @@
 import math
-
 import pytest
+import os 
+
+from distributed import get_worker
+from pathlib import Path
 
 import ROOT
 
-from DistRDF.Backends import Dask
-
-
-class TestSharedLibDask:
+class TestInterfaceHeadersLibrariesFiles:
     """
-    Check that the required header files are properly included in Dask
-    environment.
+    Check that the interface functions to distribute headers, shared libraries and files work properly. 
     """
     
     def _check_rdf_histos(self, rdf):
@@ -33,8 +32,6 @@ class TestSharedLibDask:
         assert histo.GetMean() == required_mean
         # Compare the standard deviations of equivalent set of numbers
         assert histo.GetStdDev() == required_stdDev
-        from DistRDF.Backends.Base import BaseBackend
-        BaseBackend.headers = set()   
         
     def _check_rdf_histos_second(self, rdf):
         # This filters out all numbers less than 5
@@ -56,8 +53,6 @@ class TestSharedLibDask:
         assert histo.GetMean() == required_mean
         # Compare the standard deviations of equivalent set of numbers
         assert histo.GetStdDev() == required_stdDev
-        from DistRDF.Backends.Base import BaseBackend
-        BaseBackend.headers = set()   
     
     def _distribute_header_check_filter_and_histo(self, connection, backend):
         """
@@ -73,6 +68,14 @@ class TestSharedLibDask:
             
         ROOT.RDF.Experimental.Distributed.DistributeHeaders("../test_headers/header1.hxx")     
         self._check_rdf_histos(rdf)
+        # Reset headers for future tests
+        # TODO: this underlines either a misusage of the class or a bug
+        # this way we avoid SPARK warnings like:
+        # WARN SparkContext: 
+        # The path ../test_headers/header1.hxx has been added already. Overwriting of added paths is not supported in the current version.
+        from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.headers = set()
+        
 
     def _extend_ROOT_include_path(self, connection, backend):
         """
@@ -108,9 +111,11 @@ class TestSharedLibDask:
         # Check that histogram has 10 entries and mean 4.5
         assert histo1.GetEntries() == 10
         assert histo1.GetMean() == pytest.approx(4.5)
-        
         # Reset headers for future tests
         # TODO: this underlines either a misusage of the class or a bug
+        # this way we avoid SPARK warnings like:
+        # WARN SparkContext: 
+        # The path ../test_headers/header1.hxx has been added already. Overwriting of added paths is not supported in the current version.
         from DistRDF.Backends.Base import BaseBackend
         BaseBackend.headers = set()
 
@@ -127,8 +132,11 @@ class TestSharedLibDask:
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
             rdf = RDataFrame(100, sparkcontext=connection)        
         
-        ROOT.RDF.Experimental.Distributed.DistributeSharedLib("../test_shared_libs/headersecond_hxx.so")
+        ROOT.RDF.Experimental.Distributed.DistributeSharedLibs("../test_shared_libs/headersecond_hxx.so")
         self._check_rdf_histos_second(rdf)
+        from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.shared_libraries = set()
+        BaseBackend.pcms = set()
         
     def _distribute_shared_lib_folder_check_filter_and_histo(self, connection, backend):
         """
@@ -142,9 +150,11 @@ class TestSharedLibDask:
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
             rdf = RDataFrame(10, sparkcontext=connection)
         
-        ROOT.RDF.Experimental.Distributed.DistributeSharedLib("../test_shared_libs/")
+        ROOT.RDF.Experimental.Distributed.DistributeSharedLibs("../test_shared_libs/")
         self._check_rdf_histos(rdf)
-        
+        from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.shared_libraries = set()
+        BaseBackend.pcms = set()
 
     def _distribute_multiple_shared_lib_folder_check_filter_and_histo(self, connection, backend):
         if backend == "dask":
@@ -154,9 +164,13 @@ class TestSharedLibDask:
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
             rdf = RDataFrame(10, sparkcontext=connection)
         
-        ROOT.RDF.Experimental.Distributed.DistributeSharedLib("../test_shared_libs/")
+        ROOT.RDF.Experimental.Distributed.DistributeSharedLibs("../test_shared_libs/")
         self._check_rdf_histos(rdf)
         self._check_rdf_histos_second(rdf)
+        from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.shared_libraries = set()
+        BaseBackend.pcms = set()
+        
         
     def _distribute_multiple_shared_lib_check_filter_and_histo(self, connection, backend):
         if backend == "dask":
@@ -166,108 +180,112 @@ class TestSharedLibDask:
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
             rdf = RDataFrame(10, sparkcontext=connection)
         
-        ROOT.RDF.Experimental.Distributed.DistributeSharedLib(["../test_shared_libs/header1_hxx.so","../test_shared_libs/headersecond_hxx.so"])
+        ROOT.RDF.Experimental.Distributed.DistributeSharedLibs(["../test_shared_libs/header1_hxx.so","../test_shared_libs/headersecond_hxx.so"])
         self._check_rdf_histos(rdf)
         self._check_rdf_histos_second(rdf)
-    
-    def _distribute_single_declare(self, connection, backend):
-    
-        if backend == "dask":
-            RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-            rdf = RDataFrame(10, daskclient=connection)
-        elif backend == "spark":
-            RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame(100, sparkcontext=connection)
-            
         from DistRDF.Backends.Base import BaseBackend
-        BaseBackend.declaration_str = ""
-                
-        ROOT.RDF.Experimental.Distributed.DeclareCppCode("""
-            bool check_number_less_than_5(int num){
-            return num < 5;
-            }  
-            """)
-        
-        self._check_rdf_histos(rdf)
-
-    # TODO the test here would pass but it uncovers that the multiple declares are called more times than needed
-    # if they are called only once, the test would fail 
+        BaseBackend.shared_libraries = set()
+        BaseBackend.pcms = set()
     
-    # def _distribute_multiple_declares(self, connection, backend):
-        
-    #     if backend == "dask":
-    #         RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-    #         rdf = RDataFrame(10, daskclient=connection)
-    #     elif backend == "spark":
-    #         RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-    #         rdf = RDataFrame(100, sparkcontext=connection)
-        
-    #     from DistRDF.Backends.Base import BaseBackend
-    #     BaseBackend.declaration_string = "" 
-        
-    #     ROOT.RDF.Experimental.Distributed.DeclareCppCode("""
-    #         bool check_number_less_than_5(int num){
-    #         return num < 5;
-    #         }  
-    #         """) 
-        
-    #     ROOT.RDF.Experimental.Distributed.DeclareCppCode("""
-    #         bool check_number_less_than_4(int num){
-    #         return num < 4;
-    #         }  
-    #         """)
-        
-    #     self._check_rdf_histos(rdf)
-    #     self._check_rdf_histos_second(rdf)
     
     def _distribute_single_file(self, connection, backend):
-        # another, hacky way would be to print localdir of workers and ls what's inside
-        # here we distribute file that is a header 
-        # #TODO we should really test the files that are not headers
+        # #TODO do we want to test Spark as well? 
+        # For spark we are using spark "addFile" function directly 
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
             rdf = RDataFrame(10, daskclient=connection)
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
             rdf = RDataFrame(100, sparkcontext=connection)
+        
+        ROOT.RDF.Experimental.Distributed.DistributeFiles("../test_files/file.txt")
+
+        if backend == "dask":
+            def Foo():
+                try:
+                    localdir = get_worker().local_directory
                     
-        ROOT.RDF.Experimental.Distributed.DistributeFiles("../test_headers/header1.hxx")
-        self._check_rdf_histos(rdf)
+                    if os.path.exists(Path(localdir)/"file.txt"):
+                        os.environ['ENV'] = localdir
+                except ValueError:
+                    pass
+                ROOT.gInterpreter.Declare(
+                """
+                #ifndef CODE_ENV
+                #define CODE_ENV
+                bool isEnv(){
+                    return  gSystem->Getenv("ENV");
+                }
+                #endif
+                """
+                )
+                
+            ROOT.RDF.Experimental.Distributed.initialize(Foo)
+            df_flag = rdf.Define("flags", "isEnv()")
+            countFlags = df_flag.Sum("flags").GetValue()
+            assert countFlags == 10.0    
+        # Reset files for future tests
+        # TODO: this underlines either a misusage of the class or a bug
+        from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.files = set()
+            
+    def _distribute_multiple_files(self, connection, backend):
+        # #TODO do we want to test Spark as well? 
+        # For spark we are using spark "addFile" function directly 
     
-    # def _distribute_multiple_files(self, connection, backend):
-    #     # another, hacky way would be to print localdir of workers and ls what's inside
-    #     # here we distribute file that is a header
-    #     # #TODO issue if we try with two headers - this is not the correct way to run the files test, here for the reference
-    #     if backend == "dask":
-    #         RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-    #         rdf = RDataFrame(10, daskclient=connection)
-    #     elif backend == "spark":
-    #         RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-    #         rdf = RDataFrame(100, sparkcontext=connection)
-                    
-    #     ROOT.RDF.Experimental.Distributed.DistributeFiles(["../test_headers/header1.hxx", "../test_headers/headersecond.hxx"])
-    #     self._check_rdf_histos(rdf)
-    #     self._check_rdf_histos_second(rdf)
+        if backend == "dask":
+            RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
+            rdf = RDataFrame(10, daskclient=connection)
+        elif backend == "spark":
+            RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
+            rdf = RDataFrame(100, sparkcontext=connection)
+        
+        ROOT.RDF.Experimental.Distributed.DistributeFiles(["../test_files/file.txt", "../test_files/file_1.txt"])
+
+        if backend == "dask":
+            def Foo():
+                try:
+                    localdir = get_worker().local_directory
+                    if os.path.exists(Path(localdir)/"file.txt") and os.path.exists(Path(localdir)/"file_1.txt"):
+                        os.environ['ENV'] = localdir
+                except ValueError:
+                    pass
+                ROOT.gInterpreter.Declare(
+                """
+                #ifndef CODE_ENV
+                #define CODE_ENV
+                bool isEnv(){
+                    return  gSystem->Getenv("ENV");
+                }
+                #endif
+                """
+                )
+                
+            ROOT.RDF.Experimental.Distributed.initialize(Foo)
+            df_flag = rdf.Define("flags", "isEnv()")
+            countFlags = df_flag.Sum("flags").GetValue()
+            assert countFlags == 10.0
+            
+        # Reset files for future tests
+        # TODO: this underlines either a misusage of the class or a bug
+        from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.files = set()
+        
     
     def test_check_new_interfaces(self, payload):
         """
         Tests for the distribution of headers to the workers and their
-        corresponding inclusion.
+        corresponding inclusion and tests for the distribution of files. 
         """
         connection, backend = payload
-        
         self._distribute_header_check_filter_and_histo(connection, backend)
         self._extend_ROOT_include_path(connection, backend)
-        # TODO how do we proceed with the shared libs tests? They pass locally. 
-        # self._distribute_shared_lib_check_filter_and_histo(connection, backend)
-        # self._distribute_shared_lib_folder_check_filter_and_histo(connection, backend)
-        # self._distribute_multiple_shared_lib_check_filter_and_histo(connection, backend)
-        # self._distribute_multiple_shared_lib_folder_check_filter_and_histo(connection, backend)
-        self._distribute_single_declare(connection, backend)
-        #self._distribute_multiple_declares(connection, backend)
+        self._distribute_shared_lib_check_filter_and_histo(connection, backend)
+        self._distribute_shared_lib_folder_check_filter_and_histo(connection, backend)
+        self._distribute_multiple_shared_lib_check_filter_and_histo(connection, backend)
+        self._distribute_multiple_shared_lib_folder_check_filter_and_histo(connection, backend)
         self._distribute_single_file(connection, backend)
-        #self._distribute_multiple_files(connection, backend)
-        
+        self._distribute_multiple_files(connection, backend)
 
 if __name__ == "__main__":
     pytest.main(args=[__file__])
