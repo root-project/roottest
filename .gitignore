@@ -1073,9 +1073,3 @@ root/tree/stl/vecptr.root
 # /scripts/
 /scripts/roottest.arch
 /scripts/roottesttiming.root
-
-# /python/distrdf/
-! *.so
-! *.dll
-! *.dylib
-! *.pcm
