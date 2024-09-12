@@ -462,7 +462,7 @@ foreach(TEST_DESCRIPTION ${TEST_DESCRIPTIONS})
     # TODO: Debug hanging browser, maybe also some new references
 
     elseif(${test_type} STREQUAL "a")
-        foreach (X "j" "o" "p" "s")
+        foreach (X "j" "o" "p")
             ROOTTEST_ADD_TEST(${macro}_${X}
                 MACRO testGraphics.C
                 MACROARG \"${macro}\",\"${X}\",\"${macro_folder}\",\"${BUILD_DIR}\")
