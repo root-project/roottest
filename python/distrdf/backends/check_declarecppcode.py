@@ -1,18 +1,10 @@
 import math
-
 import pytest
-import os 
-
 import ROOT
-
-from DistRDF.Backends import Dask
-
-from pathlib import Path
-from distributed import get_worker
-
 
 class TestDeclare:
     """
+    Check if the distributed c++ code declaration works as expected. 
     """
     
     def _check_rdf_histos(self, rdf):
