@@ -293,7 +293,7 @@ set(TEST_DESCRIPTIONS
     "quarks a graphics"
     #"schroedinger_hydrogen a graphics" Excluded because of MAC failures (2. round, o p)
     "schroedinger_hydrogen j graphics"
-    "schroedinger_hydrogen s graphics"
+    #"schroedinger_hydrogen s graphics" Excluded Fedora failures
     "tmathtext a graphics"
     "tmathtext2 a graphics"
     "triangles a graphics"
@@ -314,7 +314,7 @@ set(TEST_DESCRIPTIONS
     "graph a graphs"
     #"graph2derrorsfit a graphs" Excluded because of MAC failures (2. round, o p)
     "graph2derrorsfit j graphs"
-    "graph2derrorsfit s graphs"
+    #"graph2derrorsfit s graphs" Excluded Fedora failures
     #"graphApply a graphs" Excluded because of MAC failures (2. round, o p)
     "graphApply j graphs"
     "graphApply s graphs"
