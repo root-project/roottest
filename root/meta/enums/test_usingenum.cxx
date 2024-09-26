@@ -19,7 +19,6 @@ int test_usingenum() {
     std::cerr << "The TEnum found for A::E and B::E is different\n";
     return 3;
   }
-#if CLING_FIXED_15407
   // This is failing due to https://github.com/root-project/root/issues/15407
   auto ce = TEnum::GetEnum("C::E");
   if (!ce) {
@@ -31,6 +30,5 @@ int test_usingenum() {
     std::cerr << "The TEnum found for A::E and C::E is different\n";
     return 5;
   }
-#endif
   return 0;
 };
