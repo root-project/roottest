@@ -13,17 +13,12 @@ class TestIncludesDask:
     environment.
     """
 
-    def _includes_function_with_filter_and_histo(self, connection, backend):
+    def _includes_function_with_filter_and_histo(self, connection):
         """
         Check that the filter operation is able to use C++ functions that
         were included using header files.
         """
-        if backend == "dask":
-            RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-            rdf = RDataFrame(10, daskclient=connection)
-        elif backend == "spark":
-            RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame(10, sparkcontext=connection)
+        rdf = ROOT.RDataFrame(10, executor=connection)
 
         rdf._headnode.backend.distribute_headers("../test_headers/header1.hxx")
 
@@ -52,7 +47,7 @@ class TestIncludesDask:
         from DistRDF.Backends.Base import BaseBackend
         BaseBackend.headers = set()
 
-    def _extend_ROOT_include_path(self, connection, backend):
+    def _extend_ROOT_include_path(self, connection):
         """
         Check that the include path of ROOT is extended with the directories
         specified in `DistRDF.include_headers()` so references between headers
@@ -60,12 +55,7 @@ class TestIncludesDask:
         """
 
         # Create an RDataFrame with 100 integers from 0 to 99
-        if backend == "dask":
-            RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-            rdf = RDataFrame(100, daskclient=connection)
-        elif backend == "spark":
-            RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame(100, sparkcontext=connection)
+        rdf = ROOT.RDataFrame(100, executor=connection)
 
         # Distribute headers to the workers
         header_folder = "../test_headers/headers_folder"
@@ -100,9 +90,9 @@ class TestIncludesDask:
         corresponding inclusion.
         """
 
-        connection, backend = payload
-        self._includes_function_with_filter_and_histo(connection, backend)
-        self._extend_ROOT_include_path(connection, backend)
+        connection, _ = payload
+        self._includes_function_with_filter_and_histo(connection)
+        self._extend_ROOT_include_path(connection)
 
 
 if __name__ == "__main__":
