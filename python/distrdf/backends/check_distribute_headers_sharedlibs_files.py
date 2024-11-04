@@ -4,6 +4,7 @@ import os
 
 from distributed import get_worker
 from pathlib import Path
+import subprocess
 
 import ROOT
 
@@ -12,7 +13,7 @@ class TestInterfaceHeadersLibrariesFiles:
     Check that the interface functions to distribute headers, shared libraries and files work properly. 
     """
     
-    def _check_rdf_histos(self, rdf):
+    def _check_rdf_histos_5(self, rdf):
         # This filters out all numbers less than 5
         rdf_filtered = rdf.Filter("check_number_less_than_5(rdfentry_)")
         histo = rdf_filtered.Histo1D(("name", "title", 10, 0, 10), "rdfentry_")
@@ -32,15 +33,29 @@ class TestInterfaceHeadersLibrariesFiles:
         assert histo.GetMean() == required_mean
         # Compare the standard deviations of equivalent set of numbers
         assert histo.GetStdDev() == required_stdDev
-        
-    def _check_rdf_histos_second(self, rdf):
-        # This filters out all numbers less than 5
-        rdf_filtered = rdf.Filter("check_number_less_than_4(rdfentry_)")
+    
+    def _check_rdf_histos_6(self, rdf):
+        rdf_filtered = rdf.Filter("check_number_less_than_6(rdfentry_)")
         histo = rdf_filtered.Histo1D(("name", "title", 10, 0, 10), "rdfentry_")
+        
+        required_numbers = range(6)
+        required_size = len(required_numbers)
+        required_mean = sum(required_numbers) / float(required_size)
+        required_stdDev = math.sqrt(
+            sum((x - required_mean)**2 for x in required_numbers) /
+            required_size)
 
-        # The expected results after filtering
-        # The actual set of numbers required after filtering
-        required_numbers = range(4)
+        # Compare the sizes of equivalent set of numbers
+        assert histo.GetEntries() == required_size
+        # Compare the means of equivalent set of numbers
+        assert histo.GetMean() == required_mean
+        # Compare the standard deviations of equivalent set of numbers
+        assert histo.GetStdDev() == required_stdDev
+        
+    def _check_rdf_histos_7(self, rdf):
+        rdf_filtered = rdf.Filter("check_number_less_than_7(rdfentry_)")
+        histo = rdf_filtered.Histo1D(("name", "title", 15, 0, 15), "rdfentry_")
+        required_numbers = range(7)
         required_size = len(required_numbers)
         required_mean = sum(required_numbers) / float(required_size)
         required_stdDev = math.sqrt(
@@ -54,6 +69,12 @@ class TestInterfaceHeadersLibrariesFiles:
         # Compare the standard deviations of equivalent set of numbers
         assert histo.GetStdDev() == required_stdDev
     
+    def _create_mylib_shared_lib_6(self):
+        subprocess.run(["g++", "-fPIC", "../test_shared_libs/mysource6.cpp", "-shared", "-o", "../test_shared_libs/mylib6.so"]) 
+        
+    def _create_mylib_shared_lib_7(self):
+        subprocess.run(["g++", "-fPIC", "../test_shared_libs/mysource7.cpp", "-shared", "-o", "../test_shared_libs/mylib7.so"]) 
+            
     def _distribute_header_check_filter_and_histo(self, connection, backend):
         """
         Check that the filter operation is able to use C++ functions that
@@ -67,7 +88,7 @@ class TestInterfaceHeadersLibrariesFiles:
             rdf = RDataFrame(10, sparkcontext=connection)
             
         ROOT.RDF.Experimental.Distributed.DistributeHeaders("../test_headers/header1.hxx")     
-        self._check_rdf_histos(rdf)
+        self._check_rdf_histos_5(rdf)
         # Reset headers for future tests
         # TODO: this underlines either a misusage of the class or a bug
         # this way we avoid SPARK warnings like:
@@ -127,14 +148,17 @@ class TestInterfaceHeadersLibrariesFiles:
         """
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-            rdf = RDataFrame(10, daskclient=connection)
+            rdf = RDataFrame(15, daskclient=connection)
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame(100, sparkcontext=connection)        
-        
-        ROOT.RDF.Experimental.Distributed.DistributeSharedLibs("../test_shared_libs/headersecond_hxx.so")
-        self._check_rdf_histos_second(rdf)
+            rdf = RDataFrame(15, sparkcontext=connection)  
+                
+        ROOT.RDF.Experimental.Distributed.DistributeHeaders("../test_shared_libs/myheader7.h")
+        ROOT.RDF.Experimental.Distributed.DistributeSharedLibs("../test_shared_libs/mylib7.so")
+
+        self._check_rdf_histos_7(rdf)
         from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.headers = set()
         BaseBackend.shared_libraries = set()
         BaseBackend.pcms = set()
         
@@ -145,29 +169,33 @@ class TestInterfaceHeadersLibrariesFiles:
         """
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-            rdf = RDataFrame(10, daskclient=connection)
+            rdf = RDataFrame(15, daskclient=connection)
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame(10, sparkcontext=connection)
+            rdf = RDataFrame(15, sparkcontext=connection)    
         
+        ROOT.RDF.Experimental.Distributed.DistributeHeaders("../test_shared_libs/myheader6.h") 
         ROOT.RDF.Experimental.Distributed.DistributeSharedLibs("../test_shared_libs/")
-        self._check_rdf_histos(rdf)
+        self._check_rdf_histos_6(rdf)
         from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.headers = set()
         BaseBackend.shared_libraries = set()
         BaseBackend.pcms = set()
 
     def _distribute_multiple_shared_lib_folder_check_filter_and_histo(self, connection, backend):
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-            rdf = RDataFrame(10, daskclient=connection)
+            rdf = RDataFrame(15, daskclient=connection)
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame(10, sparkcontext=connection)
-        
+            rdf = RDataFrame(15, sparkcontext=connection)
+
+        ROOT.RDF.Experimental.Distributed.DistributeHeaders(["../test_shared_libs/myheader7.h","../test_shared_libs/myheader6.h"]) 
         ROOT.RDF.Experimental.Distributed.DistributeSharedLibs("../test_shared_libs/")
-        self._check_rdf_histos(rdf)
-        self._check_rdf_histos_second(rdf)
+        self._check_rdf_histos_6(rdf)
+        self._check_rdf_histos_7(rdf)
         from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.headers = set()
         BaseBackend.shared_libraries = set()
         BaseBackend.pcms = set()
         
@@ -175,15 +203,17 @@ class TestInterfaceHeadersLibrariesFiles:
     def _distribute_multiple_shared_lib_check_filter_and_histo(self, connection, backend):
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
-            rdf = RDataFrame(10, daskclient=connection)
+            rdf = RDataFrame(15, daskclient=connection)
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame(10, sparkcontext=connection)
+            rdf = RDataFrame(15, sparkcontext=connection)
         
-        ROOT.RDF.Experimental.Distributed.DistributeSharedLibs(["../test_shared_libs/header1_hxx.so","../test_shared_libs/headersecond_hxx.so"])
-        self._check_rdf_histos(rdf)
-        self._check_rdf_histos_second(rdf)
+        ROOT.RDF.Experimental.Distributed.DistributeHeaders(["../test_shared_libs/myheader7.h","../test_shared_libs/myheader6.h"]) 
+        ROOT.RDF.Experimental.Distributed.DistributeSharedLibs(["../test_shared_libs/mylib7.so","../test_shared_libs/mylib6.so"])
+        self._check_rdf_histos_6(rdf)
+        self._check_rdf_histos_7(rdf)
         from DistRDF.Backends.Base import BaseBackend
+        BaseBackend.headers = set()
         BaseBackend.shared_libraries = set()
         BaseBackend.pcms = set()
     
@@ -238,7 +268,7 @@ class TestInterfaceHeadersLibrariesFiles:
             rdf = RDataFrame(10, daskclient=connection)
         elif backend == "spark":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-            rdf = RDataFrame(100, sparkcontext=connection)
+            rdf = RDataFrame(10, sparkcontext=connection)
         
         ROOT.RDF.Experimental.Distributed.DistributeFiles(["../test_files/file.txt", "../test_files/file_1.txt"])
 
@@ -278,12 +308,14 @@ class TestInterfaceHeadersLibrariesFiles:
         corresponding inclusion and tests for the distribution of files. 
         """
         connection, backend = payload
+        self._create_mylib_shared_lib_6()
+        self._create_mylib_shared_lib_7()
         self._distribute_header_check_filter_and_histo(connection, backend)
         self._extend_ROOT_include_path(connection, backend)
-        self._distribute_shared_lib_check_filter_and_histo(connection, backend)
-        self._distribute_shared_lib_folder_check_filter_and_histo(connection, backend)
-        self._distribute_multiple_shared_lib_check_filter_and_histo(connection, backend)
-        self._distribute_multiple_shared_lib_folder_check_filter_and_histo(connection, backend)
+        self._distribute_shared_lib_check_filter_and_histo(connection, backend) # works
+        self._distribute_shared_lib_folder_check_filter_and_histo(connection, backend) #not working 
+        self._distribute_multiple_shared_lib_check_filter_and_histo(connection, backend) #works 
+        self._distribute_multiple_shared_lib_folder_check_filter_and_histo(connection, backend) #works
         self._distribute_single_file(connection, backend)
         self._distribute_multiple_files(connection, backend)
 
