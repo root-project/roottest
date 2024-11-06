@@ -50,23 +50,17 @@ class TestDeclare:
         assert histo.GetStdDev() == required_stdDev
     
     def _mydeclare_1(self, rdf):     
-        ROOT.RDF.Experimental.Distributed.DeclareCppCode("""
-            #ifndef CODE_1
-            #define CODE_1                                                                                         
+        ROOT.RDF.Experimental.Distributed.DeclareCppCode("""                                                                                      
             bool check_number_less_than_five(int num){
                 return num < 5;
             }  
-            #endif
             """)
     
     def _mydeclare_2(self, rdf):     
         ROOT.RDF.Experimental.Distributed.DeclareCppCode("""
-            #ifndef CODE_2
-            #define CODE_2
             bool check_number_less_than_four(int num){
                 return num < 4;
             }  
-            #endif
             """)
         
     def _distribute_single_declare_check_filter_and_histo(self, connection, backend):
