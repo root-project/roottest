@@ -201,6 +201,7 @@ macro(ROOTTEST_COMPILE_MACRO filename)
         -e "gROOT->SetMacroPath(\"${CMAKE_CURRENT_SOURCE_DIR}\")"
         -e "gInterpreter->AddIncludePath(\"-I${CMAKE_CURRENT_BINARY_DIR}\")"
         -e "gSystem->AddIncludePath(\"-I${CMAKE_CURRENT_BINARY_DIR}\")"
+        -e "gSystem->AddIncludePath(\"-I/usr/local/include\")"
         ${RootMacroDirDefines})
 
   set(root_compile_macro ${ROOT_root_CMD} ${RootMacroBuildDefines} -q -l -b)
@@ -631,6 +632,7 @@ macro(ROOTTEST_SETUP_MACROTEST)
                -e "gROOT->SetMacroPath(\"${CMAKE_CURRENT_SOURCE_DIR}\")"
                -e "gInterpreter->AddIncludePath(\"-I${CMAKE_CURRENT_BINARY_DIR}\")"
                -e "gSystem->AddIncludePath(\"-I${CMAKE_CURRENT_BINARY_DIR}\")"
+               -e "gSystem->AddIncludePath(\"-I/usr/local/include\")"
                ${RootExternalIncludes} ${RootExeOptions}
                -q -l -b)
 
