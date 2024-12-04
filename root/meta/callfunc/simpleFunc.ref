@@ -15,6 +15,12 @@ p=3
 Result of FloatPtrOneArg = 3.000000
 Double32PtrOneArg(int p, float f, double* d).
 Result of A::Double32TPtrThreeArgs = -1.000000
+AddIntPtrs(int *a, int* b).
+Result of A::AddIntPtrs = -5
+AddLLPtrs (long long* a, long long* b).
+Result of A::LLPtrAddLLPtrs = -3
+AddULLPtrs (unsigned long long* a, unsigned long long* b).
+Result of A::ULLPtrAddULLPtrs = 3
 Result of A::A1::A2::A3::NestedNamespaceIntOneArg = 14
 ======================================================
 Running through TMethodCall...
@@ -32,4 +38,10 @@ p=3
 Result of FloatPtrOneArg = 3.000000
 Double32PtrOneArg(int p, float f, double* d).
 Result of A::Double32TPtrThreeArgs = -1.000000
+AddIntPtrs(int *a, int* b).
+Result of A::AddIntPtrs = -5
+AddLLPtrs (long long* a, long long* b).
+Result of A::LLPtrAddLLPtrs = -3
+AddULLPtrs (unsigned long long* a, unsigned long long* b).
+Result of A::ULLPtrAddULLPtrs = 3
 Result of A::A1::A2::A3::NestedNamespaceIntOneArg = 14
