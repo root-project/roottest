@@ -5,6 +5,7 @@ import pytest
 from check_backend import *
 from check_cloned_actions import *
 from check_definepersample import *
+from check_explicit_api import *
 from check_friend_trees_alignment import *
 from check_friend_trees import *
 from check_histo_write import *
