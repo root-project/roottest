@@ -12,4 +12,8 @@ if(ROOT_pyroot_FOUND)
                     COPY_TO_BUILDDIR SmartPtr.C SmartPtr.h
                     PRECMD ${ROOT_root_CMD} -b -q -l -e .L\ SmartPtr.C+
                     ENVIRONMENT LEGACY_PYROOT=${legacy_pyroot})
+
+  ROOTTEST_ADD_TEST(universal_histogram_interface
+                    MACRO universal_histogram_interface_tests.py
+                    ENVIRONMENT LEGACY_PYROOT=${legacy_pyroot})
 endif()
