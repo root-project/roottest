@@ -65,6 +65,26 @@ ROOTTEST_ADD_TEST(simpleRead
                   OUTREF simpleRead.ref
                   DEPENDS simpleWriteRead)
 
+ROOTTEST_ADD_TEST(privacy-dict
+                  COMMAND ${ROOT_rootcling_CMD} -f privacy.dict.cc
+                          ${CMAKE_CURRENT_SOURCE_DIR}/privacy.hh
+                          ${CMAKE_CURRENT_SOURCE_DIR}/privacyLinkDef.h
+                  OUTREF privacyDict.oref
+                  ERRREF privacyDict.eref)
+
+ROOTTEST_GENERATE_DICTIONARY(privacy privacy.hh LINKDEF privacyLinkDef.h)
+
+ROOTTEST_ADD_TEST(privacy-load
+                  MACRO  privacyLoad.C
+                  OUTREF privacyLoad.oref
+                  ERRREF privacyLoad.eref
+                  DEPENDS ${GENERATE_DICTIONARY_TEST})
+
+ROOTTEST_ADD_TEST(privacy-interp
+                  MACRO  privacyInterp.C
+                  OUTREF privacyInterp.oref
+                  ERRREF privacyInterp.eref)
+
 ROOTTEST_GENERATE_REFLEX_DICTIONARY(classes classes.h  SELECTION sel.xml)
 
 ROOTTEST_ADD_TEST(simpleWriteRead

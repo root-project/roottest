@@ -1,0 +1,18 @@
+
+Processing /home/pcanal/root_working/code/root/roottest/root/io/uniquePointer/privacyInterp.C...
+Data member list for privacy::test
+  filesystem::path persistent_path
+
+Data member list for privacy::test1
+  privacy::test1::Inner* unique_data
+  privacy::test1::Inner* ptr_data
+
+Data member list for privacy::test2
+  privacy::test1 persistent_data
+
+Data member list for privacy::test3
+  tuple<int,privacy::test3::Inner> persistent_data
+
+Data member list for privacy::test4
+
+(int) 0
