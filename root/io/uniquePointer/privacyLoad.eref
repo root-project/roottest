@@ -1,0 +1,6 @@
+Warning in <TStreamerInfo::Build>: test: filesystem::path has no streamer or dictionary, data member "persistent_path" will not be saved
+Error in <TStreamerInfo::Build>: test1: test1::Inner has no streamer or dictionary, data member unique_data will not be saved
+Error in <TStreamerInfo::Build>: test1: test1::Inner* has no streamer or dictionary, data member ptr_data will not be saved
+Error in <Load>: Could not declare alternate type for tuple<int,test3::Inner> since test3::Inner (or one of its context) is private or protected
+Warning in <TClass::Init>: no dictionary for class tuple<int,test3::Inner> is available
+Warning in <TStreamerInfo::Build>: test3: tuple<int,test3::Inner> has no streamer or dictionary, data member "persistent_data" will not be saved
