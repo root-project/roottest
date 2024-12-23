@@ -17,10 +17,15 @@ int countIncludePaths()
    // Exclude from the test the builds with R as external package
    if (std::string::npos != includePath.find("RInside/include")) return 0;
 
-   // At most 10
+   int maxPaths = 10; // At most
+
+   // detect if -Dclingtest=ON, which adds extra paths:
+   // interpreter/cling/include, interpreter/llvm-project/clang/include, interpreter/llvm-project/llvm/tools/clang//include, interpreter/llvm-project/llvm/include, interpreter/llvm-project/llvm/include
+   if (std::string::npos != includePath.find("interpreter/cling/include"))
+      maxPaths += 5;
    auto nPaths = countSubstring(includePath, "-I");
-   if (nPaths > 10){
-      std::cerr << "The number of include paths is too high (>9) " << nPaths
+   if (nPaths > maxPaths) {
+      std::cerr << "The number of include paths is too high (" << nPaths << ">" << maxPaths << ") "
                 << ". The number of \"-I\"s has been counted in the include path of ROOT (gSystem->GetIncludePath()=" << includePath << ")." << std::endl;
       return nPaths;
    }
