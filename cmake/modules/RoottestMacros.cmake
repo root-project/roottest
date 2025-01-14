@@ -1120,7 +1120,14 @@ function(ROOTTEST_ADD_UNITTEST_DIR)
 
   add_executable(${binary} ${unittests_SRC})
   target_include_directories(${binary} PRIVATE ${GTEST_INCLUDE_DIR})
-  target_link_libraries(${binary} gtest gtest_main ${libraries})
+  if(TARGET GTest::gtest AND TARGET GTest::gtest_main)
+    # Canonical target names since CMake 3.20, and also now used in ROOT:
+    target_link_libraries(${binary} GTest::gtest GTest::gtest_main ${libraries})
+  else()
+    # Fallback solution, which just names the libraries. Might lead to undefined symbol
+    # errors if the libraries are not found:
+    target_link_libraries(${binary} gtest gtest_main ${libraries})
+  endif()
 
   if(MSVC AND DEFINED ROOT_SOURCE_DIR)
     if(TARGET ROOTStaticSanitizerConfig)
