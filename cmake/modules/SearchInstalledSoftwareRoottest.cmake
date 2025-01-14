@@ -1,6 +1,6 @@
 include(ExternalProject)
 
-if(NOT TARGET gtest)
+if(NOT TARGET GTest::gtest AND NOT TARGET gtest)
 
   set(_gtest_byproduct_binary_dir
     ${CMAKE_CURRENT_BINARY_DIR}/googletest-prefix/src/googletest-build)
@@ -94,7 +94,7 @@ if(NOT TARGET gtest)
   set_property(TARGET gmock PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}/${CMAKE_STATIC_LIBRARY_PREFIX}gmock${CMAKE_STATIC_LIBRARY_SUFFIX})
   set_property(TARGET gmock_main PROPERTY IMPORTED_LOCATION ${_G_LIBRARY_PATH}/${CMAKE_STATIC_LIBRARY_PREFIX}gmock_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-endif(NOT TARGET gtest)
+endif()
 
 #---Find timeout binary---------------------------------------------------------
 if(NOT MSVC)
