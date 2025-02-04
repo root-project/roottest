@@ -2,12 +2,18 @@
 Processing execSourceTypes.cxx+...
 The A[3] values are:
    1.5  2.6  3.7  
+Error in <UpdateFromRule>: For Old::fArrayWrongSize[3] the number of array elements in the rule (5) does not match the number in the StreamerElement (3)
+Error in <UpdateFromRule>: For Old::fArrayWrongSize[3] the number of array elements in the rule (5) does not match the number in the StreamerElement (3)
 Error in <TStreamerInfo::InsertArtificialElements>: For class Old in StreamerInfo -1 a rule has conflicting type for the source "double fSingle",
-   The TStreamerElement has memory type 5 (needed 8) :
-   type=read sourceClass="Old" targetClass="New" version="[1-]" source="double fSingle; " target="fDouble" code="{ std::cout << "ERROR: the rule for fDouble should not be run
+   The TStreamerElement onfile is "float fSingle" and already has memory i/o type 5 while the following rule needed 8:
+     type=read sourceClass="Old" targetClass="New" version="[1-]" source="double fSingle; " target="fDouble" code="{ std::cout << "ERROR: the rule for fDouble should not be run
 "; fDouble = onfile.fSingle * 3; }" 
 Warning in <TStreamerInfo::InsertArtificialElements>: For class Old in StreamerInfo -1 is missing the source data member `fArrayNew` when trying to apply the rule:
    type=read sourceClass="Old" targetClass="New" version="[1-]" source="A fArrayNew[3]; " target="fArrayNew" code="{ examine_array<A,3>(onfile.fArrayNew); for(size_t i = 0; i < 3; ++i) fArrayNew[i].f = onfile.fArrayNew[i].f; }" 
+Error in <TStreamerInfo::InsertArtificialElements>: For class Old in StreamerInfo -1 the source "int fArrayWrongSize[5]" can not be read.
+   The TStreamerElement onfile is "int fArrayWrongSize[3]" and the rule is
+     type=read sourceClass="Old" targetClass="New" version="[1-]" source="int fArrayWrongSize[5]; " target="fArrayWrongSize" code="{ std::cout << "ERROR: Rule with improper size of input array should not be run
+"; for(size_t i = 0; i < 3; ++i) fArrayWrongSize[i] = - onfile.fArrayWrongSize[i]; }" 
 The A value is: 1.2
 The B value is: 5.27183e-315
 The B value is: 1.3
@@ -71,4 +77,6 @@ The int[3] values are:
    111  112  113   and is correct.
 The int value is: 3 and is correct.
 The string value is: "input message" and is correct.
+The int[3] values are:
+   0  0  0   and is correct.
 (int) 0

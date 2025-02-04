@@ -58,6 +58,8 @@ struct Old
 
    std::string fString = "input message";
 
+   int fArrayWrongSize[3] = { 202, 204, 206 };
+
    Old() {
       Feed(fListImplicit, {"a1", "a2", "a3"});
       Feed(fListExplicit, {"b1", "b2", "b3"});
@@ -81,7 +83,7 @@ struct New
    double fSingle = 10.0;
    double fExtra  = 15.0;
    double fDouble = 20.0;
-   int fHitPattern[3] = {101, 102, 103};
+   int fHitPattern[3] = {0, 0, 0};
    int fHitCount = 2;
    B fValue;  // Using implicit conversion
    B fValueB; // Using explicit conversion from A to B
@@ -110,6 +112,8 @@ struct New
    std::list<std::string> fListImplicitExplicit;
 
    std::string fString;
+
+   int fArrayWrongSize[3] = { 0, 0, 0 };
 
    ~New()
    {
@@ -482,6 +486,10 @@ void CopyTo(const TList &input, std::list<std::string> &output)
 #pragma read sourceClass="Old" targetClass="New" source="std::string fString;" target="fString"  version="[1-]" \
   code="{ fString = onfile.fString; }";
 
+// Improper array size for input variable, ideally this rule should not be run at all.
+#pragma read sourceClass="Old" targetClass="New" source="int fArrayWrongSize[5];" target="fArrayWrongSize"  version="[1-]" \
+  code="{ std::cout << \"ERROR: Rule with improper size of input array should not be run\n\"; for(size_t i = 0; i < 3; ++i) fArrayWrongSize[i] = - onfile.fArrayWrongSize[i]; }";
+
 #endif
 
 void writefile(const char *filename)
@@ -546,6 +554,8 @@ int readfile(const char *filename = "sourcetypes.root")
    res = res && check(n->fHitCount, 3);
 
    res = res && check(n->fString, "input message");
+
+   res = res && check_array<3>(n->fArrayWrongSize, std::vector<int>{0, 0, 0});
 
    return !res; // 0 is success.
 }
