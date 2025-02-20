@@ -1,5 +1,5 @@
 ///
-/// Used to generate http://root.cern/files/ttree_read_imt.root
+/// Used to generate http://root-test.web.cern.ch/files/ttree_read_imt.root
 #include "TFile.h"
 #include "TRandom.h"
 #include "TTree.h"
