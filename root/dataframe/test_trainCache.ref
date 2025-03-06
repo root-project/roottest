@@ -49,6 +49,6 @@ Cached Reading.....................: 332 bytes in 1 transactions
 Reading............................: 0 bytes in 0 uncached transactions
 Readahead..........................: 256000 bytes with overhead = 3775 bytes
 Average transaction................: 0.332000 Kbytes
-Number of blocks in current cache..: 2, total size: 332
+Number of blocks in current cache..: 0, total size: 0
  ====> Bytes Read: 332
 (int) 0
