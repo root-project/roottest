@@ -235,10 +235,18 @@ ROOTTEST_ADD_TEST(read_leaves_nodict
                   EXEC ./read_leaves_nodict
                   DEPENDS ${GENERATE_EXECUTABLE_TEST} read_leaves)
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+# In debug mode RDataFrame warns when it needs to copy collection elements for reading
+ROOTTEST_ADD_TEST(test_readTotemNtuple
+                  MACRO test_readTotemNtuple.C
+                  COPY_TO_BUILDDIR Slimmed_TotemNTuple_9883.040.ntuple.root
+                  OUTREF test_readTotemNtupleDebug.ref)
+else()
 ROOTTEST_ADD_TEST(test_readTotemNtuple
                   MACRO test_readTotemNtuple.C
                   COPY_TO_BUILDDIR Slimmed_TotemNTuple_9883.040.ntuple.root
                   OUTREF test_readTotemNtuple.ref)
+endif()
 
 ROOTTEST_GENERATE_EXECUTABLE(test_progressiveCSV test_progressiveCSV.cxx LIBRARIES ${DFLIBRARIES})
 ROOTTEST_ADD_TEST(test_progressiveCSV
