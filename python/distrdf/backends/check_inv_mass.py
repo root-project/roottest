@@ -16,7 +16,7 @@ class TestDaskHistograms:
         """
         
         treename = "data"
-        files = ["http://root.cern/files/teaching/CMS_Open_Dataset.root", ]
+        files = ["http://root-eos.web.cern.ch/files/teaching/CMS_Open_Dataset.root", ]
         if backend == "dask":
             RDataFrame = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame
             rdf = RDataFrame(treename, files, npartitions=5, daskclient=connection)
@@ -52,7 +52,7 @@ class TestDaskHistograms:
     def build_rootrdf_graph(self):
         """Create an RDF graph with a fixed set of operations and return it."""
         treename = "data"
-        files = ["http://root.cern/files/teaching/CMS_Open_Dataset.root", ]
+        files = ["http://root-eos.web.cern.ch/files/teaching/CMS_Open_Dataset.root", ]
         rdf = ROOT.RDataFrame(treename, files)
 
         # Define the analysis cuts
