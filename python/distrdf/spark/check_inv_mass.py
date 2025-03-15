@@ -15,7 +15,7 @@ class TestSparkHistograms:
         Create a DistRDF graph with a fixed set of operations and return it.
         """
         treename = "data"
-        files = ["http://root.cern/files/teaching/CMS_Open_Dataset.root", ]
+        files = ["http://root-eos.web.cern.ch/files/teaching/CMS_Open_Dataset.root", ]
         rdf = Spark.RDataFrame(treename, files, npartitions=5, sparkcontext=connection)
 
         # Define the analysis cuts
@@ -46,7 +46,7 @@ class TestSparkHistograms:
     def build_rootrdf_graph(self):
         """Create an RDF graph with a fixed set of operations and return it."""
         treename = "data"
-        files = ["http://root.cern/files/teaching/CMS_Open_Dataset.root", ]
+        files = ["http://root-eos.web.cern.ch/files/teaching/CMS_Open_Dataset.root", ]
         rdf = ROOT.RDataFrame(treename, files)
 
         # Define the analysis cuts
