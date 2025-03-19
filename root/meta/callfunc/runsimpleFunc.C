@@ -91,6 +91,18 @@ namespace A {
       printf("Double32PtrOneArg(int p, float f, double* d).\n");
       return new Double32_t(p + f - *d);
    }
+   int AddIntPtrs (int* a, int* b) {
+      printf("AddIntPtrs(int *a, int* b).\n");
+      return *a + *b;
+   }
+   long long* LLPtrAddLLPtrs (long long* a, long long* b) {
+      printf("AddLLPtrs (long long* a, long long* b).\n");
+      return new long long (*a + *b);
+   }
+   unsigned long long* ULLPtrAddULLPtrs (unsigned long long* a, unsigned long long* b) {
+      printf("AddULLPtrs (unsigned long long* a, unsigned long long* b).\n");
+      return new unsigned long long (*a + *b);
+   }
 }
 
 namespace A {
@@ -163,9 +175,30 @@ void runAllThroughTInterpreterInterfaces() {
    gInterpreter->CallFunc_SetFuncProto(mc, namespaceA, "Double32TPtrThreeArgs", "int, float, double *", &offset);
    gInterpreter->CallFunc_SetArg(mc, (Long_t)1+1);
    gInterpreter->CallFunc_SetArg(mc, (Double_t)1.-1);
-   gInterpreter->CallFunc_SetArg(mc, (ULong64_t)new double(3.000));
+   gInterpreter->CallFunc_SetArg(mc, new double(3.000));
    result_long = gInterpreter->CallFunc_ExecInt(mc, /* void* */0);
    printf("Result of A::Double32TPtrThreeArgs = %f\n", *reinterpret_cast<Double32_t*>(result_long));
+
+   // Run int A::AddIntPtrs (int* a, int* b)
+   gInterpreter->CallFunc_SetFuncProto(mc, namespaceA, "AddIntPtrs", "int*, int*", &offset);
+   gInterpreter->CallFunc_SetArg(mc, new int(-2));
+   gInterpreter->CallFunc_SetArg(mc, new int(-3));
+   result_long = gInterpreter->CallFunc_ExecInt(mc, /* void* */0);
+   printf("Result of A::AddIntPtrs = %ld\n", result_long);
+
+   // Run long long* LLPtrAddLLPtrs (long long* a, long long* b)
+   gInterpreter->CallFunc_SetFuncProto(mc, namespaceA, "LLPtrAddLLPtrs", "long long*, long long*", &offset);
+   gInterpreter->CallFunc_SetArg(mc, new long long(-1));
+   gInterpreter->CallFunc_SetArg(mc, new long long(-2));
+   result_long = gInterpreter->CallFunc_ExecInt(mc, /* void* */0);
+   printf("Result of A::LLPtrAddLLPtrs = %lld\n", *reinterpret_cast<long long *>(result_long));
+
+   // Run unsigned long long* ULLPtrAddULLPtrs (unsigned long long* a, unsigned long long* b)
+   gInterpreter->CallFunc_SetFuncProto(mc, namespaceA, "ULLPtrAddULLPtrs", "unsigned long long*, unsigned long long*", &offset);
+   gInterpreter->CallFunc_SetArg(mc, new unsigned long long(1));
+   gInterpreter->CallFunc_SetArg(mc, new unsigned long long(2));
+   result_long = gInterpreter->CallFunc_ExecInt(mc, /* void* */0);
+   printf("Result of A::ULLPtrAddULLPtrs = %llu\n", *reinterpret_cast<unsigned long long*>(result_long));
 
    // Run A::A1::A2::A3::NestedNamespaceIntOneArg (int return)
    ClassInfo_t* namespaceA3 = gInterpreter->ClassInfo_Factory("A::A1::A2::A3");
@@ -227,6 +260,21 @@ void runAllThroughTMethodCall() {
    method = TMethodCall("A::Double32TPtrThreeArgs", "1+1, 1.-1, new double(3.000)");
    method.Execute(result_long);
    printf("Result of A::Double32TPtrThreeArgs = %f\n", *reinterpret_cast<Double32_t*>(result_long));
+
+   // Run int A::AddIntPtrs (int* a, int* b)
+   method = TMethodCall("A::AddIntPtrs", "new int(-2), new int(-3)");
+   method.Execute(result_long);
+   printf("Result of A::AddIntPtrs = %ld\n", result_long);
+
+   // Run long long* AddLLPtrs (long long* a, long long* b)
+   method = TMethodCall("A::LLPtrAddLLPtrs", "new long long (-1), new long long(-2)");
+   method.Execute(result_long);
+   printf("Result of A::LLPtrAddLLPtrs = %lld\n", *reinterpret_cast<long long*>(result_long));
+
+   // Run unsigned long long* ULLPtrAddULLPtrs (unsigned long long* a, unsigned long long* b)
+   method = TMethodCall("A::ULLPtrAddULLPtrs", "new unsigned long long(1), new unsigned long long(2)");
+   method.Execute(result_long);
+   printf("Result of A::ULLPtrAddULLPtrs = %llu\n", *reinterpret_cast<unsigned long long*>(result_long));
 
    // Run A::A1::A2::A3::NestedNamespaceIntOneArg (int return)
    method.InitWithPrototype("A::A1::A2::A3::NestedNamespaceIntOneArg", "int");
