@@ -62,6 +62,7 @@
 //
 ////////////////////////////////////////////////////////////////////////
 
+#include "TLine.h"
 #include "TRandom.h"
 #include "TDirectory.h"
 #include "TAttLine.h"
