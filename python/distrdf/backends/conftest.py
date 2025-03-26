@@ -11,6 +11,7 @@ from dask.distributed import Client, LocalCluster
 import pyspark
 import ROOT
 
+from pathlib import Path
 
 def create_dask_connection():
     connection = Client(LocalCluster(
@@ -23,8 +24,10 @@ def cleanup_dask_connection(connection):
 
 
 def create_spark_connection():
-    conf = {"spark.master": "local[2]", "spark.driver.memory": "4g",
-            "spark.app.name": "roottest-distrdf-spark"}
+    conf = {"spark.app.name": "roottest-distrdf-spark",
+            "spark.master": "spark://127.0.0.1:7077",
+            "spark.cores.max": "2",
+            "spark.local.dir": str(Path().absolute())}
     sparkconf = pyspark.SparkConf().setAll(conf.items())
     connection = pyspark.SparkContext(conf=sparkconf)
     return connection

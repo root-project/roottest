@@ -2,6 +2,8 @@ import pytest
 
 import ROOT
 
+from pathlib import Path
+DATA_DIR = str(Path().absolute().parent / "data/ttree")
 
 class TestMissingValues:
     """Tests of dealing with missing values in the input dataset."""
@@ -13,9 +15,9 @@ class TestMissingValues:
         """
         filenames = [
             # 10k entries, defining b1, b2, b3 (Int_t), all always equal to 42
-            f"../data/ttree/distrdf_roottest_check_rungraphs.root",
+            f"{DATA_DIR}/distrdf_roottest_check_rungraphs.root",
             # 100 entries defining 'v' (Double_t)
-            f"../data/ttree/distrdf_roottest_check_reducer_merge_1.root",
+            f"{DATA_DIR}/distrdf_roottest_check_reducer_merge_1.root",
         ]
         connection, _ = payload
         df = ROOT.RDataFrame("tree", filenames, executor=connection)

@@ -4,6 +4,9 @@ import ROOT
 from DistRDF.Backends import Dask
 
 
+from pathlib import Path
+DATA_DIR = str(Path().absolute().parent / "data/ttree")
+
 def check_histograms(h_parent, h_friend):
     """Check equality of histograms in tests"""
     # Both trees have the same number of entries, i.e. 10000
@@ -22,8 +25,8 @@ def check_histograms(h_parent, h_friend):
 class TestDaskFriendTrees:
     """Integration tests to check the working of DistRDF with friend trees"""
 
-    main_filename = "../data/ttree/distrdf_roottest_check_friend_trees_main.root"
-    friend_filename = "../data/ttree/distrdf_roottest_check_friend_trees_friend.root"
+    main_filename = f"{DATA_DIR}/distrdf_roottest_check_friend_trees_main.root"
+    friend_filename = f"{DATA_DIR}/distrdf_roottest_check_friend_trees_friend.root"
 
     def test_tchain_with_friend_tchain_histo(self, payload):
         """
@@ -84,9 +87,9 @@ class TestDaskFriendTrees:
         chainFriend = ROOT.TChain()
 
         chain.Add(
-            "../data/ttree/distrdf_roottest_check_friend_trees_7584.root/randomNumbers")
+            f"{DATA_DIR}/distrdf_roottest_check_friend_trees_7584.root/randomNumbers")
         chainFriend.Add(
-            "../data/ttree/distrdf_roottest_check_friend_trees_7584.root/randomNumbersBis")
+            f"{DATA_DIR}/distrdf_roottest_check_friend_trees_7584.root/randomNumbersBis")
 
         chain.AddFriend(chainFriend, "myfriend")
 

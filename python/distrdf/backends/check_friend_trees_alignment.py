@@ -4,10 +4,13 @@ import ROOT
 from DistRDF.Backends import Dask
 
 
+from pathlib import Path
+DATA_DIR = str(Path().absolute().parent / "data/ttree")
+
 TREENAMES = [
     f"distrdf_roottest_check_friend_trees_alignment_{i}" for i in range(1, 7)]
 FILENAMES = [
-    f"../data/ttree/distrdf_roottest_check_friend_trees_alignment_{i}.root" for i in range(1, 7)]
+    f"{DATA_DIR}/distrdf_roottest_check_friend_trees_alignment_{i}.root" for i in range(1, 7)]
 
 
 def create_chain():

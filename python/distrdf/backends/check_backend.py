@@ -4,6 +4,9 @@ import pytest
 import DistRDF
 import ROOT
 
+from pathlib import Path
+DATA_DIR = str(Path().absolute().parent / "data/ttree")
+
 
 class TestBackendInit:
     """
@@ -132,7 +135,7 @@ class TestEmptyTreeError:
         connection, _ = payload
         # Create an RDataFrame from a file with an empty tree
         rdf = ROOT.RDataFrame(
-            "empty", "../data/ttree/empty.root", executor=connection)
+            "empty", f"{DATA_DIR}/empty.root", executor=connection)
         histo = rdf.Histo1D(("empty", "empty", 10, 0, 10), "mybranch")
 
         # Get entries in the histogram, raises error
@@ -149,10 +152,10 @@ class TestEmptyTreeError:
         connection, _ = payload
         treenames = [f"tree_{i}" for i in range(3)]
         filenames = [
-            f"../data/ttree/distrdf_roottest_check_backend_{i}.root" for i in range(3)]
+            f"{DATA_DIR}/distrdf_roottest_check_backend_{i}.root" for i in range(3)]
 
         empty_treename = "empty"
-        empty_filename = "../data/ttree/empty.root"
+        empty_filename = f"{DATA_DIR}/empty.root"
 
         # Create the final dataset with some empty trees
         final_treenames = []
@@ -185,7 +188,7 @@ class TestWithRepeatedTree:
         """
         connection, _ = payload
         treename = "tree_0"
-        filename = "../data/ttree/distrdf_roottest_check_backend_0.root"
+        filename = f"{DATA_DIR}/distrdf_roottest_check_backend_0.root"
         filenames = [filename] * 3
 
         rdf = ROOT.RDataFrame(treename, filenames, executor=connection)
