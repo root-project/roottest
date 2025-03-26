@@ -3,6 +3,9 @@ import pytest
 
 import ROOT
 
+from pathlib import Path
+DATA_DIR = str(Path().absolute().parent / "data/ttree")
+
 
 class TestAsNumpy:
     """
@@ -18,7 +21,7 @@ class TestAsNumpy:
         """
 
         datasetname = "Events"
-        filename = "../data/ttree/distrdf_roottest_check_cloned_actions_asnumpy.root"
+        filename = f"{DATA_DIR}/distrdf_roottest_check_cloned_actions_asnumpy.root"
         connection, _ = payload
         distrdf = ROOT.RDataFrame(datasetname, filename, executor=connection, npartitions=nparts)
 

@@ -4,12 +4,16 @@ import ROOT
 
 import DistRDF
 
+from pathlib import Path
+DATA_DIR = str(Path().absolute().parent / "data/ttree")
+
+
 class TestDefinePerSample:
     """Check the working of merge operations in the reducer function."""
 
     samples = ["sample1", "sample2", "sample3"]
     filenames = [
-        f"../data/ttree/distrdf_roottest_definepersample_{sample}.root" for sample in samples]
+        f"{DATA_DIR}/distrdf_roottest_definepersample_{sample}.root" for sample in samples]
     maintreename = "Events"
 
     def test_definepersample_simple(self, payload):

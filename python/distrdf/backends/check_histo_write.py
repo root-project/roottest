@@ -6,6 +6,9 @@ import ROOT
 from DistRDF.Backends import Dask
 
 
+from pathlib import Path
+DATA_DIR = str(Path().absolute().parent / "data/ttree")
+
 class TestDaskHistoWrite:
     """
     Integration tests to check writing histograms to a `TFile` distributedly.
@@ -26,7 +29,7 @@ class TestDaskHistoWrite:
         with ROOT.TFile("out_file.root", "recreate") as outfile:
             # We can reuse the same dataset from another test
             treename = "T"
-            filename = "../data/ttree/distrdf_roottest_check_friend_trees_main.root"
+            filename = f"{DATA_DIR}/distrdf_roottest_check_friend_trees_main.root"
             # Create a DistRDF RDataFrame with the parent and the friend trees
             connection, _ = payload
             df = ROOT.RDataFrame(treename, filename, executor=connection)

@@ -4,6 +4,8 @@ import ROOT
 
 import DistRDF
 
+from pathlib import Path
+DATA_DIR = str(Path().absolute().parent / "data/ttree")
 
 class TestExplicitAPI:
     """
@@ -38,7 +40,7 @@ class TestExplicitAPI:
         """
         # Create a test file for processing
         treename = "tree"
-        filename = "../data/ttree/distrdf_roottest_check_rungraphs.root"
+        filename = f"{DATA_DIR}/distrdf_roottest_check_rungraphs.root"
         nentries = 10000
         connection, backend = payload
         if backend == "dask":
