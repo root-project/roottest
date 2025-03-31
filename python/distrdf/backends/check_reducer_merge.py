@@ -9,6 +9,17 @@ import ROOT
 from DistRDF.Backends import Dask
 
 
+from pathlib import Path
+DATA_DIR = str(Path().absolute().parent / "data/ttree")
+
+def get_root_dir():
+    try:
+        from pyspark.files import SparkFiles
+        raise RuntimeError(SparkFiles.getRootDirectory())
+    except:
+        pass
+
+
 class TestReducerMerge:
     """Check the working of merge operations in the reducer function."""
 
@@ -312,7 +323,7 @@ class TestReducerMerge:
         npy = npy_lazy.GetValue()
         self.check_npy_dict(npy)
 
-    def check_snapshot_df(self, snapdf, snapfilename):
+    def check_snapshot_df(self, snapdf, snapfilename, final_dir):
         # Count the rows in the snapshotted dataframe
         snapcount = snapdf.Count()
 
@@ -321,9 +332,9 @@ class TestReducerMerge:
         # Retrieve list of file from the snapshotted dataframe
         input_files = snapdf.proxied_node.inputfiles
         # Create list of supposed filenames for the intermediary files
-        tmp_files = [f"{snapfilename}_0.root", f"{snapfilename}_1.root"]
+        tmp_files = [f"{final_dir}/{snapfilename}_0.root", f"{final_dir}/{snapfilename}_1.root"]
         # Check that the two lists are the same
-        assert input_files == tmp_files
+        assert input_files == tmp_files, f"{input_files}!={tmp_files}"
         # Check that the intermediary .root files were created with the right
         # names, then remove them because they are not necessary
         for filename in tmp_files:
@@ -334,6 +345,9 @@ class TestReducerMerge:
         """Test support for `Snapshot` in distributed backend"""
         # A simple dataframe with ten sequential numbers from 0 to 9
         connection, _ = payload
+        spark_local_dir = connection.getConf().get("spark.local.dir")
+        spark_app_id = connection.getConf().get("spark.app.id")
+        final_dir = os.path.join(spark_local_dir, spark_app_id, "0")
         df = ROOT.RDataFrame(10, executor=connection)
 
         df = df.Define("x", "rdfentry_")
@@ -341,7 +355,7 @@ class TestReducerMerge:
         # Snapshot to two files, build a ROOT.TChain with them and retrieve a
         # Dask.RDataFrame
         snapdf = df.Snapshot("snapTree", "snapFile.root")
-        self.check_snapshot_df(snapdf, "snapFile")
+        self.check_snapshot_df(snapdf, "snapFile", final_dir)
 
     def test_distributed_snapshot_columnlist(self, payload):
         """
@@ -360,10 +374,12 @@ class TestReducerMerge:
         )
         expectedcolumns = ["a", "b"]
         df.Snapshot("snapTree_columnlist", "distrdf_dask_snapfile_columnlist.root", expectedcolumns)
-
+        spark_local_dir = connection.getConf().get("spark.local.dir")
+        spark_app_id = connection.getConf().get("spark.app.id")
+        final_dir = os.path.join(spark_local_dir, spark_app_id, "0")
         # Create a traditional RDF from the snapshotted files to retrieve the
         # list of columns
-        tmp_files = ["distrdf_dask_snapfile_columnlist_0.root", "distrdf_dask_snapfile_columnlist_1.root"]
+        tmp_files = [f"{final_dir}/distrdf_dask_snapfile_columnlist_0.root", f"{final_dir}/distrdf_dask_snapfile_columnlist_1.root"]
         rdf = ROOT.RDataFrame("snapTree_columnlist", tmp_files)
         snapcolumns = [str(column) for column in rdf.GetColumnNames()]
 
@@ -376,6 +392,9 @@ class TestReducerMerge:
         """Test that `Snapshot` can be still called lazily in distributed mode"""
         # A simple dataframe with ten sequential numbers from 0 to 9
         connection, _ = payload
+        spark_local_dir = connection.getConf().get("spark.local.dir")
+        spark_app_id = connection.getConf().get("spark.app.id")
+        final_dir = os.path.join(spark_local_dir, spark_app_id, "0")
         df = ROOT.RDataFrame(10, executor=connection)
         df = df.Define("x", "rdfentry_")
 
@@ -386,7 +405,7 @@ class TestReducerMerge:
         assert snap_lazy.proxied_node.value is None
 
         snapdf = snap_lazy.GetValue()
-        self.check_snapshot_df(snapdf, "snapFile_lazy")
+        self.check_snapshot_df(snapdf, "snapFile_lazy", final_dir)
 
     def test_redefine_one_column(self, payload):
         """Test that values of one column can be properly redefined."""
@@ -409,7 +428,7 @@ class TestReducerMerge:
 
         # Create dataset with fixed series of entries
         treename = "tree"
-        filename = "../data/ttree/distrdf_roottest_check_reducer_merge_1.root"
+        filename = f"{DATA_DIR}/distrdf_roottest_check_reducer_merge_1.root"
 
         connection, _ = payload
         df = ROOT.RDataFrame(treename, filename, executor=connection)
@@ -424,7 +443,7 @@ class TestReducerMerge:
         """Test support for the Stats action."""
         # Create dataset with fixed series of entries
         treename = "tree"
-        filename = "../data/ttree/distrdf_roottest_check_reducer_merge_1.root"
+        filename = f"{DATA_DIR}/distrdf_roottest_check_reducer_merge_1.root"
 
         connection, _ = payload
         df = ROOT.RDataFrame(treename, filename, executor=connection)

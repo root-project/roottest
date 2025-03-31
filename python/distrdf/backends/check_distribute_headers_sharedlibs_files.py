@@ -6,6 +6,11 @@ import os
 import pytest
 import math
 
+from pathlib import Path
+FILES_DIR = str(Path().absolute().parent / "test_files")
+HEADERS_DIR = str(Path().absolute().parent / "test_headers")
+LIBS_DIR = str(Path().absolute().parent / "test_shared_libs")
+
 
 class TestInterfaceHeadersLibrariesFiles:
     """
@@ -17,26 +22,26 @@ class TestInterfaceHeadersLibrariesFiles:
             [
                 "g++",
                 "-fPIC",
-                "../test_shared_libs/mysource6.cpp",
+                f"{LIBS_DIR}/mysource6.cpp",
                 "-shared",
                 "-o",
-                "../test_shared_libs/mylib6.so",
+                f"{LIBS_DIR}/mylib6.so",
             ]
         )
         subprocess.run(
             [
                 "g++",
                 "-fPIC",
-                "../test_shared_libs/mysource7.cpp",
+                f"{LIBS_DIR}/mysource7.cpp",
                 "-shared",
                 "-o",
-                "../test_shared_libs/mylib7.so",
+                f"{LIBS_DIR}/mylib7.so",
             ]
         )
 
     def _remove_shared_libs(self):
-        os.remove("../test_shared_libs/mylib6.so")
-        os.remove("../test_shared_libs/mylib7.so")
+        os.remove(f"{LIBS_DIR}/mylib6.so")
+        os.remove(f"{LIBS_DIR}/mylib7.so")
 
     def _check_rdf_histos_5(self, rdf):
         # This filters out all numbers less than 5
@@ -92,7 +97,7 @@ class TestInterfaceHeadersLibrariesFiles:
         rdf = ROOT.RDataFrame(10, executor=connection)
 
         ROOT.RDF.Experimental.Distributed.DistributeHeaders(
-            "../test_headers/header1.hxx"
+            f"{HEADERS_DIR}/header1.hxx"
         )
 
         self._check_rdf_histos_5(rdf)
@@ -103,7 +108,7 @@ class TestInterfaceHeadersLibrariesFiles:
         specified in `DistRDF.include_headers()` so references between headers
         are correctly solved.
         """
-        header_folder = "../test_headers/headers_folder"
+        header_folder = f"{HEADERS_DIR}/headers_folder"
 
         # Create an RDataFrame with 100 integers from 0 to 99
         rdf = ROOT.RDataFrame(100, executor=connection)
@@ -135,10 +140,10 @@ class TestInterfaceHeadersLibrariesFiles:
         rdf = ROOT.RDataFrame(15, executor=connection)
 
         ROOT.RDF.Experimental.Distributed.DistributeHeaders(
-            "../test_shared_libs/myheader7.h"
+            f"{LIBS_DIR}/myheader7.h"
         )
         ROOT.RDF.Experimental.Distributed.DistributeSharedLibs(
-            "../test_shared_libs/mylib7.so"
+            f"{LIBS_DIR}/mylib7.so"
         )
         self._check_rdf_histos_7(rdf)
 
@@ -150,10 +155,10 @@ class TestInterfaceHeadersLibrariesFiles:
         rdf = ROOT.RDataFrame(15, executor=connection)
 
         ROOT.RDF.Experimental.Distributed.DistributeHeaders(
-            "../test_shared_libs/myheader6.h"
+            f"{LIBS_DIR}/myheader6.h"
         )
         ROOT.RDF.Experimental.Distributed.DistributeSharedLibs(
-            "../test_shared_libs/")
+            f"{LIBS_DIR}/")
         self._check_rdf_histos_6(rdf)
 
     def _distribute_multiple_shared_lib_check_filter_and_histo(
@@ -166,10 +171,10 @@ class TestInterfaceHeadersLibrariesFiles:
         rdf = ROOT.RDataFrame(15, executor=connection)
 
         ROOT.RDF.Experimental.Distributed.DistributeHeaders(
-            ["../test_shared_libs/myheader7.h", "../test_shared_libs/myheader6.h"]
+            [f"{LIBS_DIR}/myheader7.h", f"{LIBS_DIR}/myheader6.h"]
         )
         ROOT.RDF.Experimental.Distributed.DistributeSharedLibs(
-            ["../test_shared_libs/mylib7.so", "../test_shared_libs/mylib6.so"]
+            [f"{LIBS_DIR}/mylib7.so", f"{LIBS_DIR}/mylib6.so"]
         )
         self._check_rdf_histos_6(rdf)
         self._check_rdf_histos_7(rdf)
@@ -184,10 +189,10 @@ class TestInterfaceHeadersLibrariesFiles:
         rdf = ROOT.RDataFrame(15, executor=connection)
 
         ROOT.RDF.Experimental.Distributed.DistributeHeaders(
-            ["../test_shared_libs/myheader7.h", "../test_shared_libs/myheader6.h"]
+            [f"{LIBS_DIR}/myheader7.h", f"{LIBS_DIR}/myheader6.h"]
         )
         ROOT.RDF.Experimental.Distributed.DistributeSharedLibs(
-            "../test_shared_libs/")
+            f"{LIBS_DIR}/")
         self._check_rdf_histos_6(rdf)
         self._check_rdf_histos_7(rdf)
 
@@ -198,7 +203,7 @@ class TestInterfaceHeadersLibrariesFiles:
         rdf = ROOT.RDataFrame(10, executor=connection)
 
         ROOT.RDF.Experimental.Distributed.DistributeFiles(
-            "../test_files/file.txt")
+            f"{FILES_DIR}/file.txt")
 
         if backend == "dask":
 
@@ -233,7 +238,7 @@ class TestInterfaceHeadersLibrariesFiles:
         rdf = ROOT.RDataFrame(10, executor=connection)
 
         ROOT.RDF.Experimental.Distributed.DistributeFiles(
-            ["../test_files/file.txt", "../test_files/file_1.txt"]
+            [f"{FILES_DIR}/file.txt", f"{FILES_DIR}/file_1.txt"]
         )
 
         if backend == "dask":
