@@ -71,6 +71,11 @@ void Test(Int_t range) {
       h3->GetXaxis()->SetRange(range , 10 + 1 - range);
       h3->GetYaxis()->SetRange(range , 20 + 1 - range);
       h3->GetZaxis()->SetRange(range , 30 + 1 - range);
+      if (range == 1) {
+         h3->GetXaxis()->ResetBit(TAxis::kAxisRange);
+         h3->GetYaxis()->ResetBit(TAxis::kAxisRange);
+         h3->GetZaxis()->ResetBit(TAxis::kAxisRange);
+      }
    }
 
    // Project3D wants them in inverse order :-(
