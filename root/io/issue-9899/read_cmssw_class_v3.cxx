@@ -129,10 +129,8 @@ struct PersHighData {
    }
    int check(int slide = 1) {
       int res = 0;
-#ifdef FIXED_ISSUE_9924
       for(auto &d : fPersLowData)
          res += d.check(slide, 0);
-#endif
       for(auto &d : fLowData)
          res += d.check(slide * BIT(6), 10);
       return res;
