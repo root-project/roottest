@@ -1,0 +1,5 @@
+
+Processing /Users/pcanal/root_working/roottest/root/meta/naming/issue-18363/size_tTemplateNameTest.C...
+Collection name='TObjArray', class='TObjArray', size=16
+ OBJ: TProtoClass	reco::PFRecHitSoALayout<128,false>	
+ OBJ: TProtoClass	reco::PFRecHitSoALayout<128,false>::ViewTemplateFreeParams<128,false,true,true>	
