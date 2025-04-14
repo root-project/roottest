@@ -18,7 +18,7 @@ endif()
 ROOTTEST_GENERATE_EXECUTABLE(IoBigEventGenerator
   ${CMAKE_CURRENT_SOURCE_DIR}/IoBigEventGenerator.cxx
   LIBRARIES Core RIO Net Tree Hist MathCore IoBigEventGeneration
-  DEPENDS IoBigEventGeneration MathCore
+  DEPENDS IoBigEventGeneration
   FIXTURES_SETUP io-bigevent-generator)
 
 ROOTTEST_ADD_TEST(write
