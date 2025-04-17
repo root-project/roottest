@@ -1,0 +1,4 @@
+<lcgdict>
+ <class name="reco::PFRecHitSoA"/>
+ <class name="reco::PFRecHitSoA::View"/>
+</lcgdict>
