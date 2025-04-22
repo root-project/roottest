@@ -5,5 +5,7 @@
 #
 #-------------------------------------------------------------------------------
 if(geom)
-  ROOTTEST_ADD_OLDTEST()
+  if(davix)
+    ROOTTEST_ADD_OLDTEST()
+  endif()
 endif()
