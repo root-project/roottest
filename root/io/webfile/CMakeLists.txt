@@ -4,8 +4,6 @@
 # define a CTest test that calls 'make' in ${CMAKE_CURRENT_SOURCE_DIR}
 #
 #-------------------------------------------------------------------------------
-if(geom)
-  if(davix)
-    ROOTTEST_ADD_OLDTEST()
-  endif()
+if(geom AND davix)
+  ROOTTEST_ADD_OLDTEST()
 endif()
