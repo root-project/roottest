@@ -95,7 +95,7 @@ if(${LZ4_VERSION} VERSION_LESS "1.7.5")
 elseif(${LZ4_VERSION} VERSION_GREATER_EQUAL "1.7.5")
    ROOTTEST_ADD_TEST(merged-lz4
                   PRECMD ${ROOT_hadd_CMD} -f404 mlz4file1-4.root mlz4file1-2.root mlz4file3-4.root
-                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testMergedFile.C(\"mlz4file1-4.root\",404,5410,5)"
+                  COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testMergedFile.C(\"mlz4file1-4.root\",404,5415,5)"
                   DEPENDS datagen-hadd-mlz4file12
                   DEPENDS datagen-hadd-mlz4file34)
 endif()
@@ -232,7 +232,7 @@ if(${compression_default} STREQUAL "zlib")
 
       ROOTTEST_ADD_TEST(simple-lz4-compr-level1
                      PRECMD ${ROOT_hadd_CMD} -f401 hsimple401.root hsimple.root
-                     COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple401.root\",25000,401,520005,5)"
+                     COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple401.root\",25000,401,520007,5)"
                      DEPENDS roottest-root-io-filemerger-hsimple)
    else()
       ROOTTEST_ADD_TEST(simple-default-compr-level9
@@ -340,7 +340,7 @@ if(${compression_default} STREQUAL "zlib")
          if(CMAKE_SYSTEM_PROCESSOR MATCHES aarch64)
             ROOTTEST_ADD_TEST(simple-lz4-compr-level9
                           PRECMD ${ROOT_hadd_CMD} -f409 hsimple409.root hsimple.root
-                          COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple409.root\",25000,409,516985,30)"
+                          COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple409.root\",25000,409,517004,30)"
                           DEPENDS roottest-root-io-filemerger-hsimple)
          else()
             ROOTTEST_ADD_TEST(simple-lz4-compr-level9
@@ -350,7 +350,7 @@ if(${compression_default} STREQUAL "zlib")
          endif()
          ROOTTEST_ADD_TEST(simple-lz4-compr-level1
                         PRECMD ${ROOT_hadd_CMD} -f401 hsimple401.root hsimple.root
-                        COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple401.root\",25000,401,520005,10)"
+                        COMMAND ${ROOT_root_CMD} -q -l -b "${CMAKE_CURRENT_SOURCE_DIR}/testSimpleFile.C(\"hsimple401.root\",25000,401,520007,10)"
                         DEPENDS roottest-root-io-filemerger-hsimple)
       endif()
 
