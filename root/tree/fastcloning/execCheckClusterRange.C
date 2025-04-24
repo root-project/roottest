@@ -122,7 +122,7 @@ int execCheckClusterRange()
    tm1->SetBranchStatus("v2", false);
    tm1->SetBranchStatus("v3", false);
 
-   auto m2 = new TMemFile("m2.root","RECREATE");
+   auto m2 = new TMemFile("m2.root","RECREATE", "", 0);
 
    // Cloning the merged file a second time.
    TTree *tm2 = tm1->CloneTree(-1,"fast");
