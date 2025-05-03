@@ -15,6 +15,10 @@ ROOTTEST_ADD_TEST(execFileMerger
                   MACRO execFileMerger.C
                   OUTREF references/execFileMerger.ref)
 
+ROOTTEST_ADD_TEST(execRNTupleMerge
+                  MACRO execRNTupleMerge.C
+                  OUTREF references/execRNTupleMerge.ref)
+
 # FIXME: Should be CTEST fixtures
 ROOTTEST_ADD_TEST(datagen-hadd-mfile12
                      COMMAND ${ROOT_hadd_CMD} -f mfile1-2.root mfile1.root mfile2.root
