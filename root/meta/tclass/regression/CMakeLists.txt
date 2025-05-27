@@ -11,6 +11,7 @@ if(ROOT_pyroot_FOUND)
                   MACRO execNormalizationInf.py
                   OUTREF execNormalizationInf.py.ref
                   ENVIRONMENT CLING_STANDARD_PCH=none
+                  CPPYY_API_PATH=none
                   CPPYY_BACKEND_LIBRARY=${CMAKE_BINARY_DIR}/lib/libcppyy_backend.so)
 endif()
 
