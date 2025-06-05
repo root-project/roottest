@@ -41,6 +41,9 @@ AutoDict_*.cxx
 *_dictContent.h
 *_dictUmbrella.h
 
+# vscode
+.vscode
+
 # Eclipse
 .project
 .pydevproject
