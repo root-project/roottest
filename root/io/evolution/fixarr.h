@@ -35,8 +35,6 @@ void read(const char *filename = "arr.root") {
    if (a) a->Print();
 };
 
-#ifdef __MAKECINT__
-#pragma link C++ function write;
-#pragma link C++ function read;
+#ifdef __ROOTCLING__
 #pragma link C++ class One+;
 #endif
