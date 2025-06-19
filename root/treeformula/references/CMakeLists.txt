@@ -5,7 +5,7 @@ ROOT_GENERATE_DICTIONARY(G__TreeFormulaReferencesGeneration
 ROOT_LINKER_LIBRARY(TreeFormulaReferencesGeneration
   ${CMAKE_CURRENT_SOURCE_DIR}/TreeFormulaReferencesGeneration.cxx
   G__TreeFormulaReferencesGeneration.cxx
-  LIBRARIES Core Tree Hist MathCore)
+  LIBRARIES ROOT::Core ROOT::Tree ROOT::Hist ROOT::MathCore)
 
 if(MSVC)
   add_custom_command(TARGET TreeFormulaReferencesGeneration POST_BUILD
