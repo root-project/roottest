@@ -1,13 +1,33 @@
 # This is a template for all makefiles.
 
 #Set the list of files to be deleted by clean (Targets can also be specified).:
-CLEAN_TARGETS += $(ALL_LIBRARIES) *.log mapvector.root
+CLEAN_TARGETS += $(ALL_LIBRARIES) *.log
 
 # Set the list of target to make while testing.  By default, mytest is the only target added.  If
 #  the name of the target is changed in the rules then the name should be changed accordingly in
 #  this list.
 
-TEST_TARGETS += embedstl pair  stlString mapvector secondindex
+TEST_TARGETS += embedstl pair  stlString secondindex
+
+ifeq ($(OS),Windows_NT)
+	TEST_TARGETS += mapvector
+	CLEAN_TARGETS += mapvector.root
+else
+	UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        TEST_TARGETS += mapvector
+		CLEAN_TARGETS += mapvector.root
+    endif
+    ifeq ($(UNAME_S),Darwin)
+		MACOSVERSION := $(shell sw_vers --productVersion)
+        ifneq ($(MACOSVERSION),26.0)
+            TEST_TARGETS += mapvector
+			CLEAN_TARGETS += mapvector.root
+        endif
+    endif
+endif
+
+
 #stlBrowse
 
 # Searched for Rules.mk in roottest/scripts
@@ -25,7 +45,7 @@ TEST_TARGETS += embedstl pair  stlString mapvector secondindex
 #  directory.
 
 ifeq ($(strip $(ROOTTEST_HOME)),)
-   export ROOTTEST_HOME := $(shell git rev-parse --show-toplevel)/
+   export ROOTTEST_HOME := $(shell git rev-parse --show-toplevel)/roottest/
    ifeq ($(strip $(ROOTTEST_HOME)),)
       export ROOTTEST_HOME := $(shell expr $(CURDIR) : '\(.*/roottest/\)')
    endif
@@ -77,7 +97,7 @@ embedstl: embedstl.log
 	$(TestDiff)
 
 mapvector.root: mapvector_C.$(DllSuf)
-	$(CMDECHO) $(CALLROOTEXE) -q -b -l mapvector.C+ > mapvector_root.build.log 2>&1
+	$(CMDECHO) $(CALLROOTEXE) -q -b -l mapvector.C+ > mapvector_root.build.log 2>&1 || handleError.sh --cmd='Execution of $<' --result=$$? --log=mapvector_root.build.log --test=$*
 
 mapvector.log: mapvector.root
 
