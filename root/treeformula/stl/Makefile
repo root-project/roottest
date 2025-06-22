@@ -10,19 +10,19 @@ CLEAN_TARGETS += $(ALL_LIBRARIES) *.log
 TEST_TARGETS += embedstl pair  stlString secondindex
 
 ifeq ($(OS),Windows_NT)
-	TEST_TARGETS += mapvector
-	CLEAN_TARGETS += mapvector.root
+    TEST_TARGETS += mapvector
+    CLEAN_TARGETS += mapvector.root
 else
-	UNAME_S := $(shell uname -s)
+    UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
         TEST_TARGETS += mapvector
-		CLEAN_TARGETS += mapvector.root
+        CLEAN_TARGETS += mapvector.root
     endif
     ifeq ($(UNAME_S),Darwin)
-		MACOSVERSION := $(shell sw_vers --productVersion)
+        MACOSVERSION := $(shell sw_vers --productVersion)
         ifneq ($(MACOSVERSION),26.0)
             TEST_TARGETS += mapvector
-			CLEAN_TARGETS += mapvector.root
+            CLEAN_TARGETS += mapvector.root
         endif
     endif
 endif
@@ -45,7 +45,7 @@ endif
 #  directory.
 
 ifeq ($(strip $(ROOTTEST_HOME)),)
-   export ROOTTEST_HOME := $(shell git rev-parse --show-toplevel)/roottest/
+   export ROOTTEST_HOME := $(shell git rev-parse --show-toplevel)/
    ifeq ($(strip $(ROOTTEST_HOME)),)
       export ROOTTEST_HOME := $(shell expr $(CURDIR) : '\(.*/roottest/\)')
    endif
