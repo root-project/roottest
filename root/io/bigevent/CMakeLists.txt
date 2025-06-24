@@ -4,7 +4,7 @@ ROOT_GENERATE_DICTIONARY(G__IoBigEventGeneration
 
 ROOT_LINKER_LIBRARY(IoBigEventGeneration
   ${CMAKE_CURRENT_SOURCE_DIR}/IoBigEventGeneration.cxx
-  G__IoBigEventGeneration.cxx
+  TEST G__IoBigEventGeneration.cxx
   LIBRARIES ROOT::Core ROOT::Tree ROOT::Hist ROOT::MathCore ROOT::Physics ROOT::Graf ROOT::Matrix)
 
 if(MSVC)
