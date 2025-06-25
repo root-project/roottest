@@ -4,7 +4,7 @@ ROOT_GENERATE_DICTIONARY(G__TreeFormulaReferencesGeneration
 
 ROOT_LINKER_LIBRARY(TreeFormulaReferencesGeneration
   ${CMAKE_CURRENT_SOURCE_DIR}/TreeFormulaReferencesGeneration.cxx
-  TEST G__TreeFormulaReferencesGeneration.cxx
+  G__TreeFormulaReferencesGeneration.cxx
   LIBRARIES ROOT::Core ROOT::Tree ROOT::Hist ROOT::MathCore)
 
 if(MSVC)
