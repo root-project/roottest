@@ -1,24 +1,19 @@
 ROOT_GENERATE_DICTIONARY(G__IoBigEventGeneration
   ${CMAKE_CURRENT_SOURCE_DIR}/Event.h
-  LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/EventLinkDef.h)
+  LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/EventLinkDef.h
+  FIXTURES_SETUP io-bigevent-G__IoBigEventGeneration-fixture)
 
-ROOT_LINKER_LIBRARY(IoBigEventGeneration
+ROOTTEST_LINKER_LIBRARY(IoBigEventGeneration
   ${CMAKE_CURRENT_SOURCE_DIR}/IoBigEventGeneration.cxx
-  G__IoBigEventGeneration.cxx
-  LIBRARIES ROOT::Core ROOT::Tree ROOT::Hist ROOT::MathCore ROOT::Physics ROOT::Graf ROOT::Matrix)
-
-if(MSVC)
-  add_custom_command(TARGET IoBigEventGeneration POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/libIoBigEventGeneration.dll
-                                     ${CMAKE_CURRENT_BINARY_DIR}/libIoBigEventGeneration.dll
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/libIoBigEventGeneration.lib
-                                     ${CMAKE_CURRENT_BINARY_DIR}/libIoBigEventGeneration.lib)
-endif()
+  TEST G__IoBigEventGeneration.cxx
+  LIBRARIES ROOT::Core ROOT::Tree ROOT::Hist ROOT::MathCore ROOT::Physics ROOT::Graf ROOT::Matrix
+  FIXTURES_REQUIRED io-bigevent-G__IoBigEventGeneration-fixture
+  FIXTURES_SETUP io-bigevent-references-IoBigEventGeneration-fixture)
 
 ROOTTEST_GENERATE_EXECUTABLE(IoBigEventGenerator
   ${CMAKE_CURRENT_SOURCE_DIR}/IoBigEventGenerator.cxx
   LIBRARIES Core RIO Net Tree Hist MathCore IoBigEventGeneration
-  DEPENDS IoBigEventGeneration
+  FIXTURES_REQUIRED io-bigevent-references-IoBigEventGeneration-fixture
   FIXTURES_SETUP io-bigevent-generator)
 
 ROOTTEST_ADD_TEST(write
