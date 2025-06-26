@@ -2,22 +2,14 @@ ROOT_GENERATE_DICTIONARY(G__IoBigEventGeneration
   ${CMAKE_CURRENT_SOURCE_DIR}/Event.h
   LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/EventLinkDef.h)
 
-ROOT_LINKER_LIBRARY(IoBigEventGeneration
+ROOTTEST_LINKER_LIBRARY(IoBigEventGeneration
   ${CMAKE_CURRENT_SOURCE_DIR}/IoBigEventGeneration.cxx
   G__IoBigEventGeneration.cxx
-  LIBRARIES Core Tree Hist MathCore Physics Graf Matrix)
-
-if(MSVC)
-  add_custom_command(TARGET IoBigEventGeneration POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/libIoBigEventGeneration.dll
-                                     ${CMAKE_CURRENT_BINARY_DIR}/libIoBigEventGeneration.dll
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/libIoBigEventGeneration.lib
-                                     ${CMAKE_CURRENT_BINARY_DIR}/libIoBigEventGeneration.lib)
-endif()
+  LIBRARIES ROOT::Core ROOT::Tree ROOT::Hist ROOT::MathCore ROOT::Physics ROOT::Graf ROOT::Matrix)
 
 ROOTTEST_GENERATE_EXECUTABLE(IoBigEventGenerator
   ${CMAKE_CURRENT_SOURCE_DIR}/IoBigEventGenerator.cxx
-  LIBRARIES Core RIO Net Tree Hist MathCore IoBigEventGeneration
+  LIBRARIES ROOT::Core ROOT::RIO ROOT::Net ROOT::Tree ROOT::Hist ROOT::MathCore IoBigEventGeneration
   DEPENDS IoBigEventGeneration
   FIXTURES_SETUP io-bigevent-generator)
 
