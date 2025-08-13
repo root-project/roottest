@@ -12,7 +12,7 @@ public:
 
 #ifdef __ROOTCLING__
 #pragma link C++ class Holder+;
-#pragma read sourceClass="Holder" targetClass="Holder" versions="[1-]" source="" target="fCache" code="{ fCache = nullptr; }"
+#pragma read sourceClass="Holder" targetClass="Holder" version="[1-]" source="" target="fCache" code="{ fCache = nullptr; }"
 #endif
 
 

@@ -43,9 +43,9 @@ struct Values {
 
 #ifdef __ROOTCLING__
 #pragma read sourceClass="RefVectorBase" targetClass="RefVectorBase" source="" \
-        versions="1-" target="fTransient" code="{ fTransient.clear(); }"
+        version="[1-]" target="fTransient" code="{ fTransient.clear(); }"
 #pragma read sourceClass="RefVectorMemberPointersHolder" targetClass="RefVectorMemberPointersHolder" source="" \
-        versions="1-" target="fTransient" code="{ fTransient.clear(); }"
+        version="[1-]" target="fTransient" code="{ fTransient.clear(); }"
 #pragma read sourceClass="LowData" targetClass="LowData" source="Values fValues" \
         checksum="[0x16066232]" target="fNewValues" code="{ fNewValues = onfile.fValues; }"
 #endif
