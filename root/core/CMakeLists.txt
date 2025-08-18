@@ -37,6 +37,5 @@ endif()
 
 ROOTTEST_ADD_TEST(execStatusBitsCheck
                   MACRO execStatusBitsCheck.C
-                  OUTCNV ../html/MakeIndex_convert.sh
                   OUTREF execStatusBitsCheck.ref
                   )
