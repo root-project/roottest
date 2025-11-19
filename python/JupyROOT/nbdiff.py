@@ -2,93 +2,76 @@ import difflib
 import json
 import os
 import shutil
-import subprocess
 import sys
 import tempfile
 
-nbExtension=".ipynb"
-convCmdTmpl = "%s nbconvert " \
-"--to notebook " \
-"--ExecutePreprocessor.kernel_name=%s " \
-"--ExecutePreprocessor.enabled=True " \
-"--ExecutePreprocessor.timeout=3600 " \
-"--ExecutePreprocessor.startup_timeout=180 " \
-"%s " \
-"--output %s"
-pythonInterpName = 'python3'
-
-rootKernelFileContent = '''{
- "language": "c++",
- "display_name": "ROOT C++",
- "argv": [
-  "%s",
-  "-m",
-  "JupyROOT.kernel.rootkernel",
-  "-f",
-  "{connection_file}"
- ]
-}
-''' %pythonInterpName
-
-
 
 # Replace the criterion according to which a line shall be skipped
-def customLineJunkFilter(line):
+def should_keep_line(line):
     # Skip the banner and empty lines
-    junkLines =['Info in <TUnixSystem::ACLiC',
-                'Info in <TMacOSXSystem::ACLiC',
-                'FAILED TO establish the default connection to the WindowServer',
-                '"version": ',
-                '"pygments_lexer": "ipython',
-                '     "execution_count":',
-                'libclang_rt.asan-']
-    for junkLine in junkLines:
-        if junkLine in line: return False
+    skip_patterns = [
+        "Info in <TUnixSystem::ACLiC",
+        "Info in <TMacOSXSystem::ACLiC",
+        "FAILED TO establish the default connection to the WindowServer",
+        '"version": ',
+        '"pygments_lexer": "ipython',
+        '     "execution_count":',
+        "libclang_rt.asan-",
+    ]
+    for pattern in skip_patterns:
+        if pattern in line:
+            return False
     return True
+
 
 def removeCellMetadata(lines):
     filteredLines = []
     discardLine = False
     for line in lines:
         if '   "metadata": {' in line:
-            if line.endswith('},' + os.linesep): # empty metadata
+            if line.endswith("}," + os.linesep):  # empty metadata
                 continue
             discardLine = True
 
         if not discardLine:
             filteredLines.append(line)
 
-        if discardLine and '   },' in line: # end of metadata
+        if discardLine and "   }," in line:  # end of metadata
             discardLine = False
 
     return filteredLines
 
+
 def getFilteredLines(fileName):
-    filteredLines = list(filter(customLineJunkFilter, open(fileName).readlines()))
+    with open(fileName) as f:
+        filteredLines = list(filter(should_keep_line, f.readlines()))
 
     # Sometimes the jupyter server adds a new line at the end of the notebook
     # and nbconvert does not.
     lastLine = filteredLines[-1]
-    if lastLine[-1] != "\n": filteredLines[-1] += "\n"
+    if lastLine[-1] != "\n":
+        filteredLines[-1] += "\n"
 
     # Remove the metadata field of cells (contains specific execution timestamps)
     filteredLines = removeCellMetadata(filteredLines)
 
     return filteredLines
 
+
 # Workaround to support nbconvert versions >= 7.14 . See #14303
 def patchForNBConvert714(outNBLines):
     newOutNBLines = []
-    toReplace = '''      "1\\n"\n'''
+    toReplace = """      "1\\n"\n"""
     replacement = [
-'''      "1"\n''',
-'''     ]\n''',
-'''    },\n''',
-'''    {\n''',
-'''     "name": "stdout",\n''',
-'''     "output_type": "stream",\n''',
-'''     "text": [\n''',
-'''      "\\n"\n''']
+        """      "1"\n""",
+        """     ]\n""",
+        """    },\n""",
+        """    {\n""",
+        """     "name": "stdout",\n""",
+        """     "output_type": "stream",\n""",
+        """     "text": [\n""",
+        """      "\\n"\n""",
+    ]
 
     for line in outNBLines:
         if line == toReplace:
@@ -97,7 +80,8 @@ def patchForNBConvert714(outNBLines):
             newOutNBLines.append(line)
     return newOutNBLines
 
-def compareNotebooks(inNBName,outNBName):
+
+def compareNotebooks(inNBName, outNBName):
     inNBLines = getFilteredLines(inNBName)
     inNBLines = patchForNBConvert714(inNBLines)
     outNBLines = getFilteredLines(outNBName)
@@ -106,8 +90,10 @@ def compareNotebooks(inNBName,outNBName):
     for line in difflib.unified_diff(inNBLines, outNBLines, fromfile=inNBName, tofile=outNBName):
         areDifferent = True
         sys.stdout.write(line)
-    if areDifferent: print("\n")
+    if areDifferent:
+        print("\n")
     return areDifferent
+
 
 def createKernelSpec():
     """Create a root kernel spec with the right python interpreter name
@@ -117,11 +103,25 @@ def createKernelSpec():
     os.mkdir(kernelsPath)
     rootKernelPath = os.path.join(kernelsPath, "root")
     os.mkdir(rootKernelPath)
-    kernel_file = open(os.path.join(rootKernelPath, "kernel.json"), "w")
-    kernel_file.write(rootKernelFileContent)
-    kernel_file.close()
+    with open(os.path.join(rootKernelPath, "kernel.json"), "w") as kernel_file:
+        kernel_file.write(
+            """{
+         "language": "c++",
+         "display_name": "ROOT C++",
+         "argv": [
+          "%s",
+          "-m",
+          "JupyROOT.kernel.rootkernel",
+          "-f",
+          "{connection_file}"
+         ]
+        }
+        """
+            % sys.executable
+        )
 
     return tmpd
+
 
 def addEtcToEnvironment(inNBDirName):
     """Add the etc directory of root to the environment under the name of
@@ -132,43 +132,58 @@ def addEtcToEnvironment(inNBDirName):
     os.environ["IPYTHONDIR"] = ipythondir
     return ipythondir
 
-def getInterpreterName():
-    """Find if the 'jupyter' executable is available on the platform. If
-    yes, return its name else return 'ipython'
-    """
-    ret = subprocess.call("type jupyter",
-                          shell=True,
-                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    return "jupyter" if ret == 0 else "i%s" %pythonInterpName
 
 def getKernelName(inNBName):
-    nbj = json.load(open(inNBName))
-    if nbj["metadata"]["kernelspec"]["language"] == "python":
-        return pythonInterpName
-    else: # we support only Python and C++
-        return 'root'
+    with open(inNBName) as f:
+        nbj = json.load(f)
+    return nbj["metadata"]["kernelspec"]["name"]
 
 
-def canReproduceNotebook(inNBName, kernelName, needsCompare):
+def canReproduceNotebook(inNBName, needsCompare):
+    import nbformat
+    from nbconvert.preprocessors import ExecutePreprocessor
+
     tmpDir = addEtcToEnvironment(os.path.dirname(inNBName))
-    outNBName = inNBName.replace(nbExtension,"_out"+nbExtension)
-    interpName = getInterpreterName()
-    convCmd = convCmdTmpl %(interpName, kernelName, inNBName, outNBName)
-    exitStatus = os.system(convCmd) # we use system to inherit the environment in os.environ
-    shutil.rmtree(tmpDir)
+    outNBName = inNBName.replace(".ipynb", "_out.ipynb")
+
+    # Load input notebook
+    with open(inNBName, "r", encoding="utf-8") as f:
+        nb = nbformat.read(f, as_version=4)
+
+    # Configure execution
+    ep = ExecutePreprocessor(
+        kernel_name=getKernelName(inNBName),
+        timeout=3600,
+        startup_timeout=180,
+        allow_errors=False,
+    )
+
+    # Run the notebook
+    ep.preprocess(nb, {"metadata": {"path": os.path.dirname(inNBName)}})
+
+    # Export executed notebook
+    with open(outNBName, "w", encoding="utf-8") as f:
+        nbformat.write(nb, f)
+
+    # Compare or return success
     if needsCompare:
-        return compareNotebooks(inNBName,outNBName)
+        return compareNotebooks(inNBName, outNBName)
     else:
-        return exitStatus
+        return 0  # success
+
+    shutil.rmtree(tmpDir)
+
 
 def isInputNotebookFileName(filename):
     if not filename.endswith(".ipynb"):
-        print("Notebook files shall have the %s extension" %nbExtension)
+        print("Notebook files shall have the .ipynb extension")
         return False
     return True
 
+
 if __name__ == "__main__":
     import sys
+
     needsCompare = True
     if len(sys.argv) < 2:
         print("Usage: nbdiff.py myNotebook.ipynb [compare_output]")
@@ -180,13 +195,5 @@ if __name__ == "__main__":
     if not isInputNotebookFileName(nbFileName):
         sys.exit(1)
 
-    try:
-        # If jupyter is there, ipython is too
-        import jupyter
-    except:
-        raise ImportError("Cannot import jupyter")
-
-    kernelName = getKernelName(nbFileName)
-
-    retCode = canReproduceNotebook(nbFileName, kernelName, needsCompare)
+    retCode = canReproduceNotebook(nbFileName, needsCompare)
     sys.exit(retCode)
