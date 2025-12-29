@@ -18,13 +18,6 @@ else
         TEST_TARGETS += mapvector
         CLEAN_TARGETS += mapvector.root
     endif
-    ifeq ($(UNAME_S),Darwin)
-        MACOSVERSION := $(shell sw_vers --productVersion)
-        ifneq ($(MACOSVERSION),26.0)
-            TEST_TARGETS += mapvector
-            CLEAN_TARGETS += mapvector.root
-        endif
-    endif
 endif
 
 
