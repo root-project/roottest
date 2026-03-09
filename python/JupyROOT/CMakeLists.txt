@@ -15,10 +15,7 @@ set(DOCTEST_LAUNCHER ${CMAKE_CURRENT_SOURCE_DIR}/doctest_launcher.py)
 # TODO: To be extended with the list of downloaded notebooks used in the
 # documentation and as tutorials.
 set(NOTEBOOKS importROOT.ipynb
-              simpleCppMagic.ipynb
-              thread_local.ipynb
-              ROOT_kernel.ipynb
-              tpython.ipynb)
+              simpleCppMagic.ipynb)
 
 # Test all modules with doctest. All new tests will be automatically picked up
 file(GLOB pyfiles ${MODULES_LOCATION}/*.py)
