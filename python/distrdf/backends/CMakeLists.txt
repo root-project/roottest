@@ -1,4 +1,5 @@
-if(NOT ROOT_test_distrdf_dask_FOUND AND NOT ROOT_test_distrdf_pyspark_FOUND)
+if((NOT ROOT_test_distrdf_dask_FOUND AND NOT ROOT_test_distrdf_pyspark_FOUND) OR
+   (NOT ${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64.*|x86.*|amd64.*|AMD64.*|i686.*|i386.*")))
     return()
 endif()
 
